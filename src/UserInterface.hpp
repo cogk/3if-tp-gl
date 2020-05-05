@@ -125,7 +125,7 @@ int menu(std::string menuName, std::vector<std::string> entries, std::ostream &o
     }
     else
     {
-        return res.value;
+        return res.value - 1;
     }
 }
 } // namespace UserInterface
