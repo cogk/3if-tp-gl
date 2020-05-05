@@ -1,4 +1,8 @@
 // Définition des séquences d'échappement ANSI classiques
+
+// #define ANSI
+#ifdef ANSI
+
 #define ANSI_FG_BLACK "\x1b[30m"
 #define ANSI_FG_BLUE "\x1b[34m"
 #define ANSI_FG_GREEN "\x1b[32m"
@@ -21,6 +25,33 @@
 
 #define ANSI_BOLD_ON "\x1b[1m"
 #define ANSI_BOLD_OFF "\x1b[22m"
+
+#else
+
+#define ANSI_FG_BLACK ""
+#define ANSI_FG_BLUE ""
+#define ANSI_FG_GREEN ""
+#define ANSI_FG_CYAN ""
+#define ANSI_FG_RED ""
+#define ANSI_FG_PURPLE ""
+#define ANSI_FG_BROWN ""
+#define ANSI_FG_GRAY ""
+#define ANSI_FG_RESET ""
+
+#define ANSI_BG_GRAY ""
+#define ANSI_BG_BLUE ""
+#define ANSI_BG_GREEN ""
+#define ANSI_BG_CYAN ""
+#define ANSI_BG_RED ""
+#define ANSI_BG_PURPLE ""
+#define ANSI_BG_YELLOW ""
+#define ANSI_BG_WHITE ""
+#define ANSI_BG_RESET ""
+
+#define ANSI_BOLD_ON ""
+#define ANSI_BOLD_OFF ""
+
+#endif
 
 #include <iomanip>
 #include <iostream>
