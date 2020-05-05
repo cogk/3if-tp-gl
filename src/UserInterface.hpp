@@ -68,7 +68,6 @@ readInteger(std::istream &inputStream = std::cin)
 std::string
 util_stringCenter(std::string const &str, int targetSize)
 {
-    assert(targetSize >= 0);
     int padding = targetSize - str.length();
     if (padding > 0)
     {
