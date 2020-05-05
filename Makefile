@@ -4,7 +4,7 @@ CFLAGS    = -ansi -pedantic -Wall -Werror -Wextra -std=c++11
 
 EXEC_NAME = airwatcher
 INCLUDES  =
-LIBS      =
+LIBS      = $(wildcard src/*.hpp)
 SRCS      = $(wildcard src/*.cpp)
 OBJS      = $(addprefix tmp/,$(notdir $(SRCS:.cpp=.o)))
 
@@ -33,12 +33,12 @@ directories:
 	mkdir -p tmp
 
 # Règle de compilation
-tmp/%.o: src/%.cpp
+tmp/%.o: src/%.cpp $(LIBS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 # Règle d'édition de liens
-$(EXEC_NAME): $(OBJS)
-	$(CC) -o $(EXEC_NAME) $(OBJS) $(LIBS)
+$(EXEC_NAME): $(OBJS) $(LIBS)
+	$(CC) -o $(EXEC_NAME) $(OBJS)
 
 # Permet d'éviter que les fichiers du même nom que des règles
 # soient "interprétés" comme des dépendances.
