@@ -127,8 +127,7 @@ void banner(std::string text, bool thick = false, std::ostream &out = std::cout)
 
 /**
  * Attention :
- * - ne renverra JAMAIS 0
- * - renvoie un entier entre 1 et N lorsque le choix est valide
+ * - renvoie un entier entre 0 et (N - 1) lorsque le choix est valide
  * - renvoie UserInterface::InvalidMenuChoice sinon
  */
 int menu(std::string menuName, std::vector<std::string> entries, std::ostream &out = std::cout)
