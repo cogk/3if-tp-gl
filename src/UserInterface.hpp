@@ -64,6 +64,10 @@ namespace UserInterface
 const int InvalidMenuChoice = -1;
 int MaxWidth = 32;
 
+const std::string primaryBg = ANSI_BG_YELLOW;
+const std::string secondaryBg = ANSI_BG_CYAN;
+const std::string primaryFg = ANSI_FG_BLACK;
+
 // fonctions utilitaires
 
 // lire un entier
@@ -111,15 +115,14 @@ util_stringCenter(std::string const &str, int targetSize)
 void banner(std::string text, bool thick = false, std::ostream &out = std::cout)
 {
     const int width = MaxWidth;
-    // const int width = text.length() + 2 * 3;
 
     if (thick)
-        out << ANSI_BG_YELLOW << ANSI_FG_BLACK << std::string(width, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
+        out << primaryBg << primaryFg << std::string(width, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
 
-    out << ANSI_BG_YELLOW << ANSI_FG_BLACK << util_stringCenter(text, width) << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
+    out << primaryBg << primaryFg << util_stringCenter(text, width) << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
 
     if (thick)
-        out << ANSI_BG_YELLOW << ANSI_FG_BLACK << std::string(width, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
+        out << primaryBg << primaryFg << std::string(width, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
 }
 
 /**
