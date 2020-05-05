@@ -4,7 +4,7 @@ project(3if_gl-tp)
 set(CMAKE_CXX_STANDARD 11)
 
 # Crée des variables avec les fichiers à compiler
-set(SRCS src/main.cpp)
+set(SRCS src/main.cpp src/App.cpp)
 
 # Notre exécutable
 add_executable(main ${SRCS})
