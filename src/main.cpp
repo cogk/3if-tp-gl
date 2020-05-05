@@ -6,6 +6,7 @@
 int main()
 {
     UserInterface::banner("Bienvenue dans AirWatcher", true);
+    UserInterface::userbar("Corentin");
     std::cout << std::endl;
 
     std::vector<std::string>

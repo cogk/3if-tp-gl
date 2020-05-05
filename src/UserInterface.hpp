@@ -161,4 +161,18 @@ int menu(std::string menuName, std::vector<std::string> entries, std::ostream &o
         return res.value - 1;
     }
 }
+
+void userbar(std::string username, std::ostream &out = std::cout)
+{
+    const int width = MaxWidth;
+
+    const std::string preamble = "   Utilisateur: ";
+    int space = width - username.length() - preamble.length();
+    if (space < 0)
+    {
+        space = 0;
+    }
+
+    out << secondaryBg << primaryFg << preamble << username << std::string(space, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
+}
 } // namespace UserInterface
