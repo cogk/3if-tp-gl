@@ -4,6 +4,10 @@
 tmp/
 airwatcher
 
+#CLion
+.idea/
+cmake-build-debug/
+
 # misc
 .DS_Store
 .DS_Store?
