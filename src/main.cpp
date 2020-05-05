@@ -1,19 +1,21 @@
 #include <string>
 #include <vector>
 
-#include "UserInterface.hpp"
+#include "App.hpp"
 
 int main()
 {
-    UserInterface::banner("Bienvenue dans AirWatcher", true);
-    UserInterface::userbar("Corentin");
+    App app;
+
+    app.banner("Bienvenue dans AirWatcher", true);
+    app.userbar("Corentin");
     std::cout << std::endl;
 
     std::vector<std::string>
         menu1 = {"Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Iota", "Lambda", "Mumu", "Nono", "Wallah", "Poulet braisé", "Cuisine ouzbèke"};
-    const int choice = UserInterface::menu("Menu Principal", menu1);
+    const int choice = app.menu("Menu Principal", menu1);
 
-    if (choice == UserInterface::InvalidMenuChoice)
+    if (choice == App::InvalidMenuChoice)
     {
         std::cout << "Vous n'avez pas choisi de menu." << std::endl;
     }
