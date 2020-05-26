@@ -6,10 +6,11 @@
 #define INC_3IF_GL_TP_MESUREDAO_H
 
 #include <vector>
-
+#include "../Metier/Mesure.h"
+#include "../Metier/Coordonnees.h"
+#include "../Metier/Type.h"
 
 class MesureDAO {
-
 
 public:
     MesureDAO();
