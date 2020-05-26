@@ -11,3 +11,5 @@ set(DAO src/DAO/MesureDAO.cpp src/DAO/MesureDAO.h)
 
 # Notre exécutable
 add_executable(main ${SRCS} ${DAO} ${Services} ${Metier})
+
+add_executable(app ${SRCS})

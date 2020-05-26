@@ -13,7 +13,18 @@ bool MesureDAO::add(Mesure mesure) {
     stringstream ss;
 
     // timestamp
-    ss << mesure.getDate();
+
+    time_t rawtime = mesure.getDate();
+    struct tm * timeinfo;
+    char buffer [80];
+
+//    time (&rawtime);  // set la valeur de rawtime à mtn
+    timeinfo = localtime (&rawtime);
+
+    strftime (buffer, 80, "%F %T", timeinfo);
+    std::cerr << "Timestamp ajouté : " << buffer;    // debug
+
+    ss << buffer;
     ligne.push_back(ss.str());
 
     // sensor ID

@@ -4,14 +4,14 @@ Attributes :
 AttributeID;Unit;Description;
 
 Cleaners :
-CleanerID;longitude;latitude;timestamp1;timestamp2; ?
+CleanerID;longitude;latitude;rien???;timestamp1;timestamp2; ?
 -> déduit de :
 Cleaner0;45.333333;1.333333;;2019-02-01 12:00:00;2019-03-01 00:00:00;
 
 Measurements :
-timestamp;SensorID;AttributeID;Value;
+yyyy-mm-dd hh:mm:ss;SensorID;AttributeID;Value;
 -> déduit de :
-2019-01-01 12:00:00;Sensor0;O3;63.5;
+2019-01-24 12:00:00;Sensor0;O3;46.75;
 
 Providers :
 ProviderID;CleanerID;
