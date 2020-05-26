@@ -13,12 +13,9 @@ bool MesureDAO::add(Mesure mesure) {
     stringstream ss;
 
     // timestamp
-
     time_t rawtime = mesure.getDate();
     struct tm * timeinfo;
     char buffer [80];
-
-//    time (&rawtime);  // set la valeur de rawtime à mtn
     timeinfo = localtime (&rawtime);
 
     strftime (buffer, 80, "%F %T", timeinfo);
@@ -28,10 +25,10 @@ bool MesureDAO::add(Mesure mesure) {
     ligne.push_back(ss.str());
 
     // sensor ID
-    ligne.push_back("SENSOR ID PLZ");
+    ligne.push_back(mesure.getCapteur().getSensorId());
 
     // attribute ID
-    ligne.push_back("ATTRIBUTE ID PLZ");
+    ligne.push_back(mesure.getType().getAttributeId());
 
     // value
     ligne.push_back(to_string(mesure.getValeur()));
