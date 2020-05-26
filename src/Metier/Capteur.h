@@ -13,6 +13,8 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
+#include "Coordonnees.h"
+
 using namespace std;
 
 //------------------------------------------------------------- Constantes
@@ -48,6 +50,14 @@ public:
         Capteur::description = description;
     }
 
+    const Coordonnees &getCoordonnees() const {
+        return coordonnees;
+    }
+
+    void setCoordonnees(const Coordonnees &coordonnees) {
+        Capteur::coordonnees = coordonnees;
+    }
+
 //-------------------------------------------- Constructeurs - destructeur
 
     Capteur();
@@ -56,7 +66,11 @@ public:
     // Contrat :
     //
 
-    Capteur(const string &sensorId, const string &description) : sensorID(sensorId), description(description) {}
+    Capteur(const string &sensorId, const string &description, const Coordonnees &coordonnees) : sensorID(sensorId),
+                                                                                                 description(
+                                                                                                         description),
+                                                                                                 coordonnees(
+                                                                                                         coordonnees) {}
     // Mode d'emploi :
     //
     // Contrat :
@@ -78,6 +92,7 @@ protected:
 protected:
     std::string sensorID;
     std::string description;
+    Coordonnees coordonnees;
 
 };
 
