@@ -1,65 +1,59 @@
 
 /*************************************************************************
-                           Contributeur  -  description
+                           Agence  -  description
                              -------------------
     début                : $DATE$
     copyright            : (C) $YEAR$ par $AUTHOR$
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface de la classe <Contibuteur> (fichier Contibuteur.h) ----------------
-#if ! defined ( INC_3IF_GL_TP_CONTRIBUTEUR_H )
-#define INC_3IF_GL_TP_CONTRIBUTEUR_H
+//---------- Interface de la classe <Agence> (fichier Agence.h) ----------------
+#if ! defined ( INC_3IF_GL_TP_AGENCE_H )
+#define INC_3IF_GL_TP_AGENCE_H
 
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
-#include <vector>
 using namespace std;
-#include "Utilisateur.h"
-#include "Capteur.h"
+#include "Organisation.h"
 
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Contibuteur>
+// Rôle de la classe <Agence>
 //
 //
 //------------------------------------------------------------------------
 
-class Contibuteur : public Utilisateur
+class Agence : public Organisation
 {
 //----------------------------------------------------------------- PUBLIC
 
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const vector<Capteur> &getCapteurs() const {
-        return capteurs;
-    }
-
-    void setCapteurs(const vector<Capteur> &capteurs) {
-        Contibuteur::capteurs = capteurs;
-    }
-
 //-------------------------------------------- Constructeurs - destructeur
 
-    Contibuteur() {}
+    Agence();
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Contibuteur(const string &identifiant, const string &motDePasse, const string &email, int points, int fiabilite,
-                const vector<Capteur> &capteurs) : Utilisateur(identifiant, motDePasse, email), points(points),
-                                                   fiabilite(fiabilite), capteurs(capteurs) {}
+    Agence(const string &nom) : Organisation(nom) {}
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~Contibuteur() {}
+    Agence(const string &nom, const vector<Administrateur> &administrateur) : Organisation(nom, administrateur) {}
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    virtual ~Agence() {}
     // Mode d'emploi :
     //
     // Contrat :
@@ -73,12 +67,9 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 protected:
-    int points;
-    int fiabilite;
-    vector<Capteur> capteurs;
 
 };
 
-#endif // INC_3IF_GL_TP_CONTRIBUTEUR_H
+#endif // INC_3IF_GL_TP_AGENCE_H
 
 

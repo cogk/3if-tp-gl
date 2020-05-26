@@ -1,65 +1,71 @@
 
 /*************************************************************************
-                           Contributeur  -  description
+                           Entreprise  -  description
                              -------------------
     début                : $DATE$
     copyright            : (C) $YEAR$ par $AUTHOR$
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface de la classe <Contibuteur> (fichier Contibuteur.h) ----------------
-#if ! defined ( INC_3IF_GL_TP_CONTRIBUTEUR_H )
-#define INC_3IF_GL_TP_CONTRIBUTEUR_H
+//---------- Interface de la classe <Entreprise> (fichier Entreprise.h) ----------------
+#if ! defined ( INC_3IF_GL_TP_ENTREPRISE_H )
+#define INC_3IF_GL_TP_ENTREPRISE_H
 
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
 #include <vector>
 using namespace std;
-#include "Utilisateur.h"
-#include "Capteur.h"
+#include "Organisation.h"
+#include "Purificateur.h"
 
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Contibuteur>
+// Rôle de la classe <Entreprise>
 //
 //
 //------------------------------------------------------------------------
 
-class Contibuteur : public Utilisateur
+class Entreprise : public Organisation
 {
 //----------------------------------------------------------------- PUBLIC
 
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const vector<Capteur> &getCapteurs() const {
-        return capteurs;
+    const vector<Purificateur> &getPurificateurs() const {
+        return purificateurs;
     }
 
-    void setCapteurs(const vector<Capteur> &capteurs) {
-        Contibuteur::capteurs = capteurs;
+    void setPurificateurs(const vector<Purificateur> &purificateurs) {
+        Entreprise::purificateurs = purificateurs;
     }
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Contibuteur() {}
+    Entreprise();
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Contibuteur(const string &identifiant, const string &motDePasse, const string &email, int points, int fiabilite,
-                const vector<Capteur> &capteurs) : Utilisateur(identifiant, motDePasse, email), points(points),
-                                                   fiabilite(fiabilite), capteurs(capteurs) {}
+    Entreprise(const string &nom) : Organisation(nom) {}
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~Contibuteur() {}
+    Entreprise(const string &nom, const vector<Administrateur> &administrateur,
+               const vector<Purificateur> &purificateurs) : Organisation(nom, administrateur),
+                                                            purificateurs(purificateurs) {}
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    virtual ~Entreprise();
     // Mode d'emploi :
     //
     // Contrat :
@@ -73,12 +79,10 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 protected:
-    int points;
-    int fiabilite;
-    vector<Capteur> capteurs;
+    vector<Purificateur> purificateurs;
 
 };
 
-#endif // INC_3IF_GL_TP_CONTRIBUTEUR_H
+#endif // INC_3IF_GL_TP_ENTREPRISE_H
 
 

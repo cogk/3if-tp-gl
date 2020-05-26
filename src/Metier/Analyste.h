@@ -15,6 +15,7 @@
 #include <iostream>
 using namespace std;
 #include "Utilisateur.h"
+#include "Agence.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -33,7 +34,13 @@ class Analyste : public Utilisateur
 public:
 //----------------------------------------------------- Méthodes publiques
 
+    const Agence &getAgence() const {
+        return agence;
+    }
 
+    void setAgence(const Agence &agence) {
+        Analyste::agence = agence;
+    }
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -43,8 +50,12 @@ public:
     // Contrat :
     //
 
-    Analyste(const string &identifiant, const string &motDePasse, const string &email) : Utilisateur(identifiant,
-                                                                                                   motDePasse, email) {}
+    Analyste(const string &identifiant, const string &motDePasse, const string &email, const Agence &agence)
+            : Utilisateur(identifiant, motDePasse, email), agence(agence) {}
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
     virtual ~Analyste() {}
     // Mode d'emploi :
@@ -60,6 +71,7 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 protected:
+    Agence agence;
 
 };
 

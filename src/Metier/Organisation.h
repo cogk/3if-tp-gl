@@ -1,65 +1,79 @@
 
 /*************************************************************************
-                           Contributeur  -  description
+                           Organisation  -  description
                              -------------------
     début                : $DATE$
     copyright            : (C) $YEAR$ par $AUTHOR$
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface de la classe <Contibuteur> (fichier Contibuteur.h) ----------------
-#if ! defined ( INC_3IF_GL_TP_CONTRIBUTEUR_H )
-#define INC_3IF_GL_TP_CONTRIBUTEUR_H
+//---------- Interface de la classe <Organisation> (fichier Organisation.h) ----------------
+#if ! defined ( INC_3IF_GL_TP_ORGANISATION_H )
+#define INC_3IF_GL_TP_ORGANISATION_H
 
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
 #include <vector>
+#include "Administrateur.h"
+
 using namespace std;
-#include "Utilisateur.h"
-#include "Capteur.h"
 
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Contibuteur>
+// Rôle de la classe <Organisation>
 //
 //
 //------------------------------------------------------------------------
 
-class Contibuteur : public Utilisateur
+class Organisation
 {
 //----------------------------------------------------------------- PUBLIC
 
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const vector<Capteur> &getCapteurs() const {
-        return capteurs;
+    const string &getNom() const {
+        return nom;
     }
 
-    void setCapteurs(const vector<Capteur> &capteurs) {
-        Contibuteur::capteurs = capteurs;
+    void setNom(const string &nom) {
+        Organisation::nom = nom;
+    }
+
+    const vector<Administrateur> &getAdministrateur() const {
+        return administrateur;
+    }
+
+    void setAdministrateur(const vector<Administrateur> &administrateur) {
+        Organisation::administrateur = administrateur;
     }
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Contibuteur() {}
+    Organisation();
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Contibuteur(const string &identifiant, const string &motDePasse, const string &email, int points, int fiabilite,
-                const vector<Capteur> &capteurs) : Utilisateur(identifiant, motDePasse, email), points(points),
-                                                   fiabilite(fiabilite), capteurs(capteurs) {}
+
+    Organisation(const string &nom) : nom(nom) {}
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~Contibuteur() {}
+    Organisation(const string &nom, const vector<Administrateur> &administrateur) : nom(nom),
+                                                                                    administrateur(administrateur) {}
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    virtual ~Organisation();
     // Mode d'emploi :
     //
     // Contrat :
@@ -73,12 +87,9 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 protected:
-    int points;
-    int fiabilite;
-    vector<Capteur> capteurs;
+    std::string nom;
+    vector<Administrateur> administrateur;
 
 };
 
-#endif // INC_3IF_GL_TP_CONTRIBUTEUR_H
-
-
+#endif // INC_3IF_GL_TP_ORGANISATION_H

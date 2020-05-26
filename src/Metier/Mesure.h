@@ -14,6 +14,8 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
 #include <ctime>
+#include "Capteur.h"
+#include "Type.h"
 
 using namespace std;
 
@@ -58,6 +60,22 @@ public:
         Mesure::description = description;
     }
 
+    const Capteur &getCapteur() const {
+        return capteur;
+    }
+
+    void setCapteur(const Capteur &capteur) {
+        Mesure::capteur = capteur;
+    }
+
+    const Type &getType() const {
+        return type;
+    }
+
+    void setType(const Type &type) {
+        Mesure::type = type;
+    }
+
 //-------------------------------------------- Constructeurs - destructeur
 
     Mesure();
@@ -66,8 +84,8 @@ public:
     // Contrat :
     //
 
-    Mesure(double valeur, time_t date, const string &description) : valeur(valeur), date(date),
-                                                                    description(description) {}
+    Mesure(double valeur, time_t date, const string &description, const Capteur &capteur, const Type &type) : valeur(
+            valeur), date(date), description(description), capteur(capteur), type(type) {}
     // Mode d'emploi :
     //
     // Contrat :
@@ -90,6 +108,8 @@ protected:
     double valeur;
     time_t date;
     std::string description;
+    Capteur capteur;
+    Type type;
 
 };
 
