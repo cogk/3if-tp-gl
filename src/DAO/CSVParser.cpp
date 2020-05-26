@@ -9,48 +9,72 @@ using namespace std;
 
 // Constructeurs / destructeurs
 
-CSVParser::CSVParser(string csv) {
-    csvFile.open(csv);
-    assert(csvFile.is_open());
+CSVParser::CSVParser(string csvStr) {
+    csv = csvStr;
 }
 
 CSVParser::~CSVParser() {
-    csvFile.close(csv);
 }
 
 // Méthodes publiques
 
-void split(const string& str, const string& delim, vector<string> &result)
+// Fonction nécessaire à CSVParser::read
+void split(string& str, string& delim, vector<string*> &result)
 {
     size_t prev = 0, pos = 0;
     do {
         pos = str.find(delim, prev);
         if (pos == string::npos) pos = str.length();
-        string token = str.substr(prev, pos-prev);
+        string *token = new string;
+        *token = str.substr(prev, pos-prev);
         result.push_back(token);
         prev = pos + delim.length();
     } while (pos < str.length() && prev < str.length());
 }
 
-vector<vector<string>> CSVParser::read(map<int, string> params) {
-    vector<vector<string>> *result = new vector<vector<string>>;
-    while (!csvFile.eof()) {
-        string line;
-        getline(csvFile, line);
+vector<vector<string*>*>* CSVParser::read(map<int, string> params) {
+    ifstream csvFile(csv);
+    vector<vector<string*>*>* result = new vector<vector<string*>*>;
 
-        vector<string> *splittedLine = new vector<string>;
-        split(line, ";", *splittedLine);
+    if (csvFile) {
+        cout << "Hello" << endl;
+        while (!csvFile.eof()) {
+            string *line = new string;
+            getline(csvFile, *line);
+            if (line->empty()) {
+                continue;
+            }
 
-        result->push_back(splittedLine);
+            vector<string*> *splittedLine = new vector<string*>;
+            string delim = ";";
+            split(*line, delim, *splittedLine);
+
+            result->push_back(splittedLine);
+        }
+
+        csvFile.close();
     }
+
+    return result;
 }
 
 bool CSVParser::add(vector<string> line) {
-    string unsplittedLine = "";
-    for (const string &str : line) {
-        unsplittedLine += str + ";";
+    ofstream csvFile(csv, ios_base::app);
+
+    if (csvFile) {
+        cout << "Hello" << endl;
+        string unsplittedLine = "";
+        for (const string &str : line) {
+            unsplittedLine = unsplittedLine + str + ";";
+        }
+        csvFile << unsplittedLine << endl;
+
+        bool state = csvFile.good();
+        csvFile.close();
+        return state;
     }
-    csvFile << unsplittedLine;
+
+    return false;
 }
 
 bool CSVParser::deleteLines(map<int, string> params) {
