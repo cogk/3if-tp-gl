@@ -8,8 +8,8 @@
 
 class ServiceContributeur {
 
-    public:
-        bool envoyerDonnees();
+//public:
+//    bool envoyerDonnees();
 };
 
 
