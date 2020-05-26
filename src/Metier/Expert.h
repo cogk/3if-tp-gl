@@ -15,6 +15,7 @@
 #include <iostream>
 using namespace std;
 #include "Utilisateur.h"
+#include "Entreprise.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -33,7 +34,13 @@ class Expert : public Utilisateur
 public:
 //----------------------------------------------------- Méthodes publiques
 
+    const Entreprise &getEntreprise() const {
+        return entreprise;
+    }
 
+    void setEntreprise(const Entreprise &entreprise) {
+        Expert::entreprise = entreprise;
+    }
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -43,8 +50,12 @@ public:
     // Contrat :
     //
 
-    Expert(const string &identifiant, const string &motDePasse, const string &email) : Utilisateur(identifiant,
-                                                                                                   motDePasse, email) {}
+    Expert(const string &identifiant, const string &motDePasse, const string &email, const Entreprise &entreprise)
+            : Utilisateur(identifiant, motDePasse, email), entreprise(entreprise) {}
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
     virtual ~Expert() {}
     // Mode d'emploi :
@@ -60,6 +71,7 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 protected:
+    Entreprise entreprise;
 
 };
 

@@ -13,8 +13,10 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
+#include <vector>
 using namespace std;
 #include "Utilisateur.h"
+#include "Capteur.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -33,7 +35,13 @@ class Contibuteur : public Utilisateur
 public:
 //----------------------------------------------------- Méthodes publiques
 
+    const vector<Capteur> &getCapteurs() const {
+        return capteurs;
+    }
 
+    void setCapteurs(const vector<Capteur> &capteurs) {
+        Contibuteur::capteurs = capteurs;
+    }
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -43,8 +51,9 @@ public:
     // Contrat :
     //
 
-    Contibuteur(const string &identifiant, const string &motDePasse, const string &email, int points, int fiabilite)
-            : Utilisateur(identifiant, motDePasse, email), points(points), fiabilite(fiabilite) {}
+    Contibuteur(const string &identifiant, const string &motDePasse, const string &email, int points, int fiabilite,
+                const vector<Capteur> &capteurs) : Utilisateur(identifiant, motDePasse, email), points(points),
+                                                   fiabilite(fiabilite), capteurs(capteurs) {}
     // Mode d'emploi :
     //
     // Contrat :
@@ -66,6 +75,7 @@ protected:
 protected:
     int points;
     int fiabilite;
+    vector<Capteur> capteurs;
 
 };
 

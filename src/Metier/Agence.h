@@ -41,7 +41,19 @@ public:
     // Contrat :
     //
 
-    virtual ~Agence();
+    Agence(const string &nom) : Organisation(nom) {}
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    Agence(const string &nom, const vector<Administrateur> &administrateur) : Organisation(nom, administrateur) {}
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    virtual ~Agence() {}
     // Mode d'emploi :
     //
     // Contrat :
