@@ -4,6 +4,6 @@
 
 #include "ServiceAnalyste.h"
 
-/*Map<Type, Double> ServiceAnalyste::agregerDonnees(Coordonnees centre, double rayon, date debut, date fin){
+map<Type, double> ServiceAnalyste::agregerDonnees(Coordonnees centre, double rayon, time_t debut, time_t fin){
 
-}*/
+}
