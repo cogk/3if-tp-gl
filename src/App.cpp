@@ -11,26 +11,37 @@ bool App::MenuPrincipal()
 {
     this->banner("Bienvenue dans AirWatcher", true);
     this->userbar("(anonyme)");
-    std::cout << std::endl;
 
     // Tous les menus
-    const std::vector<std::string> menuPrincipal = {"Vos données…", "Analyse…", "Sources de données…", "Administration…", "Quitter AirWatcher"};
+    const std::vector<std::string>
+        menuPrincipal = {"Vos données…", "Analyse…", "Sources de données…", "Administration…", "Super Admin…", "Quitter AirWatcher"};
 
     while (true)
     {
         const int choice = this->menu("Menu Principal", menuPrincipal);
-
         switch (choice)
         {
-        case App::InvalidMenuChoice:
+        case 0:
+            this->MenuContributeur();
+            break;
+        case 1:
+            this->MenuAnalyste();
+            break;
+        case 2:
+            this->MenuExpert();
+            break;
+        case 3:
+            this->MenuAdmin();
+            break;
+        case 4:
+            this->MenuSuperAdmin();
+            break;
+        case 5: // quitter
+            return true;
+            break;
+        default:
             std::cout << "Vous n'avez pas choisi de menu." << std::endl;
             return false;
-            break;
-
-        default:
-            std::cout << "Choix #" << choice << std::endl;
-            // return true;
-            break;
         }
     }
     return true;
@@ -38,29 +49,164 @@ bool App::MenuPrincipal()
 
 bool App::MenuContributeur()
 {
-    // const std::vector<std::string> menuVosDonnees = {"Votre score global", "Liste de vos données"};
+    const std::vector<std::string> menuVosDonnees = {"Votre score global", "Liste de vos données", "Retour au menu principal"};
+    const int choice = this->menu("Menu - Vos données", menuVosDonnees);
+    switch (choice)
+    {
+    case 0:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 1:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 2:
+        return true;
+        break;
+    default:
+        std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+        return false;
+    }
     return true;
 }
 
 bool App::MenuAnalyste()
 {
-    // const std::vector<std::string> menuAnalyse = {"Filtrage…", "Statistiques…"};
+    const std::vector<std::string> menuAnalyse = {"Filtrage spatial…", "Filtrage temporel…", "Statistiques…"};
     // const std::vector<std::string> menuAnalyseFiltrage = {"Définir une région d'analyse"};
     // const std::vector<std::string> menuAnalyseStats = {"Choisir séries"};
     // const std::vector<std::string> menuAnalyseStatsCalculsSolo = {"Moyenne", "Médian", "Écart-type"};
     // const std::vector<std::string> menuAnalyseStatsCalculsMulti = {"Corrélation"};
+    const int choice = this->menu("Menu - Sources de données", menuAnalyse);
+    switch (choice)
+    {
+    case 0:
+    {
+        App::banner("Définir une région d'analyse");
+        std::cout << "Forme de la région d'analyse : CERCLE" << std::endl;
+
+        std::cout << "* Rayon du cercle (en mètres) : ";
+        const auto resR = App::readFractional();
+        if (!resR.valid || resR.value < 0)
+        {
+            std::cout << "Valeur invalide." << std::endl;
+            return false;
+        }
+
+        std::cout << "* Centre du cercle" << std::endl;
+        std::cout << "   - latitude : ";
+        const auto resLat = App::readFractional();
+        if (!resLat.valid || resLat.value < 0)
+        {
+            std::cout << "Valeur invalide." << std::endl;
+            return false;
+        }
+
+        std::cout << "   - longitude : ";
+        const auto resLon = App::readFractional();
+        if (!resLon.valid || resLon.value < 0)
+        {
+            std::cout << "Valeur invalide." << std::endl;
+            return false;
+        }
+
+        std::cout << std::endl;
+
+        const double R = resR.value;
+        const double lat = resLat.value;
+        const double lon = resLon.value;
+
+        std::cout << "Cercle(R=" << R << ", lat=" << lat << ", lon=" << lon << ")" << std::endl;
+
+        break;
+    }
+    case 1:
+        App::banner("Définir une période d'analyse :");
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 2:
+    {
+        // App::banner("Choisir les séries à analyser :");
+        App::banner("Choisir la série à analyser :");
+
+        std::vector<std::string> series = {"Blabla", "Machin", "Truc"};
+        const int N = series.size();
+        for (int i = 0; i < N; i++)
+        {
+            const auto serie = series[i];
+            std::cout << std::setw(4) << i << ". " << serie << std::endl;
+        }
+        std::cout << std::endl;
+
+        std::cout << "Série : ";
+        const auto res = App::readInteger();
+        const bool valid = (res.valid && res.value >= 0 && res.value < N);
+        if (!valid)
+        {
+            return false;
+        }
+
+        // poursuivre avec le choix de l'analyse
+
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    }
+    case 3:
+        return true;
+        break;
+    default:
+        std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+        return false;
+    }
     return true;
 }
 
 bool App::MenuExpert()
 {
-    // const std::vector<std::string> menuSources = {"Liste des sources", "Qualité des données", "Données médiocres"};
+    const std::vector<std::string> menuSources = {"Liste des sources", "Qualité des données", "Données médiocres", "Retour au menu principal"};
+    const int choice = this->menu("Menu - Sources de données", menuSources);
+    switch (choice)
+    {
+    case 0:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 1:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 2:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 3:
+        return true;
+        break;
+    default:
+        std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+        return false;
+    }
     return true;
 }
 
 bool App::MenuAdmin()
 {
-    // const std::vector<std::string> menuAdministration = {"Supprimer un utilisateur", "Modifier un utilisateur", "Réinit. un mot de passe"};
+    const std::vector<std::string> menuAdministration = {"Supprimer un utilisateur", "Modifier un utilisateur", "Réinit. un mot de passe", "Retour au menu principal"};
+    const int choice = this->menu("Menu - Administration", menuAdministration);
+    switch (choice)
+    {
+    case 0:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 1:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 2:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 3:
+        return true;
+        break;
+    default:
+        std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+        return false;
+    }
     return true;
 }
 
@@ -71,13 +217,13 @@ bool App::MenuSuperAdmin()
 
 // fonctions utilitaires
 // lire un entier
-App::ReadIntegerResult
+App::ConsoleReadResult<int>
 App::readInteger(std::istream &in)
 {
     std::string input;
     std::getline(in, input);
 
-    ReadIntegerResult res;
+    ConsoleReadResult<int> res;
 
     try
     {
@@ -94,17 +240,27 @@ App::readInteger(std::istream &in)
     return res;
 }
 
-// centrer une chaine de caractères
-std::string
-App::util_stringCenter(std::string const &str, int targetSize)
+App::ConsoleReadResult<double>
+App::readFractional(std::istream &in)
 {
-    int padding = targetSize - str.length();
-    if (padding > 0)
+    std::string input;
+    std::getline(in, input);
+
+    ConsoleReadResult<double> res;
+
+    try
     {
-        int half = padding / 2;
-        return std::string(half, ' ') + str + std::string(padding - half, ' ');
+        const double value = std::stod(input);
+        res.value = value;
+        res.valid = true;
     }
-    return str;
+    catch (std::invalid_argument)
+    {
+        res.value = 0.0;
+        res.valid = false;
+    }
+
+    return res;
 }
 
 void App::banner(std::string text, bool thick, std::ostream &out)
@@ -113,7 +269,7 @@ void App::banner(std::string text, bool thick, std::ostream &out)
 
     if (thick)
         out << primaryBg << primaryFg << std::string(width, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
-    out << primaryBg << primaryFg << util_stringCenter(text, width) << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
+    out << primaryBg << primaryFg << text << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
 
     if (thick)
         out << primaryBg << primaryFg << std::string(width, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
@@ -126,6 +282,8 @@ void App::banner(std::string text, bool thick, std::ostream &out)
  */
 int App::menu(const std::string menuName, const std::vector<std::string> &entries, std::ostream &out)
 {
+    out << std::endl;
+    out << std::endl;
     banner(menuName, false, out);
     out << std::endl;
 
