@@ -6,6 +6,69 @@
 
 #include "App.hpp"
 
+// Définition des menus
+bool App::MenuPrincipal()
+{
+    this->banner("Bienvenue dans AirWatcher", true);
+    this->userbar("(anonyme)");
+    std::cout << std::endl;
+
+    // Tous les menus
+    const std::vector<std::string> menuPrincipal = {"Vos données…", "Analyse…", "Sources de données…", "Administration…", "Quitter AirWatcher"};
+
+    while (true)
+    {
+        const int choice = this->menu("Menu Principal", menuPrincipal);
+
+        switch (choice)
+        {
+        case App::InvalidMenuChoice:
+            std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+            return false;
+            break;
+
+        default:
+            std::cout << "Choix #" << choice << std::endl;
+            // return true;
+            break;
+        }
+    }
+    return true;
+}
+
+bool App::MenuContributeur()
+{
+    // const std::vector<std::string> menuVosDonnees = {"Votre score global", "Liste de vos données"};
+    return true;
+}
+
+bool App::MenuAnalyste()
+{
+    // const std::vector<std::string> menuAnalyse = {"Filtrage…", "Statistiques…"};
+    // const std::vector<std::string> menuAnalyseFiltrage = {"Définir une région d'analyse"};
+    // const std::vector<std::string> menuAnalyseStats = {"Choisir séries"};
+    // const std::vector<std::string> menuAnalyseStatsCalculsSolo = {"Moyenne", "Médian", "Écart-type"};
+    // const std::vector<std::string> menuAnalyseStatsCalculsMulti = {"Corrélation"};
+    return true;
+}
+
+bool App::MenuExpert()
+{
+    // const std::vector<std::string> menuSources = {"Liste des sources", "Qualité des données", "Données médiocres"};
+    return true;
+}
+
+bool App::MenuAdmin()
+{
+    // const std::vector<std::string> menuAdministration = {"Supprimer un utilisateur", "Modifier un utilisateur", "Réinit. un mot de passe"};
+    return true;
+}
+
+bool App::MenuSuperAdmin()
+{
+    return this->MenuAdmin();
+}
+
 // fonctions utilitaires
 // lire un entier
 App::ReadIntegerResult
@@ -61,7 +124,7 @@ void App::banner(std::string text, bool thick, std::ostream &out)
  * - renvoie un entier entre 0 et (N - 1) lorsque le choix est valide
  * - renvoie App::InvalidMenuChoice sinon
  */
-int App::menu(std::string menuName, std::vector<std::string> entries, std::ostream &out)
+int App::menu(const std::string menuName, const std::vector<std::string> &entries, std::ostream &out)
 {
     banner(menuName, false, out);
     out << std::endl;

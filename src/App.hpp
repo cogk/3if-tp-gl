@@ -73,14 +73,22 @@ private:
 
     std::string util_stringCenter(std::string const &str, int targetSize);
 
+    void banner(const std::string text, bool thick = false, std::ostream &out = std::cout);
+    int menu(const std::string menuName, const std::vector<std::string> &entries, std::ostream &out = std::cout);
+    void userbar(std::string username, std::ostream &out = std::cout);
+
 public:
     App();
     ~App();
 
-    ReadIntegerResult readInteger(std::istream &inputStream = std::cin);
-    void banner(std::string text, bool thick = false, std::ostream &out = std::cout);
-
     static const int InvalidMenuChoice = -1;
-    int menu(std::string menuName, std::vector<std::string> entries, std::ostream &out = std::cout);
-    void userbar(std::string username, std::ostream &out = std::cout);
+
+    bool MenuPrincipal();
+    bool MenuContributeur();
+    bool MenuExpert();
+    bool MenuAnalyste();
+    bool MenuAdmin();
+    bool MenuSuperAdmin();
+
+    static ReadIntegerResult readInteger(std::istream &inputStream = std::cin);
 };
