@@ -4,7 +4,7 @@
 
 #include "ServiceContributeur.h"
 
-bool ServiceContributeur::envoyerDonnees() {
+bool ServiceContributeur::envoyerDonnees(Mesure donnees) {
 
     return true;
 }

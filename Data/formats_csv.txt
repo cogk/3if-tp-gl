@@ -1,0 +1,29 @@
+----- Formats des entrées des fichiers csv -----
+
+Attributes :
+AttributeID;Unit;Description;
+
+Cleaners :
+CleanerID;longitude;latitude;timestamp1;timestamp2; ?
+-> déduit de :
+Cleaner0;45.333333;1.333333;;2019-02-01 12:00:00;2019-03-01 00:00:00;
+
+Measurements :
+timestamp;SensorID;AttributeID;Value;
+-> déduit de :
+2019-01-01 12:00:00;Sensor0;O3;63.5;
+
+Providers :
+ProviderID;CleanerID;
+-> déduit de :
+Provider0;Cleaner0;
+
+Sensors :
+SensorID;longitude;latitude;
+-> déduit de :
+Sensor0;44;-1;
+
+Users :
+UserID;SensorID;
+-> déduit de :
+User0;Sensor70;

@@ -5,11 +5,12 @@
 #ifndef INC_3IF_GL_TP_SERVICECONTRIBUTEUR_H
 #define INC_3IF_GL_TP_SERVICECONTRIBUTEUR_H
 
+#include "../Metier/Mesure.h"
 
 class ServiceContributeur {
 
-//public:
-//    bool envoyerDonnees();
+public:
+    bool envoyerDonnees(Mesure donnees);
 };
 
 
