@@ -41,12 +41,12 @@
 #define ANSI_BG_GRAY "["
 #define ANSI_BG_BLUE "["
 #define ANSI_BG_GREEN "["
-#define ANSI_BG_CYAN "["
+#define ANSI_BG_CYAN "* "
 #define ANSI_BG_RED "["
 #define ANSI_BG_PURPLE "["
-#define ANSI_BG_YELLOW "["
+#define ANSI_BG_YELLOW "| "
 #define ANSI_BG_WHITE "["
-#define ANSI_BG_RESET "]"
+#define ANSI_BG_RESET " "
 
 #define ANSI_BOLD_ON ""
 #define ANSI_BOLD_OFF ""
@@ -59,19 +59,18 @@
 class App
 {
 private:
-    int maxWidth = 32;
+    int maxWidth = 28;
 
     const std::string primaryBg = ANSI_BG_YELLOW;
     const std::string secondaryBg = ANSI_BG_CYAN;
     const std::string primaryFg = ANSI_FG_BLACK;
 
-    struct ReadIntegerResult
+    template <typename T>
+    struct ConsoleReadResult
     {
-        int value;
+        T value;
         bool valid;
     };
-
-    std::string util_stringCenter(std::string const &str, int targetSize);
 
     void banner(const std::string text, bool thick = false, std::ostream &out = std::cout);
     int menu(const std::string menuName, const std::vector<std::string> &entries, std::ostream &out = std::cout);
@@ -90,5 +89,6 @@ public:
     bool MenuAdmin();
     bool MenuSuperAdmin();
 
-    static ReadIntegerResult readInteger(std::istream &inputStream = std::cin);
+    static ConsoleReadResult<int> readInteger(std::istream &inputStream = std::cin);
+    static ConsoleReadResult<double> readFractional(std::istream &inputStream = std::cin);
 };
