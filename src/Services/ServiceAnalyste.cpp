@@ -3,3 +3,7 @@
 //
 
 #include "ServiceAnalyste.h"
+
+/*Map<Type, Double> ServiceAnalyste::agregerDonnees(Coordonnees centre, double rayon, date debut, date fin){
+
+}*/

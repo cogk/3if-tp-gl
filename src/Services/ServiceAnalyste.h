@@ -9,9 +9,8 @@
 
 class ServiceAnalyste {
 
-    public:
-       Map<Type, Double> agregerDonnees(Coordonnees centre, double rayon, date début, date fin);
-
+/*    public:
+       Map<Type, Double> agregerDonnees(Coordonnees centre, double rayon, date debut, date fin);*/
 
 };
 
