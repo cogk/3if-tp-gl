@@ -18,11 +18,13 @@
 class MesureDAO {
 
 public:
-    MesureDAO();
+    // TODO ref pas ref ?
+    MesureDAO(string filePath);
 
-    // TODO peut-être changer time_t en classe qui l'encapsule pour avoir le bon format en string
+    ~MesureDAO();
 
-    bool add(Mesure mesure);
+    // TODO passer en static ?
+    bool add(const Mesure& mesure);
 
     vector<Mesure> list(Capteur, Coordonnees, Type, time_t, time_t);
 
@@ -31,6 +33,7 @@ public:
 private:
 
     vector<Mesure> objetsRencontres;
+    string path;
 
 };
 

@@ -6,7 +6,17 @@
 
 int main() {
 
-    Mesure mes();
+    time_t timestamp = time(nullptr);   // marche bien
+
+    Coordonnees coord(42.0, 42.0);
+    Capteur capteur("capteurTest", "un test", coord);
+    Type type("typeTest", "°C", "temperature test");
+    Mesure mes(42.0, timestamp, "mesure test", capteur, type);
+
+    // somehow
+    MesureDAO dao("../Data/test.csv");
+
+    dao.add(mes);
 
     return 0;
 }

@@ -4,22 +4,30 @@
 
 #include "MesureDAO.h"
 
-MesureDAO::MesureDAO(){}
+#include <utility>
+#include <ctime>
 
-bool MesureDAO::add(Mesure mesure) {
+MesureDAO::MesureDAO(string filePath){
+    this->path = std::move(filePath);   // askip c'est mieux
+}
 
-    // format csv : timestamp;SensorID;AttributeID;Value;
+bool MesureDAO::add(const Mesure& mesure) {
+
+//    const char * formatTimestamp("%F%T");  // pas supporté on dirait -> rip
+    const char * formatTimestamp("%Y-%m-%d %H:%M:%S");
+
+    // formatTimestamp csv : timestamp;SensorID;AttributeID;Value;
     vector<string> ligne;
     stringstream ss;
 
     // timestamp
     time_t rawtime = mesure.getDate();
     struct tm * timeinfo;
-    char buffer [80];
+    char buffer [200];
     timeinfo = localtime (&rawtime);
 
-    strftime (buffer, 80, "%F %T", timeinfo);
-    std::cerr << "Timestamp ajouté : " << buffer;    // debug
+    strftime (buffer, 200, formatTimestamp, timeinfo);
+//    std::cerr << "Timestamp ajouté : " << buffer << std::endl;    // debug
 
     ss << buffer;
     ligne.push_back(ss.str());
@@ -33,16 +41,21 @@ bool MesureDAO::add(Mesure mesure) {
     // value
     ligne.push_back(to_string(mesure.getValeur()));
 
-    CSVParser parser ("Data/measurements.csv");
+    CSVParser parser (path);
     return parser.add(ligne);
 
 }
 
 vector<Mesure> MesureDAO::list(Capteur, Coordonnees, Type, time_t, time_t) {
-    return nullptr;
+    // TODO
+    return vector<Mesure>();
 }
 
 void MesureDAO::clean() {
+    // TODO
+}
+
+MesureDAO::~MesureDAO() {
 
 }
 

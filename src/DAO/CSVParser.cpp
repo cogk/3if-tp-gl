@@ -72,6 +72,8 @@ bool CSVParser::add(vector<string> line) {
         bool state = csvFile.good();
         csvFile.close();
         return state;
+    }else{
+        cout << "Oupsi" << endl;
     }
 
     return false;
