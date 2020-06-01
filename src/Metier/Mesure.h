@@ -36,45 +36,25 @@ class Mesure
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    double getValeur() const {
-        return valeur;
-    }
+    double getValeur() const;
 
-    void setValeur(double valeur) {
-        Mesure::valeur = valeur;
-    }
+    void setValeur(double valeur);
 
-    time_t getDate() const {
-        return date;
-    }
+    time_t getDate() const;
 
-    void setDate(time_t date) {
-        Mesure::date = date;
-    }
+    void setDate(time_t date);
 
-    const string &getDescription() const {
-        return description;
-    }
+    const string &getDescription() const;
 
-    void setDescription(const string &description) {
-        Mesure::description = description;
-    }
+    void setDescription(const string &description);
 
-    const Capteur &getCapteur() const {
-        return capteur;
-    }
+    const Capteur &getCapteur() const;
 
-    void setCapteur(const Capteur &capteur) {
-        Mesure::capteur = capteur;
-    }
+    void setCapteur(const Capteur &capteur);
 
-    const Type &getType() const {
-        return type;
-    }
+    const Type &getType() const;
 
-    void setType(const Type &type) {
-        Mesure::type = type;
-    }
+    void setType(const Type &type);
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -84,8 +64,7 @@ public:
     // Contrat :
     //
 
-    Mesure(double valeur, time_t date, const string &description, const Capteur &capteur, const Type &type) : valeur(
-            valeur), date(date), description(description), capteur(capteur), type(type) {}
+    Mesure(double valeur, time_t date, const string &description, const Capteur &capteur, const Type &type);
     // Mode d'emploi :
     //
     // Contrat :

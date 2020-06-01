@@ -32,21 +32,13 @@ class Coordonnees
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    double getLattitude() const {
-        return lattitude;
-    }
+    double getLattitude() const;
 
-    void setLattitude(double lattitude) {
-        Coordonnees::lattitude = lattitude;
-    }
+    void setLattitude(double lattitude);
 
-    double getLongitude() const {
-        return longitude;
-    }
+    double getLongitude() const;
 
-    void setLongitude(double longitude) {
-        Coordonnees::longitude = longitude;
-    }
+    void setLongitude(double longitude);
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -56,7 +48,7 @@ public:
     // Contrat :
     //
 
-    Coordonnees(double lattitude, double longitude) : lattitude(lattitude), longitude(longitude) {}
+    Coordonnees(double lattitude, double longitude);
     // Mode d'emploi :
     //
     // Contrat :

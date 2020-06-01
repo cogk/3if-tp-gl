@@ -34,29 +34,18 @@ class Capteur
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const string &getSensorId() const {
-        return sensorID;
-    }
+    const string &getSensorId() const;
 
-    void setSensorId(const string &sensorId) {
-        sensorID = sensorId;
-    }
+    void setSensorId(const string &sensorId);
 
-    const string &getDescription() const {
-        return description;
-    }
+    const string &getDescription() const;
 
-    void setDescription(const string &description) {
-        Capteur::description = description;
-    }
+    void setDescription(const string &description);
 
-    const Coordonnees &getCoordonnees() const {
-        return coordonnees;
-    }
+    const Coordonnees &getCoordonnees() const;
 
-    void setCoordonnees(const Coordonnees &coordonnees) {
-        Capteur::coordonnees = coordonnees;
-    }
+    void setCoordonnees(const Coordonnees &coordonnees);
+
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -66,11 +55,7 @@ public:
     // Contrat :
     //
 
-    Capteur(const string &sensorId, const string &description, const Coordonnees &coordonnees) : sensorID(sensorId),
-                                                                                                 description(
-                                                                                                         description),
-                                                                                                 coordonnees(
-                                                                                                         coordonnees) {}
+    Capteur(const string &sensorId, const string &description, const Coordonnees &coordonnees);
     // Mode d'emploi :
     //
     // Contrat :

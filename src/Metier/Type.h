@@ -32,29 +32,17 @@ class Type
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const string &getAttributeId() const {
-        return attributeID;
-    }
+    const string &getAttributeId() const;
 
-    void setAttributeId(const string &attributeId) {
-        attributeID = attributeId;
-    }
+    void setAttributeId(const string &attributeId);
 
-    const string &getUnite() const {
-        return unite;
-    }
+    const string &getUnite() const;
 
-    void setUnite(const string &unite) {
-        Type::unite = unite;
-    }
+    void setUnite(const string &unite);
 
-    const string &getDescription() const {
-        return description;
-    }
+    const string &getDescription() const;
 
-    void setDescription(const string &description) {
-        Type::description = description;
-    }
+    void setDescription(const string &description);
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -64,9 +52,7 @@ public:
     // Contrat :
     //
 
-    Type(const string &attributeId, const string &unite, const string &description) : attributeID(attributeId),
-                                                                                      unite(unite),
-                                                                                      description(description) {}
+    Type(const string &attributeId, const string &unite, const string &description);
     // Mode d'emploi :
     //
     // Contrat :
