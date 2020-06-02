@@ -32,6 +32,8 @@ class Type
 public:
 //----------------------------------------------------- Méthodes publiques
 
+    friend  bool operator<(const Type& t1, const Type& t2);
+
     const string &getAttributeId() const;
 
     void setAttributeId(const string &attributeId);
@@ -43,6 +45,8 @@ public:
     const string &getDescription() const;
 
     void setDescription(const string &description);
+
+    bool operator<(const Type& type);
 
 //-------------------------------------------- Constructeurs - destructeur
 

@@ -6,6 +6,7 @@
 #define INC_3IF_GL_TP_SERVICECONTRIBUTEUR_H
 
 #include "../Metier/Mesure.h"
+#include "../Metier/Type.h"
 
 class ServiceContributeur {
 

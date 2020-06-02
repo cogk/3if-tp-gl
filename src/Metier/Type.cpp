@@ -75,7 +75,16 @@ Type::~Type ( )
 #ifdef MAP
     cout << "Appel au destructeur de <Type>" << endl;
 #endif
-} //----- Fin de ~Type
+}
+
+bool Type::operator<(const Type &type) {
+    return (attributeID < type.getAttributeId());
+}
+
+bool operator<(const Type &t1, const Type &t2) {
+    return t1.getAttributeId() < t2.getAttributeId();
+}
+//----- Fin de ~Type
 
 
 //------------------------------------------------------------------ PRIVE

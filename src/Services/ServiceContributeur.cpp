@@ -9,7 +9,7 @@ const string cheminMesuresCSV = "../../Data/test.csv";
 
 bool ServiceContributeur::envoyerDonnees(const Mesure& donnees) {
 
-    MesureDAO dao(cheminMesuresCSV);
+    MesureDAO dao;
     return dao.add(donnees);
 
 }

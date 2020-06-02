@@ -5,8 +5,8 @@ set(CMAKE_CXX_STANDARD 11)
 
 # Crée des variables avec les fichiers à compiler
 set(SRCS src/main.cpp src/App.cpp)
-set(Metier src/Metier/Utilisateur.h src/Metier/SuperAdministrateur.h src/Metier/Administrateur.h src/Metier/Analyste.h src/Metier/Expert.h src/Metier/Contributeur.h src/Metier/Capteur.h src/Metier/Mesure.h src/Metier/Type.h src/Metier/Coordonnees.h src/Metier/Purificateur.h src/Metier/Organisation.h src/Metier/Agence.h src/Metier/Entreprise.h)
-set(Services src/Services/ServiceContributeur.cpp src/Services/ServiceContributeur.h src/Services/ServiceAnalyste.cpp src/Services/ServiceAnalyste.h)
+set(Metier src/Metier/Utilisateur.cpp src/Metier/SuperAdministrateur.cpp src/Metier/Administrateur.cpp src/Metier/Analyste.cpp src/Metier/Expert.cpp src/Metier/Contributeur.cpp src/Metier/Capteur.cpp src/Metier/Mesure.cpp src/Metier/Type.cpp src/Metier/Coordonnees.cpp src/Metier/Purificateur.cpp src/Metier/Organisation.cpp src/Metier/Agence.cpp src/Metier/Entreprise.cpp)
+set(Services src/Services/ServiceContributeur.cpp src/Services/ServiceAnalyste.cpp)
 set(DAO src/DAO/MesureDAO.cpp src/DAO/MesureDAO.h)
 
 set(test src/test.cpp src/DAO/MesureDAO.cpp src/DAO/CSVParser.cpp src/Metier/Mesure.h src/Metier/Mesure.cpp src/Metier/Coordonnees.cpp src/Metier/Capteur.cpp src/Metier/Type.cpp src/Metier/Administrateur.cpp src/Metier/Agence.cpp src/Metier/Organisation.cpp src/Metier/Utilisateur.cpp src/Metier/Analyste.cpp src/Metier/Contributeur.cpp src/Metier/Entreprise.cpp src/Metier/Expert.cpp src/Metier/SuperAdministrateur.cpp src/Metier/Purificateur.cpp)
