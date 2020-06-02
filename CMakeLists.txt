@@ -9,7 +9,7 @@ set(Metier src/Metier/Utilisateur.h src/Metier/SuperAdministrateur.h src/Metier/
 set(Services src/Services/ServiceContributeur.cpp src/Services/ServiceContributeur.h src/Services/ServiceAnalyste.cpp src/Services/ServiceAnalyste.h)
 set(DAO src/DAO/MesureDAO.cpp src/DAO/MesureDAO.h)
 
-set(test src/test.cpp src/DAO/MesureDAO.cpp src/DAO/CSVParser.cpp src/Metier/Mesure.h src/Metier/Mesure.cpp src/Metier/Coordonnees.cpp src/Metier/Capteur.cpp src/Metier/Type.cpp src/Metier/Administrateur.cpp src/Metier/Agence.cpp src/Metier/Organisation.cpp src/Metier/Utilisateur.cpp)
+set(test src/test.cpp src/DAO/MesureDAO.cpp src/DAO/CSVParser.cpp src/Metier/Mesure.h src/Metier/Mesure.cpp src/Metier/Coordonnees.cpp src/Metier/Capteur.cpp src/Metier/Type.cpp src/Metier/Administrateur.cpp src/Metier/Agence.cpp src/Metier/Organisation.cpp src/Metier/Utilisateur.cpp src/Metier/Analyste.cpp src/Metier/Contributeur.cpp src/Metier/Entreprise.cpp src/Metier/Expert.cpp src/Metier/SuperAdministrateur.cpp src/Metier/Purificateur.cpp)
 
 # Notre exécutable
 add_executable(main ${SRCS} ${DAO} ${Services} ${Metier})
