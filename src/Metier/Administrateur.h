@@ -37,16 +37,19 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Administrateur() {}
+    Administrateur();
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Administrateur(const string &identifiant, const string &motDePasse, const string &email) : Utilisateur(identifiant,
-                                                                                                     motDePasse, email) {}
+    Administrateur(const string &identifiant, const string &motDePasse, const string &email);
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
-    virtual ~Administrateur() {}
+    virtual ~Administrateur();
     // Mode d'emploi :
     //
     // Contrat :

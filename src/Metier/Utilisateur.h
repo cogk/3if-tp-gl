@@ -32,29 +32,17 @@ class Utilisateur
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const string &getIdentifiant() const {
-        return identifiant;
-    }
+    const string &getIdentifiant() const;
 
-    void setIdentifiant(const string &identifiant) {
-        Utilisateur::identifiant = identifiant;
-    }
+    void setIdentifiant(const string &identifiant);
 
-    const string &getMotDePasse() const {
-        return motDePasse;
-    }
+    const string &getMotDePasse() const;
 
-    void setMotDePasse(const string &motDePasse) {
-        Utilisateur::motDePasse = motDePasse;
-    }
+    void setMotDePasse(const string &motDePasse);
 
-    const string &getEmail() const {
-        return email;
-    }
+    const string &getEmail() const;
 
-    void setEmail(const string &email) {
-        Utilisateur::email = email;
-    }
+    void setEmail(const string &email);
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -64,9 +52,7 @@ public:
     // Contrat :
     //
 
-    Utilisateur(const string &identifiant, const string &motDePasse, const string &email) : identifiant(identifiant),
-                                                                                            motDePasse(motDePasse),
-                                                                                            email(email) {}
+    Utilisateur(const string &identifiant, const string &motDePasse, const string &email);
     // Mode d'emploi :
     //
     // Contrat :

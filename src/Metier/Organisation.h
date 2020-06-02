@@ -35,21 +35,13 @@ class Organisation
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const string &getNom() const {
-        return nom;
-    }
+    const string &getNom() const;
 
-    void setNom(const string &nom) {
-        Organisation::nom = nom;
-    }
+    void setNom(const string &nom);
 
-    const vector<Administrateur> &getAdministrateur() const {
-        return administrateur;
-    }
+    const vector<Administrateur> &getAdministrateur() const;
 
-    void setAdministrateur(const vector<Administrateur> &administrateur) {
-        Organisation::administrateur = administrateur;
-    }
+    void setAdministrateur(const vector<Administrateur> &administrateur);
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -60,14 +52,13 @@ public:
     //
 
 
-    Organisation(const string &nom) : nom(nom) {}
+    Organisation(const string &nom);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Organisation(const string &nom, const vector<Administrateur> &administrateur) : nom(nom),
-                                                                                    administrateur(administrateur) {}
+    Organisation(const string &nom, const vector<Administrateur> &administrateur);
     // Mode d'emploi :
     //
     // Contrat :
