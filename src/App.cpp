@@ -2,19 +2,25 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <time.h>
 #include <vector>
 
-#include "App.hpp"
+#include "App.h"
+#include "Metier/Capteur.h"
+#include "Metier/Coordonnees.h"
+#include "Metier/Mesure.h"
+#include "Metier/Type.h"
+#include "Services/ServiceContributeur.h"
 
 // Définition des menus
 bool App::MenuPrincipal()
 {
-    this->banner("Bienvenue dans AirWatcher", true);
+    this->banner("Bienvenue dans AirWatcher");
     this->userbar("(anonyme)");
 
     // Tous les menus
     const std::vector<std::string>
-        menuPrincipal = {"Vos données…", "Analyse…", "Sources de données…", "Administration…", "Super Admin…", "Quitter AirWatcher"};
+        menuPrincipal = {"Contribution…", "Analyse…", "Sources de données…", "Administration…", "Super Admin…", "Quitter AirWatcher"};
 
     while (true)
     {
@@ -49,50 +55,24 @@ bool App::MenuPrincipal()
 
 bool App::MenuContributeur()
 {
-    const std::vector<std::string> menuVosDonnees = {"Votre score global", "Liste de vos données", "Retour au menu principal"};
+    const std::vector<std::string> menuVosDonnees = {"Entrer de nouvelles données", "Votre score global", "Liste de vos données", "Retour au menu principal"};
     const int choice = this->menu("Menu - Vos données", menuVosDonnees);
     switch (choice)
     {
     case 0:
-        std::cout << "> Pas implémenté" << std::endl;
-        break;
-    case 1:
-        std::cout << "> Pas implémenté" << std::endl;
-        break;
-    case 2:
-        return true;
-        break;
-    default:
-        std::cout << "Vous n'avez pas choisi de menu." << std::endl;
-        return false;
-    }
-    return true;
-}
-
-bool App::MenuAnalyste()
-{
-    const std::vector<std::string> menuAnalyse = {"Filtrage spatial…", "Filtrage temporel…", "Statistiques…"};
-    // const std::vector<std::string> menuAnalyseFiltrage = {"Définir une région d'analyse"};
-    // const std::vector<std::string> menuAnalyseStats = {"Choisir séries"};
-    // const std::vector<std::string> menuAnalyseStatsCalculsSolo = {"Moyenne", "Médian", "Écart-type"};
-    // const std::vector<std::string> menuAnalyseStatsCalculsMulti = {"Corrélation"};
-    const int choice = this->menu("Menu - Sources de données", menuAnalyse);
-    switch (choice)
     {
-    case 0:
-    {
-        App::banner("Définir une région d'analyse");
-        std::cout << "Forme de la région d'analyse : CERCLE" << std::endl;
+        App::banner("Ajouter une nouvelle entrée");
 
-        std::cout << "* Rayon du cercle (en mètres) : ";
-        const auto resR = App::readFractional();
-        if (!resR.valid || resR.value < 0)
+        std::string sensorId;
+        std::cout << "* Nom du capteur : ";
+        std::getline(std::cin, sensorId);
+        if (sensorId.size() == 0)
         {
             std::cout << "Valeur invalide." << std::endl;
             return false;
         }
 
-        std::cout << "* Centre du cercle" << std::endl;
+        std::cout << "* Coordonnées capteur" << std::endl;
         std::cout << "   - latitude : ";
         const auto resLat = App::readFractional();
         if (!resLat.valid || resLat.value < 0)
@@ -109,53 +89,171 @@ bool App::MenuAnalyste()
             return false;
         }
 
-        std::cout << std::endl;
+        std::cout << "* Valeur mesurée : ";
+        const auto resVal = App::readFractional();
+        if (!resVal.valid || resVal.value < 0)
+        {
+            std::cout << "Valeur invalide." << std::endl;
+            return false;
+        }
 
-        const double R = resR.value;
-        const double lat = resLat.value;
-        const double lon = resLon.value;
+        time_t timestamp = time(nullptr);
+        Coordonnees coords(resLat.value, resLon.value);
+        Capteur capteur(sensorId, "description capteur", coords);
+        Type type("machin", "unité", "description unité");
+        Mesure mes(resVal.value, timestamp, "mesure test", capteur, type);
 
-        std::cout << "Cercle(R=" << R << ", lat=" << lat << ", lon=" << lon << ")" << std::endl;
+        ServiceContributeur::envoyerDonnees(mes);
 
         break;
     }
     case 1:
-        App::banner("Définir une période d'analyse :");
         std::cout << "> Pas implémenté" << std::endl;
         break;
     case 2:
-    {
-        // App::banner("Choisir les séries à analyser :");
-        App::banner("Choisir la série à analyser :");
-
-        std::vector<std::string> series = {"Blabla", "Machin", "Truc"};
-        const int N = series.size();
-        for (int i = 0; i < N; i++)
-        {
-            const auto serie = series[i];
-            std::cout << std::setw(4) << i << ". " << serie << std::endl;
-        }
-        std::cout << std::endl;
-
-        std::cout << "Série : ";
-        const auto res = App::readInteger();
-        const bool valid = (res.valid && res.value >= 0 && res.value < N);
-        if (!valid)
-        {
-            return false;
-        }
-
-        // poursuivre avec le choix de l'analyse
-
         std::cout << "> Pas implémenté" << std::endl;
         break;
-    }
     case 3:
         return true;
         break;
     default:
         std::cout << "Vous n'avez pas choisi de menu." << std::endl;
         return false;
+    }
+    return true;
+}
+
+bool App::MenuAnalyste()
+{
+    const std::vector<std::string> menuAnalyse = {"Filtrage géographique…", "Filtrage temporel…", "Statistiques…"};
+    // const std::vector<std::string> menuAnalyseStatsCalculsSolo = {"Moyenne", "Médian", "Écart-type"};
+
+    bool filtre_geographique = false;
+    double filtre_rayon = 0.0;
+    Coordonnees filtre_centre = Coordonnees(0.0, 0.0);
+
+    bool filtre_temporel = false;
+    std::time_t filtre_debut;
+    std::time_t filtre_fin;
+
+    while (true)
+    {
+        if (filtre_geographique)
+        {
+            std::cout << ">> Filtre géographique : "
+                      << "Cercle de rayon " << filtre_rayon << " et de centre (" << filtre_centre.getLattitude() << ", " << filtre_centre.getLongitude() << ")"
+                      << std::endl;
+        }
+        if (filtre_temporel)
+        {
+            char *buffer_debut;
+            char *buffer_fin;
+            const char *formatTimestamp("%d/%m/%Y");
+            strftime(buffer_debut, 200, formatTimestamp, localtime(&filtre_debut));
+            strftime(buffer_fin, 200, formatTimestamp, localtime(&filtre_fin));
+
+            std::cout << ">> Filtre temporel : "
+                      << "Période du " << buffer_debut << " au " << buffer_fin
+                      << std::endl;
+        }
+
+        const int choice = this->menu("Menu - Sources de données", menuAnalyse);
+
+        switch (choice)
+        {
+        case 0:
+        {
+            App::banner("Définir une région d'analyse");
+            std::cout << "Forme de la région d'analyse : CERCLE" << std::endl;
+
+            std::cout << "* Rayon du cercle (en mètres) : ";
+            const auto resR = App::readFractional();
+            if (!resR.valid || resR.value < 0)
+            {
+                std::cout << "Valeur invalide." << std::endl;
+                return false;
+            }
+
+            std::cout << "* Centre du cercle" << std::endl;
+            std::cout << "   - latitude : ";
+            const auto resLat = App::readFractional();
+            if (!resLat.valid || resLat.value < 0)
+            {
+                std::cout << "Valeur invalide." << std::endl;
+                return false;
+            }
+
+            std::cout << "   - longitude : ";
+            const auto resLon = App::readFractional();
+            if (!resLon.valid || resLon.value < 0)
+            {
+                std::cout << "Valeur invalide." << std::endl;
+                return false;
+            }
+
+            std::cout << std::endl;
+
+            filtre_geographique = true;
+            filtre_rayon = resR.value;
+            filtre_centre = Coordonnees(resLat.value, resLon.value);
+            break;
+        }
+        case 1:
+        {
+            App::banner("Définir une période d'analyse");
+            std::cout << "Date de début (jour/mois/année) : ";
+            const auto debut = App::readDate();
+            if (!debut.valid)
+            {
+                std::cout << "Valeur invalide." << std::endl;
+                return false;
+            }
+
+            std::cout << "Date de fin   (jour/mois/année) : ";
+            const auto fin = App::readDate();
+            if (!fin.valid)
+            {
+                std::cout << "Valeur invalide." << std::endl;
+                return false;
+            }
+
+            std::cout << "PAS IMPLÉMENTÉ OUIN OUIN" << std::endl;
+            break;
+        }
+        case 2:
+        {
+            // App::banner("Choisir les séries à analyser :");
+            App::banner("Choisir la série à analyser :");
+
+            std::vector<std::string> series = {"Blabla", "Machin", "Truc"};
+            const int N = series.size();
+            for (int i = 0; i < N; i++)
+            {
+                const auto serie = series[i];
+                std::cout << std::setw(4) << i << ". " << serie << std::endl;
+            }
+            std::cout << std::endl;
+
+            std::cout << "Série : ";
+            const auto res = App::readInteger();
+            const bool valid = (res.valid && res.value >= 0 && res.value < N);
+            if (!valid)
+            {
+                return false;
+            }
+
+            // poursuivre avec le choix de l'analyse
+
+            std::cout << "> Pas implémenté" << std::endl;
+            break;
+        }
+        case 3:
+            return true;
+            break;
+        default:
+            std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+            return false;
+        }
     }
     return true;
 }
@@ -263,6 +361,28 @@ App::readFractional(std::istream &in)
     return res;
 }
 
+App::ConsoleReadResult<std::time_t>
+App::readDate(std::istream &in)
+{
+    ConsoleReadResult<std::time_t> res;
+
+    try
+    {
+        struct std::tm tm;
+        in >> std::get_time(&tm, "%d/%m/%Y");
+        std::time_t time = mktime(&tm);
+        res.value = time;
+        res.valid = true;
+    }
+    catch (std::invalid_argument)
+    {
+        res.value = 0;
+        res.valid = false;
+    }
+
+    return res;
+}
+
 void App::banner(std::string text, bool thick, std::ostream &out)
 {
     const int width = maxWidth;
@@ -282,8 +402,8 @@ void App::banner(std::string text, bool thick, std::ostream &out)
  */
 int App::menu(const std::string menuName, const std::vector<std::string> &entries, std::ostream &out)
 {
-    out << std::endl;
-    out << std::endl;
+    // out << std::endl;
+    // out << std::endl;
     banner(menuName, false, out);
     out << std::endl;
 
@@ -317,7 +437,7 @@ void App::userbar(std::string username, std::ostream &out)
 {
     const int width = maxWidth;
 
-    const std::string preamble = "   Utilisateur: ";
+    const std::string preamble = "Utilisateur: ";
     int space = width - username.length() - preamble.length();
     if (space < 0)
     {
