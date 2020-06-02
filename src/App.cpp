@@ -228,7 +228,7 @@ bool App::MenuAnalyste()
         case 2:
         {
             // App::banner("Choisir les séries à analyser :");
-            App::banner("Choisir la série à analyser :");
+            App::banner("Choisir le type de mesure à analyser :");
 
             std::vector<std::string> series = {"Blabla", "Machin", "Truc"};
             const int N = series.size();
