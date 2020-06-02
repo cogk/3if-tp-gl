@@ -19,22 +19,21 @@ class MesureDAO {
 
 public:
     // TODO ref pas ref ?
-    MesureDAO(string filePath);
+    MesureDAO();
 
     ~MesureDAO();
 
     // TODO passer en static ?
     bool add(const Mesure& mesure);
 
-    vector<Mesure> list(Coordonnees, double, time_t, time_t);
+    vector<Mesure*>* list(Coordonnees, double, time_t, time_t);
 
     void clean();
 
 private:
-    vector<Mesure*>* objetsRencontres;
-
     static const string mesurePath;
     static const string capteurPath;
+    static const string typePath;
 };
 
 

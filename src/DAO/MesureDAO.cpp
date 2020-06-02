@@ -7,13 +7,15 @@
 #include <utility>
 #include <ctime>
 #include <map>
+#include <math.h>
+#include <iomanip>
+#include <sstream>
 
 const string MesureDAO::mesurePath = "Data/measurements.csv";
 const string MesureDAO::capteurPath = "Data/sensors.csv";
+const string MesureDAO::typePath = "Data/attributes.csv";
 
-MesureDAO::MesureDAO(string filePath){
-    this->path = std::move(filePath);   // askip c'est mieux
-}
+MesureDAO::MesureDAO() {}
 
 bool MesureDAO::add(const Mesure& mesure) {
 
@@ -45,35 +47,103 @@ bool MesureDAO::add(const Mesure& mesure) {
     // value
     ligne.push_back(to_string(mesure.getValeur()));
 
-    CSVParser parser (path);
+    CSVParser parser (mesurePath);
     return parser.add(ligne);
 
 }
 
-vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin) {
-    CSVParser parser(mesurePath);
-    map<int, string> params;
-    vector<vector<string*>*>* mesures = parser.read(params);
+double distanceGPS(Coordonnees coo1, Coordonnees coo2)
+{
+    double lon1 = coo1.getLongitude(), lat1 = coo1.getLattitude();
+    double lon2 = coo2.getLongitude(), lat2 = coo2.getLattitude();
 
+    // https://www.movable-type.co.uk/scripts/latlong.html
+    const double PI = M_PI;
+
+    // calcul distance entre deux points GPS
+    const double R = 6371e3; // rayon de la Terre en mètres
+
+    const double p1 = lat1 * PI / 180; // angles en (radians)
+    const double p2 = lat2 * PI / 180;
+    const double dp = (lat2 - lat1) * PI / 180;
+    const double dl = (lon2 - lon1) * PI / 180;
+
+    const double a = sin(dp / 2) * sin(dp / 2) + cos(p1) * cos(p2) * sin(dl / 2) * sin(dl / 2);
+    const double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    const double d = R * c; // distance en mètres
+
+    return d;
+}
+
+vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin) {
+    CSVParser parserMesure(mesurePath);
+    CSVParser parserCapteur(mesurePath);
+    CSVParser parserType(typePath);
+
+    // Récupération des mesures
+    map<int, string> params;
+    vector<vector<string*>*>* mesures = parserMesure.read(params);
+
+    vector<Mesure*>* retour = new vector<Mesure*>();
+
+    // Tri des mesures
     for (vector<string*>* line : *mesures) {
-        string &date = *line->at(0);
+        string &dateStr = *line->at(0);
         string &nomCapteur = *line->at(1);
         string &nomType = *line->at(2);
         string &valeur = *line->at(3);
 
+        // Récupération du capteur
         map<int, string> paramsCapteur;
         paramsCapteur.insert(pair<int, string>(0, nomCapteur));
-        vector<vector<string*>*>* capteurCsv = parser.read(paramsCapteur);
+        vector<vector<string*>*>* capteurCsv = parserMesure.read(paramsCapteur);
         auto capteurCsvLine = capteurCsv->at(0);
+        Coordonnees coos(stod(*capteurCsvLine->at(1)), stod(*capteurCsvLine->at(2)));
+        Capteur capteur(*capteurCsvLine->at(0), "", coos);
 
+        // Nettoyage mémoire
+        for (vector<string*>* vec : *capteurCsv) {
+            for (string* str : *vec) {
+                delete str;
+            }
+            delete vec;
+        }
+        delete capteurCsv;
+
+        // récupération du type
         map<int, string> paramsType;
         paramsCapteur.insert(pair<int, string>(0, nomType));
-        vector<vector<string*>*>* type = parser.read(paramsCapteur);
+        vector<vector<string*>*>* typeCsv = parserMesure.read(paramsCapteur);
+        auto typeCsvLine = typeCsv->at(0);
+        Type type(*typeCsvLine->at(0), *typeCsvLine->at(1), *typeCsvLine->at(2));
 
+        // Nettoyage mémoire
+        for (vector<string*>* vec : *typeCsv) {
+            for (string* str : *vec) {
+                delete str;
+            }
+            delete vec;
+        }
+        delete typeCsv;
 
+        // Vérification de la mesure
+        tm tm{};
+        istringstream str_stream(dateStr);
+        str_stream >> get_time(&tm, "%Y-%m-%d %T");
+        time_t date = mktime(&tm);
+        if (debut < date && date < fin && distanceGPS(centre, capteur.getCoordonnees()) <= rayon) {
+            Mesure *mesure = new Mesure(stod(valeur), date, "", capteur, type);
+            retour->push_back(mesure);
+        }
+
+        // Nettoyage mémoire
+        for (string *str : *line) {
+            delete str;
+        }
+        delete line;
     }
 
-    return vector<Mesure>();
+    return retour;
 }
 
 void MesureDAO::clean() {
