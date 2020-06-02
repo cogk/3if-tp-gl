@@ -6,13 +6,15 @@
 #define INC_3IF_GL_TP_SERVICEANALYSTE_H
 
 #include <map>
+#include <list>
+#include <numeric>
 #include "../Metier/Coordonnees.h"
 #include "../Metier/Type.h"
 
 class ServiceAnalyste {
 
 public:
-    map<Type, double> agregerDonnees(Coordonnees centre, double rayon, time_t debut, time_t fin);
+    static map<Type, double>* agregerDonnees(Coordonnees centre, double rayon, time_t debut, time_t fin);
 
 };
 
