@@ -34,6 +34,7 @@ private:
     static const string mesurePath;
     static const string capteurPath;
     static const string typePath;
+    static const string testPath;
 };
 
 
