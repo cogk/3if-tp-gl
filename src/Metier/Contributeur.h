@@ -7,7 +7,7 @@
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Interface de la classe <Contibuteur> (fichier Contibuteur.h) ----------------
+//---------- Interface de la classe <Contributeur> (fichier Contributeur.h) ----------------
 #if ! defined ( INC_3IF_GL_TP_CONTRIBUTEUR_H )
 #define INC_3IF_GL_TP_CONTRIBUTEUR_H
 
@@ -23,43 +23,38 @@ using namespace std;
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Contibuteur>
+// Rôle de la classe <Contributeur>
 //
 //
 //------------------------------------------------------------------------
 
-class Contibuteur : public Utilisateur
+class Contributeur : public Utilisateur
 {
 //----------------------------------------------------------------- PUBLIC
 
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const vector<Capteur> &getCapteurs() const {
-        return capteurs;
-    }
+    const vector<Capteur> &getCapteurs() const;
 
-    void setCapteurs(const vector<Capteur> &capteurs) {
-        Contibuteur::capteurs = capteurs;
-    }
+    void setCapteurs(const vector<Capteur> &capteurs);
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Contibuteur() {}
+    Contributeur();
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Contibuteur(const string &identifiant, const string &motDePasse, const string &email, int points, int fiabilite,
-                const vector<Capteur> &capteurs) : Utilisateur(identifiant, motDePasse, email), points(points),
-                                                   fiabilite(fiabilite), capteurs(capteurs) {}
+    Contributeur(const string &identifiant, const string &motDePasse, const string &email, int points, int fiabilite,
+                 const vector<Capteur> &capteurs);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~Contibuteur() {}
+    virtual ~Contributeur();
     // Mode d'emploi :
     //
     // Contrat :
@@ -80,5 +75,3 @@ protected:
 };
 
 #endif // INC_3IF_GL_TP_CONTRIBUTEUR_H
-
-

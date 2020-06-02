@@ -34,30 +34,25 @@ class Analyste : public Utilisateur
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const Agence &getAgence() const {
-        return agence;
-    }
+    const Agence &getAgence() const;
 
-    void setAgence(const Agence &agence) {
-        Analyste::agence = agence;
-    }
+    void setAgence(const Agence &agence);
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Analyste() {}
+    Analyste();
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Analyste(const string &identifiant, const string &motDePasse, const string &email, const Agence &agence)
-            : Utilisateur(identifiant, motDePasse, email), agence(agence) {}
+    Analyste(const string &identifiant, const string &motDePasse, const string &email, const Agence &agence);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~Analyste() {}
+    virtual ~Analyste();
     // Mode d'emploi :
     //
     // Contrat :
