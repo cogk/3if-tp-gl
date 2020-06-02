@@ -55,6 +55,7 @@
 
 #include <iostream>
 #include <string>
+#include <time.h>
 
 class App
 {
@@ -91,5 +92,5 @@ public:
 
     static ConsoleReadResult<int> readInteger(std::istream &inputStream = std::cin);
     static ConsoleReadResult<double> readFractional(std::istream &inputStream = std::cin);
-    static ConsoleReadResult<std::time_t> readDate(std::istream &inputStream = std::cin);
+    static ConsoleReadResult<time_t> readDate(std::istream &inputStream = std::cin);
 };
