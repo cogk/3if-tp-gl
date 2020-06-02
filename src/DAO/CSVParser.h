@@ -16,8 +16,8 @@ using namespace std;
 class CSVParser {
 public:
 // Méthodes publiques
-    vector<vector<string*>*>* read(map<int, string> params);
     // Contrat : le retour devra être delete par l'utilisateur
+    vector<vector<string*>*>* read(map<int, string> params);
     bool add(vector<string> line);
     bool deleteLines(map<int, string> params);
     bool editLines(map<int, string> params, vector<string> newLine);
