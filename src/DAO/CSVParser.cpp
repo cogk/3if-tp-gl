@@ -49,7 +49,21 @@ vector<vector<string*>*>* CSVParser::read(map<int, string> params) {
             string delim = ";";
             split(*line, delim, *splittedLine);
 
-            result->push_back(splittedLine);
+            bool ok = true;
+            for (auto it = params.cbegin(); it != params.cend(); ++it) {
+                if (it->first >= splittedLine->size() || splittedLine->at(it->first) != it->second) {
+                    ok = false;
+                    break;
+                }
+            }
+            if (ok) {
+                result->push_back(splittedLine);
+            } else {
+                for (int i = 0; i < splittedLine->size(); i++) {
+                    delete splittedLine->at(i);
+                }
+                delete splittedLine;
+            }
         }
 
         csvFile.close();
@@ -80,9 +94,11 @@ bool CSVParser::add(vector<string> line) {
 }
 
 bool CSVParser::deleteLines(map<int, string> params) {
+    cerr << "deleteLines : fonctionnalité non implémentée" << endl;
     return false;
 }
 
 bool CSVParser::editLines(map<int, string> params, vector<string> newLine) {
+    cerr << "editLines : fonctionnalité non implémentée" << endl;
     return false;
 }

@@ -6,6 +6,10 @@
 
 #include <utility>
 #include <ctime>
+#include <map>
+
+const string MesureDAO::mesurePath = "Data/measurements.csv";
+const string MesureDAO::capteurPath = "Data/sensors.csv";
 
 MesureDAO::MesureDAO(string filePath){
     this->path = std::move(filePath);   // askip c'est mieux
@@ -46,9 +50,30 @@ bool MesureDAO::add(const Mesure& mesure) {
 
 }
 
-vector<Mesure*>* MesureDAO::list(Coordonnees, double rayon, time_t, time_t){
-    // TODO
-    return nullptr;
+vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin) {
+    CSVParser parser(mesurePath);
+    map<int, string> params;
+    vector<vector<string*>*>* mesures = parser.read(params);
+
+    for (vector<string*>* line : *mesures) {
+        string &date = *line->at(0);
+        string &nomCapteur = *line->at(1);
+        string &nomType = *line->at(2);
+        string &valeur = *line->at(3);
+
+        map<int, string> paramsCapteur;
+        paramsCapteur.insert(pair<int, string>(0, nomCapteur));
+        vector<vector<string*>*>* capteurCsv = parser.read(paramsCapteur);
+        auto capteurCsvLine = capteurCsv->at(0);
+
+        map<int, string> paramsType;
+        paramsCapteur.insert(pair<int, string>(0, nomType));
+        vector<vector<string*>*>* type = parser.read(paramsCapteur);
+
+
+    }
+
+    return vector<Mesure>();
 }
 
 void MesureDAO::clean() {

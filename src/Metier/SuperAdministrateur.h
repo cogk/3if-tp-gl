@@ -33,20 +33,21 @@ class SuperAdministrateur : public Utilisateur
 public:
 //----------------------------------------------------- Méthodes publiques
 
-
-
 //-------------------------------------------- Constructeurs - destructeur
 
-    SuperAdministrateur() {}
+    SuperAdministrateur();
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    SuperAdministrateur(const string &identifiant, const string &motDePasse, const string &email) : Utilisateur(identifiant,
-                                                                                                           motDePasse, email) {}
+    SuperAdministrateur(const string &identifiant, const string &motDePasse, const string &email);
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
-    virtual ~SuperAdministrateur() {}
+    virtual ~SuperAdministrateur();
     // Mode d'emploi :
     //
     // Contrat :
