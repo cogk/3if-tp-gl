@@ -133,8 +133,8 @@ bool App::MenuAnalyste()
     Coordonnees filtre_centre = Coordonnees(0.0, 0.0);
 
     bool filtre_temporel = false;
-    std::time_t filtre_debut;
-    std::time_t filtre_fin;
+    time_t filtre_debut;
+    time_t filtre_fin;
 
     while (true)
     {
@@ -217,7 +217,9 @@ bool App::MenuAnalyste()
                 return false;
             }
 
-            std::cout << "PAS IMPLÉMENTÉ OUIN OUIN" << std::endl;
+            filtre_temporel = true;
+            filtre_debut = debut.value;
+            filtre_fin = fin.value;
             break;
         }
         case 2:
@@ -361,16 +363,16 @@ App::readFractional(std::istream &in)
     return res;
 }
 
-App::ConsoleReadResult<std::time_t>
+App::ConsoleReadResult<time_t>
 App::readDate(std::istream &in)
 {
-    ConsoleReadResult<std::time_t> res;
+    ConsoleReadResult<time_t> res;
 
     try
     {
         struct std::tm tm;
         in >> std::get_time(&tm, "%d/%m/%Y");
-        std::time_t time = mktime(&tm);
+        time_t time = mktime(&tm);
         res.value = time;
         res.valid = true;
     }
