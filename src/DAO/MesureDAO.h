@@ -26,15 +26,15 @@ public:
     // TODO passer en static ?
     bool add(const Mesure& mesure);
 
-    vector<Mesure> list(Capteur, Coordonnees, Type, time_t, time_t);
+    vector<Mesure> list(Coordonnees, double, time_t, time_t);
 
     void clean();
 
 private:
-
     vector<Mesure> objetsRencontres;
-    string path;
 
+    static const string mesurePath;
+    static const string capteurPath;
 };
 
 
