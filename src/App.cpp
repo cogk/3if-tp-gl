@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "App.hpp"
+#include "Metier/Coordonnees.h"
 
 // Définition des menus
 bool App::MenuPrincipal()
@@ -72,10 +73,7 @@ bool App::MenuContributeur()
 bool App::MenuAnalyste()
 {
     const std::vector<std::string> menuAnalyse = {"Filtrage spatial…", "Filtrage temporel…", "Statistiques…"};
-    // const std::vector<std::string> menuAnalyseFiltrage = {"Définir une région d'analyse"};
-    // const std::vector<std::string> menuAnalyseStats = {"Choisir séries"};
     // const std::vector<std::string> menuAnalyseStatsCalculsSolo = {"Moyenne", "Médian", "Écart-type"};
-    // const std::vector<std::string> menuAnalyseStatsCalculsMulti = {"Corrélation"};
     const int choice = this->menu("Menu - Sources de données", menuAnalyse);
     switch (choice)
     {
@@ -111,18 +109,37 @@ bool App::MenuAnalyste()
 
         std::cout << std::endl;
 
-        const double R = resR.value;
-        const double lat = resLat.value;
-        const double lon = resLon.value;
+        const double rayon = resR.value;
+        const Coordonnees centre = Coordonnees(resLat.value, resLon.value);
 
-        std::cout << "Cercle(R=" << R << ", lat=" << lat << ", lon=" << lon << ")" << std::endl;
+        std::cout << "Cercle[R=" << rayon << ", C=(" << centre.getLattitude() << ", " << centre.getLongitude() << ")]" << std::endl;
+        std::cout << std::endl;
 
+        std::cout << "PAS IMPLÉMENTÉ OUIN OUIN" << std::endl;
         break;
     }
     case 1:
-        App::banner("Définir une période d'analyse :");
-        std::cout << "> Pas implémenté" << std::endl;
+    {
+        App::banner("Définir une période d'analyse");
+        std::cout << "Date de début (jour/mois/année) : ";
+        const auto debut = App::readDate();
+        if (!debut.valid)
+        {
+            std::cout << "Valeur invalide." << std::endl;
+            return false;
+        }
+
+        std::cout << "Date de fin   (jour/mois/année) : ";
+        const auto fin = App::readDate();
+        if (!fin.valid)
+        {
+            std::cout << "Valeur invalide." << std::endl;
+            return false;
+        }
+
+        std::cout << "PAS IMPLÉMENTÉ OUIN OUIN" << std::endl;
         break;
+    }
     case 2:
     {
         // App::banner("Choisir les séries à analyser :");
@@ -257,6 +274,28 @@ App::readFractional(std::istream &in)
     catch (std::invalid_argument)
     {
         res.value = 0.0;
+        res.valid = false;
+    }
+
+    return res;
+}
+
+App::ConsoleReadResult<std::time_t>
+App::readDate(std::istream &in)
+{
+    ConsoleReadResult<std::time_t> res;
+
+    try
+    {
+        struct std::tm tm;
+        in >> std::get_time(&tm, "%d/%m/%Y");
+        std::time_t time = mktime(&tm);
+        res.value = time;
+        res.valid = true;
+    }
+    catch (std::invalid_argument)
+    {
+        res.value = 0;
         res.valid = false;
     }
 
