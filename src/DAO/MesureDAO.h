@@ -31,7 +31,7 @@ public:
     void clean();
 
 private:
-    vector<Mesure> objetsRencontres;
+    vector<Mesure*>* objetsRencontres;
 
     static const string mesurePath;
     static const string capteurPath;

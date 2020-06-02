@@ -50,7 +50,7 @@ bool MesureDAO::add(const Mesure& mesure) {
 
 }
 
-vector<Mesure> MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin) {
+vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin) {
     CSVParser parser(mesurePath);
     map<int, string> params;
     vector<vector<string*>*>* mesures = parser.read(params);
@@ -64,7 +64,7 @@ vector<Mesure> MesureDAO::list(Coordonnees centre, double rayon, time_t debut, t
         map<int, string> paramsCapteur;
         paramsCapteur.insert(pair<int, string>(0, nomCapteur));
         vector<vector<string*>*>* capteurCsv = parser.read(paramsCapteur);
-        Capteur capteur()
+        auto capteurCsvLine = capteurCsv->at(0);
 
         map<int, string> paramsType;
         paramsCapteur.insert(pair<int, string>(0, nomType));
