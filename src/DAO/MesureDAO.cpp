@@ -58,7 +58,7 @@ double distanceGPS(Coordonnees coo1, Coordonnees coo2)
     double lon2 = coo2.getLongitude(), lat2 = coo2.getLattitude();
 
     // https://www.movable-type.co.uk/scripts/latlong.html
-    const double PI = 3.1415;
+    const double PI = 3.14159265359;
 
     // calcul distance entre deux points GPS
     const double R = 6371e3; // rayon de la Terre en mètres
