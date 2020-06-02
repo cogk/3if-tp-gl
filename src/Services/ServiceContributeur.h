@@ -10,7 +10,12 @@
 class ServiceContributeur {
 
 public:
-    bool envoyerDonnees(Mesure donnees);
+
+    bool envoyerDonnees(const Mesure& donnees);
+
+private:
+
+    const string cheminMesuresCSV = "../../Data/test.csv";
 };
 
 
