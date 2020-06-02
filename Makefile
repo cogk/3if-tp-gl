@@ -34,11 +34,11 @@ directories:
 
 # Règle de compilation
 tmp/%.o: src/%.cpp $(LIBS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $< -lm
 
 # Règle d'édition de liens
 $(EXEC_NAME): $(OBJS) $(LIBS)
-	$(CC) -o $(EXEC_NAME) $(OBJS)
+	$(CC) -o $(EXEC_NAME) $(OBJS) -lm
 
 # Permet d'éviter que les fichiers du même nom que des règles
 # soient "interprétés" comme des dépendances.

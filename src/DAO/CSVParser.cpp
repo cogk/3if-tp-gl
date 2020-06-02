@@ -67,6 +67,8 @@ vector<vector<string*>*>* CSVParser::read(map<int, string> params) {
         }
 
         csvFile.close();
+    } else {
+        cout << "Oupsi !" << endl;
     }
 
     return result;

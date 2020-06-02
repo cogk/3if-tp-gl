@@ -11,9 +11,9 @@
 #include <iomanip>
 #include <sstream>
 
-const string MesureDAO::mesurePath = "Data/measurements.csv";
-const string MesureDAO::capteurPath = "Data/sensors.csv";
-const string MesureDAO::typePath = "Data/attributes.csv";
+const string MesureDAO::mesurePath = "../Data/measurements.csv";
+const string MesureDAO::capteurPath = "../Data/sensors.csv";
+const string MesureDAO::typePath = "../Data/attributes.csv";
 
 MesureDAO::MesureDAO() {}
 
@@ -58,7 +58,7 @@ double distanceGPS(Coordonnees coo1, Coordonnees coo2)
     double lon2 = coo2.getLongitude(), lat2 = coo2.getLattitude();
 
     // https://www.movable-type.co.uk/scripts/latlong.html
-    const double PI = M_PI;
+    const double PI = 3.1415;
 
     // calcul distance entre deux points GPS
     const double R = 6371e3; // rayon de la Terre en mètres
@@ -96,14 +96,14 @@ vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut,
         // Récupération du capteur
         map<int, string> paramsCapteur;
         paramsCapteur.insert(pair<int, string>(0, nomCapteur));
-        vector<vector<string*>*>* capteurCsv = parserMesure.read(paramsCapteur);
+        vector<vector<string *> *> *capteurCsv = parserMesure.read(paramsCapteur);
         auto capteurCsvLine = capteurCsv->at(0);
         Coordonnees coos(stod(*capteurCsvLine->at(1)), stod(*capteurCsvLine->at(2)));
         Capteur capteur(*capteurCsvLine->at(0), "", coos);
 
         // Nettoyage mémoire
-        for (vector<string*>* vec : *capteurCsv) {
-            for (string* str : *vec) {
+        for (vector<string *> *vec : *capteurCsv) {
+            for (string *str : *vec) {
                 delete str;
             }
             delete vec;
@@ -113,13 +113,13 @@ vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut,
         // récupération du type
         map<int, string> paramsType;
         paramsCapteur.insert(pair<int, string>(0, nomType));
-        vector<vector<string*>*>* typeCsv = parserMesure.read(paramsCapteur);
+        vector<vector<string *> *> *typeCsv = parserMesure.read(paramsCapteur);
         auto typeCsvLine = typeCsv->at(0);
         Type type(*typeCsvLine->at(0), *typeCsvLine->at(1), *typeCsvLine->at(2));
 
         // Nettoyage mémoire
-        for (vector<string*>* vec : *typeCsv) {
-            for (string* str : *vec) {
+        for (vector<string *> *vec : *typeCsv) {
+            for (string *str : *vec) {
                 delete str;
             }
             delete vec;
