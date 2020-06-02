@@ -1,12 +1,12 @@
 CC        = g++
-CFLAGS    = -ansi -pedantic -Wall -Werror -Wextra -std=c++11
+CFLAGS    = -ansi -pedantic -Wall -Wextra -std=c++11
 # ajout du flag -Wextra
 
 EXEC_NAME = airwatcher
 INCLUDES  =
-LIBS      = $(wildcard src/*.hpp)
-SRCS      = $(wildcard src/*.cpp)
-OBJS      = $(addprefix tmp/,$(notdir $(SRCS:.cpp=.o)))
+LIBS      = $(shell find src -type f -name '*.h')
+SRCS      = $(shell find src -type f -name '*.cpp')
+OBJS      = $(addprefix tmp/,$(SRCS:src/%.cpp=%.o))
 
 ifdef DEBUG
 	CFLAGS += -DMAP -g
@@ -30,7 +30,7 @@ clean:
 
 # Création du répertoire temporaire
 directories:
-	mkdir -p tmp
+	mkdir -p $(dir $(OBJS))
 
 # Règle de compilation
 tmp/%.o: src/%.cpp $(LIBS)

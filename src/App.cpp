@@ -4,13 +4,13 @@
 #include <string>
 #include <vector>
 
-#include "App.hpp"
+#include "App.h"
 #include "Metier/Coordonnees.h"
 
 // Définition des menus
 bool App::MenuPrincipal()
 {
-    this->banner("Bienvenue dans AirWatcher", true);
+    this->banner("Bienvenue dans AirWatcher");
     this->userbar("(anonyme)");
 
     // Tous les menus
@@ -321,8 +321,8 @@ void App::banner(std::string text, bool thick, std::ostream &out)
  */
 int App::menu(const std::string menuName, const std::vector<std::string> &entries, std::ostream &out)
 {
-    out << std::endl;
-    out << std::endl;
+    // out << std::endl;
+    // out << std::endl;
     banner(menuName, false, out);
     out << std::endl;
 
@@ -356,7 +356,7 @@ void App::userbar(std::string username, std::ostream &out)
 {
     const int width = maxWidth;
 
-    const std::string preamble = "   Utilisateur: ";
+    const std::string preamble = "Utilisateur: ";
     int space = width - username.length() - preamble.length();
     if (space < 0)
     {
