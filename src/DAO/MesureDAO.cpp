@@ -46,9 +46,9 @@ bool MesureDAO::add(const Mesure& mesure) {
 
 }
 
-vector<Mesure> MesureDAO::list(Capteur, Coordonnees, Type, time_t, time_t) {
+vector<Mesure*>* MesureDAO::list(Coordonnees, double rayon, time_t, time_t){
     // TODO
-    return vector<Mesure>();
+    return nullptr;
 }
 
 void MesureDAO::clean() {

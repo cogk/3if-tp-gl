@@ -3,7 +3,7 @@
 //
 
 #include "ServiceContributeur.h"
-#include "../../src/DAO/MesureDAO.h"
+#include "../DAO/MesureDAO.h"
 
 bool ServiceContributeur::envoyerDonnees(const Mesure& donnees) {
 
