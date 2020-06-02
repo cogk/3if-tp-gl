@@ -3,8 +3,11 @@
 //
 
 #include "ServiceContributeur.h"
+#include "../../src/DAO/MesureDAO.h"
 
-bool ServiceContributeur::envoyerDonnees(Mesure donnees) {
+bool ServiceContributeur::envoyerDonnees(const Mesure& donnees) {
 
-    return true;
+    MesureDAO dao(cheminMesuresCSV);
+    return dao.add(donnees);
+
 }
