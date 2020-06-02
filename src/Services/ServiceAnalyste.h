@@ -14,11 +14,7 @@
 class ServiceAnalyste {
 
 public:
-    map<Type, double>* agregerDonnees(Coordonnees centre, double rayon, time_t debut, time_t fin);
-
-    // TODO mettre dans un même fichier ? (dupliqué de ServiceContributeur.h)
-private:
-    const string cheminMesuresCSV = "../../Data/test.csv";
+    static map<Type, double>* agregerDonnees(Coordonnees centre, double rayon, time_t debut, time_t fin);
 
 };
 
