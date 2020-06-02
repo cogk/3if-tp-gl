@@ -25,8 +25,8 @@ test: clean normal
 
 # On supprime les fichiers temporaires et l'éxécutable
 clean:
-	rm -f $(EXEC_NAME) $(OBJS) 2>/dev/null || true
-	rmdir -f tmp 2>/dev/null || true
+	@rm -f $(EXEC_NAME)
+	@rm -r tmp/
 
 # Création du répertoire temporaire
 directories:
