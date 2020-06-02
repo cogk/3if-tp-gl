@@ -34,30 +34,25 @@ class Expert : public Utilisateur
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const Entreprise &getEntreprise() const {
-        return entreprise;
-    }
+    const Entreprise &getEntreprise() const;
 
-    void setEntreprise(const Entreprise &entreprise) {
-        Expert::entreprise = entreprise;
-    }
+    void setEntreprise(const Entreprise &entreprise);
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Expert() {}
+    Expert();
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Expert(const string &identifiant, const string &motDePasse, const string &email, const Entreprise &entreprise)
-            : Utilisateur(identifiant, motDePasse, email), entreprise(entreprise) {}
+    Expert(const string &identifiant, const string &motDePasse, const string &email, const Entreprise &entreprise);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~Expert() {}
+    virtual ~Expert();
     // Mode d'emploi :
     //
     // Contrat :

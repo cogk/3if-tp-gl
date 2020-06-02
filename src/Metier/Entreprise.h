@@ -35,13 +35,9 @@ class Entreprise : public Organisation
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    const vector<Purificateur> &getPurificateurs() const {
-        return purificateurs;
-    }
+    const vector<Purificateur> &getPurificateurs() const;
 
-    void setPurificateurs(const vector<Purificateur> &purificateurs) {
-        Entreprise::purificateurs = purificateurs;
-    }
+    void setPurificateurs(const vector<Purificateur> &purificateurs);
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -51,15 +47,14 @@ public:
     // Contrat :
     //
 
-    Entreprise(const string &nom) : Organisation(nom) {}
+    Entreprise(const string &nom);
     // Mode d'emploi :
     //
     // Contrat :
     //
 
     Entreprise(const string &nom, const vector<Administrateur> &administrateur,
-               const vector<Purificateur> &purificateurs) : Organisation(nom, administrateur),
-                                                            purificateurs(purificateurs) {}
+               const vector<Purificateur> &purificateurs);
     // Mode d'emploi :
     //
     // Contrat :
