@@ -51,7 +51,7 @@ vector<vector<string*>*>* CSVParser::read(map<int, string> params) {
 
             bool ok = true;
             for (auto it = params.cbegin(); it != params.cend(); ++it) {
-                if (it->first >= splittedLine->size() || splittedLine->at(it->first) != it->second) {
+                if (it->first >= splittedLine->size() || *splittedLine->at(it->first) != it->second) {
                     ok = false;
                     break;
                 }
