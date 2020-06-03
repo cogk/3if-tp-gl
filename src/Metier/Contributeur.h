@@ -37,7 +37,7 @@ public:
 
     const vector<Capteur> &getCapteurs() const;
 
-    void setCapteurs(const vector<Capteur> &capteurs);
+    void addCapteur(Capteur capteur);
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -47,8 +47,7 @@ public:
     // Contrat :
     //
 
-    Contributeur(const string &identifiant, const string &motDePasse, const string &email, int points, int fiabilite,
-                 const vector<Capteur> &capteurs);
+    Contributeur(const string &identifiant, const string &motDePasse, const string &email, int points, int fiabilite);
     // Mode d'emploi :
     //
     // Contrat :

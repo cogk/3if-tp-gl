@@ -26,8 +26,8 @@ const vector<Capteur> & Contributeur::getCapteurs() const {
     return capteurs;
 }
 
-void Contributeur::setCapteurs(const vector<Capteur> &capteurs) {
-    Contributeur::capteurs = capteurs;
+void Contributeur::addCapteur(Capteur capteur) {
+    Contributeur::capteurs.push_back(capteur);
 }
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -42,11 +42,11 @@ Contributeur::Contributeur ( )
 } //----- Fin de Contributeur
 
 Contributeur::Contributeur(const string &identifiant, const string &motDePasse, const string &email, int points,
-        int fiabilite, const vector<Capteur> &capteurs) :
+        int fiabilite) :
     Utilisateur(identifiant, motDePasse, email),
     points(points),
     fiabilite(fiabilite),
-    capteurs(capteurs)
+    capteurs()
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Contributeur>" << endl;

@@ -8,6 +8,7 @@
 
 #include "DAO/TypeDAO.h"
 #include "DAO/CapteurDAO.h"
+#include "DAO/ContributeurDAO.h"
 
 int main() {
     TypeDAO typeDao;
@@ -17,12 +18,16 @@ int main() {
         cout << type->getAttributeId() << " / " << type->getUnite() << " / " << type->getDescription() << endl;
     }
 
-    CapteurDAO capteurDao;
+//    CapteurDAO capteurDao;
+//
+//    vector<Capteur*> *capteurs = capteurDao.list();
+//    for (Capteur *capteur : *capteurs) {
+//        cout << capteur->getSensorId() << " / " << capteur->getCoordonnees().getLattitude() << " / " << capteur->getCoordonnees().getLongitude() << endl;
+//    }
 
-    vector<Capteur*> *capteurs = capteurDao.list();
-    for (Capteur *capteur : *capteurs) {
-        cout << capteur->getSensorId() << " / " << capteur->getCoordonnees().getLattitude() << " / " << capteur->getCoordonnees().getLongitude() << endl;
-    }
+    ContributeurDAO contDao;
+    Contributeur *ret = contDao.getContributeur("User0");
+    cout << ret->getIdentifiant() << " / " << ret->getCapteurs()[0].getSensorId() << " / " << ret->getCapteurs()[0].getCoordonnees().getLongitude() << endl;
 
     return 0;
 }
