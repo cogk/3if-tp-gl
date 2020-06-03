@@ -9,7 +9,6 @@
 const string MesureDAO::mesurePath = "./Data/measurements.csv";
 const string MesureDAO::capteurPath = "./Data/sensors.csv";
 const string MesureDAO::typePath = "./Data/attributes.csv";
-const string MesureDAO::testPath = "./Data/tests.csv";
 
 MesureDAO::MesureDAO() {}
 
@@ -43,9 +42,7 @@ bool MesureDAO::add(const Mesure& mesure) {
     // value
     ligne.push_back(to_string(mesure.getValeur()));
 
-    // TODO changer !!!
-//    CSVParser parser (mesurePath);
-    CSVParser parser (testPath);
+   CSVParser parser (mesurePath);
     return parser.add(ligne);
 
 }
