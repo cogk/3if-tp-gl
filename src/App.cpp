@@ -164,8 +164,8 @@ bool App::MenuAnalyste()
                       << "Période du " << buffer_debut << " au " << buffer_fin
                       << std::endl;
 
-            free(buffer_debut);
-            free(buffer_fin);
+            delete buffer_debut;
+            delete buffer_fin;
         }
 
         const int choice = this->menu("Menu - Sources de données", menuAnalyse);
@@ -174,6 +174,8 @@ bool App::MenuAnalyste()
         {
         case 0:
         {
+            filtre_geographique = false;
+
             App::banner("Définir une région d'analyse");
             std::cout << "Forme de la région d'analyse : CERCLE" << std::endl;
 
@@ -211,6 +213,8 @@ bool App::MenuAnalyste()
         }
         case 1:
         {
+            filtre_temporel = false;
+
             App::banner("Définir une période d'analyse");
             std::cout << "Date de début (jour/mois/année) : ";
             const auto debut = App::readDate();
@@ -447,11 +451,23 @@ App::readDate(std::istream &in)
 
     try
     {
-        struct std::tm tm;
+        std::tm tm{};
         in >> std::get_time(&tm, "%d/%m/%Y");
-        time_t time = mktime(&tm);
-        res.value = time;
-        res.valid = true;
+        std::cout << std::endl
+                  << tm.tm_year
+                  << std::endl;
+
+        if (in.fail())
+        {
+            res.value = 0;
+            res.valid = false;
+        }
+        else
+        {
+            time_t time = mktime(&tm);
+            res.value = time;
+            res.valid = true;
+        }
     }
     catch (std::invalid_argument)
     {
