@@ -1,10 +1,10 @@
+#include <chrono>
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
 #include <string>
 #include <time.h>
 #include <vector>
-#include <chrono>
 
 #include "App.h"
 #include "Metier/Capteur.h"
@@ -112,7 +112,7 @@ bool App::MenuContributeur()
         auto end = chrono::steady_clock::now();
         auto diff = end - start;
 
-        cout << "Temps d'execution : " << chrono::duration <double, milli> (diff).count() << " ms" << endl;
+        cout << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
         break;
     }
@@ -370,24 +370,24 @@ bool App::MenuSuperAdmin()
     const int choice = this->menu("Menu - Administration", menuSuperAdmin);
     switch (choice)
     {
-        case 0:
-            std::cout << "> Pas implémenté" << std::endl;
-            break;
-        case 1:
-            std::cout << "> Pas implémenté" << std::endl;
-            break;
-        case 2:
-            std::cout << "> Pas implémenté" << std::endl;
-            break;
-        case 3:
-            std::cout << "> Pas implémenté" << std::endl;
-            break;
-        case 4:
-            std::cout << "> Pas implémenté" << std::endl;
-            break;
-        default:
-            std::cout << "Vous n'avez pas choisi de menu." << std::endl;
-            return false;
+    case 0:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 1:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 2:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 3:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 4:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    default:
+        std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+        return false;
     }
     return true;
 }
@@ -490,20 +490,19 @@ int App::menu(const std::string menuName, const std::vector<std::string> &entrie
     for (auto const &entry : entries)
     {
         i += 1;
-        out << ANSI_FG_BLUE << std::setw(4) << i << ". " << ANSI_FG_RESET << ANSI_BOLD_ON << entry << ANSI_BOLD_OFF << std::endl;
+        out << std::setw(4) << i << ". " << entry << std::endl;
     }
     const int n = i;
 
     out << std::endl;
-    out << "Entrez ici votre sélection : " << ANSI_FG_BLUE;
+    out << "Entrez ici votre sélection : ";
 
     auto res = readInteger();
-    out << ANSI_FG_RESET;
     out << std::endl;
 
     if (!res.valid || res.value < 1 || res.value > n)
     {
-        out << ANSI_FG_RED << "Entrée invalide, veuillez entrer un entier entre " << 1 << " et " << n << "." << ANSI_FG_RESET << std::endl;
+        out << "Entrée invalide, veuillez entrer un entier entre " << 1 << " et " << n << "." << std::endl;
         return InvalidMenuChoice;
     }
     else
