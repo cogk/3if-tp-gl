@@ -1,10 +1,5 @@
-//
-// Created by emman on 26/05/2020.
-//
-
 #include "MesureDAO.h"
 
-#include <utility>
 #include <ctime>
 #include <map>
 #include <math.h>

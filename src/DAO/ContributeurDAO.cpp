@@ -1,15 +1,39 @@
-//
-// Created by emman on 03/06/2020.
-//
-
 #include "ContributeurDAO.h"
+#include "CSVParser.h"
 
-const string ContributeurDAO::ContributeurPath = "./Data/users.csv";
+#include <ctime>
+#include <map>
+#include <sstream>
+
+const string ContributeurDAO::contributeurPath = "./Data/users.csv";
+const string ContributeurDAO::capteurPath = "./Data/sensors.csv";
 
 ContributeurDAO::ContributeurDAO() {}
 
 ContributeurDAO::~ContributeurDAO() {}
 
-vector<Contributeur *> *ContributeurDAO::list() {
-    return nullptr;
+Contributeur *ContributeurDAO::getContributeur(const string &id) {
+    CSVParser parser(contributeurPath);
+    CSVParser capteurParser(capteurPath);
+
+    vector<vector<string*>*> *contributeurs = parser.readVec();
+    map<string, vector<string*>*> *capteurs = capteurParser.read();
+    Contributeur *retour = nullptr;
+
+    for (vector<string*> *ligne : *contributeurs) {
+        if (*(*ligne)[0] != id) {
+            continue;
+        }
+
+        if (retour == nullptr) {
+            retour = new Contributeur(*(*ligne)[0], "", "", 0, 0);
+        }
+
+        vector<string *> *capteurCsv = capteurs->at(*(*ligne)[1]);
+        Capteur capteur(*(*capteurCsv)[0], "", Coordonnees(stod(*(*capteurCsv)[1]), stod(*(*capteurCsv)[2])));
+
+        retour->addCapteur(capteur);
+    }
+
+    return retour;
 }
