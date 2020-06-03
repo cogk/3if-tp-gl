@@ -18,6 +18,7 @@ public:
         double min;
         double max;
         double mediane;
+        double ecartType;
     };
 
     static map<Type, Resultats> *agregerDonnees(const Coordonnees &centre, double rayon, time_t debut, time_t fin, bool = true, bool = true);

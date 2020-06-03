@@ -6,6 +6,7 @@
 #include "../DAO/MesureDAO.h"
 
 #include <algorithm>
+#include <math.h>
 #include <vector>
 
 map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
@@ -20,7 +21,8 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
 
     // mapper les valeurs par type
     map<Type, vector<double>> valeursParType;
-    for (const Mesure *mes : *res){
+    for (const Mesure *mes : *res)
+    {
         // initialisation de la liste ? -> ptet pas (constr par def appelé)
         valeursParType[mes->getType()].push_back(mes->getValeur());
     }
@@ -28,23 +30,26 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
     // mettre les resultats dans une map par type
     const double infty = std::numeric_limits<double>::infinity();
     auto resultats = new map<Type, ServiceAnalyste::Resultats>();
-    for (const auto pair : valeursParType){
+    for (const auto pair : valeursParType)
+    {
 
         auto v = pair.second;
         size_t count = v.size();
-        double sum = 0.0;
-        double max = -infty;
-        double min = +infty;
-        double mediane = 0;
 
         std::nth_element(v.begin(), v.begin() + v.size() / 2, v.end());
-        mediane = v[v.size() / 2];
+        double mediane = v[v.size() / 2];
+
+        double sum = 0.0;
+        double sumSquared = 0.0;
+        double max = -infty;
+        double min = +infty;
 
         for (auto it = v.begin(); it != v.end(); it++)
         {
             const double val = *it;
 
             sum += val;
+            sumSquared += val * val;
 
             if (min > val)
                 min = val;
@@ -53,7 +58,10 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
                 max = val;
         }
 
-        (*resultats)[pair.first] = Resultats{sum / count, min, max, mediane};
+        double moyenne = sum / count;
+        double ecartType = sqrt(sumSquared / count - moyenne * moyenne);
+
+        (*resultats)[pair.first] = Resultats{moyenne, min, max, mediane, ecartType};
     }
 
     return resultats;
