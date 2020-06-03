@@ -4,6 +4,7 @@
 #include <string>
 #include <time.h>
 #include <vector>
+#include <chrono>
 
 #include "App.h"
 #include "Metier/Capteur.h"
@@ -97,6 +98,8 @@ bool App::MenuContributeur()
             return false;
         }
 
+        auto start = chrono::steady_clock::now();
+
         time_t timestamp = time(nullptr);
         Coordonnees coords(resLat.value, resLon.value);
         Capteur capteur(sensorId, "description capteur", coords);
@@ -104,6 +107,11 @@ bool App::MenuContributeur()
         Mesure mes(resVal.value, timestamp, "mesure test", capteur, type);
 
         ServiceContributeur::envoyerDonnees(mes);
+
+        auto end = chrono::steady_clock::now();
+        auto diff = end - start;
+
+        cout << "Temps d'execution : " << chrono::duration <double, milli> (diff).count() << " ms" << endl;
 
         break;
     }
