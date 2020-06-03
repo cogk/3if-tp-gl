@@ -6,7 +6,7 @@
 #include "../DAO/MesureDAO.h"
 
 #include <algorithm>
-#include <math>
+#include <math.h>
 #include <vector>
 
 map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
@@ -21,7 +21,8 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
 
     // mapper les valeurs par type
     map<Type, vector<double>> valeursParType;
-    for (const Mesure *mes : *res){
+    for (const Mesure *mes : *res)
+    {
         // initialisation de la liste ? -> ptet pas (constr par def appelé)
         valeursParType[mes->getType()].push_back(mes->getValeur());
     }
@@ -29,7 +30,8 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
     // mettre les resultats dans une map par type
     const double infty = std::numeric_limits<double>::infinity();
     auto resultats = new map<Type, ServiceAnalyste::Resultats>();
-    for (const auto pair : valeursParType){
+    for (const auto pair : valeursParType)
+    {
 
         auto v = pair.second;
         size_t count = v.size();
