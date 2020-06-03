@@ -68,23 +68,22 @@ bool App::MenuContributeur()
         App::banner("Ajouter une nouvelle entrée");
 
         cout << "Choix de l'utilisateur (débug)" << endl;
-        const vector<string> users = {"User0", "User1"};
-        for (size_t i = 0; i < users.size(); i++)
+        const auto users = ServiceContributeur::listUsers();
+        for (size_t i = 0; i < users->size(); i++)
         {
-            const auto user = users.at(i);
-            cout << setw(4) << (i + 1) << ". " << user << endl;
+            const auto user = users->at(i);
+            cout << setw(4) << (i + 1) << ". " << *user << endl;
         }
         cout << endl;
         cout << "Numéro de votre utilisateur : ";
         const auto resUser = App::readInteger();
-        const bool validU = (resUser.valid && resUser.value > 0 && (size_t)resUser.value <= users.size());
+        const bool validU = (resUser.valid && resUser.value > 0 && (size_t)resUser.value <= users->size());
         if (!validU)
         {
             cout << "Utilisateur invalide." << endl;
             return false;
         }
-        const auto username = users.at(resUser.value - 1);
-
+        const auto username = *users->at(resUser.value - 1);
         const auto contributeur = ServiceContributeur::getContributeur(username);
 
         cout << "Choix du capteur" << endl;
@@ -148,6 +147,9 @@ bool App::MenuContributeur()
         for (auto i = types->begin(); i != types->end(); ++i)
             delete *i;
         delete types;
+        for (auto i = users->begin(); i != users->end(); ++i)
+            delete *i;
+        delete users;
         delete contributeur;
         break;
     }
@@ -321,6 +323,7 @@ bool App::MenuAnalyste()
             else
             {
                 App::banner("Aucun résultat pour les critères spécifiés");
+                cout << endl;
             }
 
             break;
