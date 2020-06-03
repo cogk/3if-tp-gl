@@ -26,7 +26,7 @@ public:
     // TODO passer en static ?
     bool add(const Mesure& mesure);
 
-    vector<Mesure*>* list(Coordonnees, double, time_t, time_t);
+    vector<Mesure *> *list(Coordonnees, double, time_t, time_t, bool = true, bool = true);
 
     void clean();
 

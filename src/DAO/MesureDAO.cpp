@@ -78,7 +78,8 @@ double distanceGPS(Coordonnees coo1, Coordonnees coo2)
     return d;
 }
 
-vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin) {
+vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin, bool filtrerParDate, bool filtrerParDistance)
+{
     CSVParser parserMesure(mesurePath);
     CSVParser parserCapteur(mesurePath);
     CSVParser parserType(typePath);
@@ -134,7 +135,11 @@ vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut,
         istringstream str_stream(dateStr);
         str_stream >> get_time(&tm, "%Y-%m-%d %T");
         time_t date = mktime(&tm);
-        if (debut < date && date < fin && distanceGPS(centre, capteur.getCoordonnees()) <= rayon) {
+        const bool validDate = filtrerParDate ? (debut < date && date < fin) : true;
+        const bool validDistance = filtrerParDistance ? (distanceGPS(centre, capteur.getCoordonnees()) <= rayon) : true;
+        const bool valid = validDate && validDistance;
+        if (valid)
+        {
             Mesure *mesure = new Mesure(stod(valeur), date, "", capteur, type);
             retour->push_back(mesure);
         }
