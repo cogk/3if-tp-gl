@@ -282,6 +282,8 @@ bool App::MenuAnalyste()
                 << std::setw(7) << "mediane"
                 << " | "
                 << std::setw(7) << "maximum"
+                << " | "
+                << std::setw(10) << "écart-type"
                 << std::endl;
 
             for (auto it = resultat->begin(); it != resultat->end(); it++)
@@ -293,7 +295,8 @@ bool App::MenuAnalyste()
                     << std::setw(7) << v.min << " | "
                     << std::setw(7) << v.moyenne << " | "
                     << std::setw(7) << v.mediane << " | "
-                    << std::setw(7) << v.max
+                    << std::setw(7) << v.max << " | "
+                    << std::setw(10) << v.ecartType
                     << std::endl;
             }
 

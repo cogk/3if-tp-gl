@@ -6,6 +6,7 @@
 #include "../DAO/MesureDAO.h"
 
 #include <algorithm>
+#include <math>
 #include <vector>
 
 map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
@@ -33,19 +34,21 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
     {
         auto v = pair.second;
         size_t count = v.size();
-        double sum = 0.0;
-        double max = -infty;
-        double min = +infty;
-        double mediane = 0;
 
         std::nth_element(v.begin(), v.begin() + v.size() / 2, v.end());
-        mediane = v[v.size() / 2];
+        double mediane = v[v.size() / 2];
+
+        double sum = 0.0;
+        double sumSquared = 0.0;
+        double max = -infty;
+        double min = +infty;
 
         for (auto it = v.begin(); it != v.end(); it++)
         {
             const double val = *it;
 
             sum += val;
+            sumSquared += val * val;
 
             if (min > val)
                 min = val;
@@ -54,7 +57,10 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
                 max = val;
         }
 
-        (*resultats)[pair.first] = Resultats{sum / count, min, max, mediane};
+        double moyenne = sum / count;
+        double ecartType = sqrt(sumSquared / count - moyenne * moyenne);
+
+        (*resultats)[pair.first] = Resultats{moyenne, min, max, mediane, ecartType};
     }
 
     return resultats;
