@@ -32,9 +32,9 @@ void split(string& str, string& delim, vector<string*> &result)
     } while (pos < str.length() && prev < str.length());
 }
 
-vector<vector<string*>*>* CSVParser::read(map<int, string> params) {
+map<string, vector<string*>*>* CSVParser::read(map<int, string> params) {
     ifstream csvFile(csv);
-    vector<vector<string*>*>* result = new vector<vector<string*>*>;
+    map<string, vector<string*>*>* result = new map<string, vector<string*>*>;
 
     if (csvFile) {
         while (!csvFile.eof()) {
@@ -56,7 +56,7 @@ vector<vector<string*>*>* CSVParser::read(map<int, string> params) {
                 }
             }
             if (ok) {
-                result->push_back(splittedLine);
+                result->insert(pair<string, vector<string*>*>(*splittedLine->at(0), splittedLine));
             } else {
                 for (int i = 0; i < splittedLine->size(); i++) {
                     delete splittedLine->at(i);
