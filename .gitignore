@@ -3,6 +3,7 @@
 # output
 tmp/
 airwatcher
+*.exe
 
 #CLion
 .idea/

@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 # si tout est cassé, enlever ça
 #                               |
 #                               v
-#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Crée des variables avec les fichiers à compiler
 set(SRCS src/main.cpp src/App.cpp)
