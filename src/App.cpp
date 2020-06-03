@@ -284,36 +284,36 @@ bool App::MenuAnalyste()
             if (resultat->size() > 0)
             {
 
-            App::banner("Résultats des calculs :");
-            cout
-                << setw(9) << "attribut"
-                << " | "
-                << setw(5) << "unité"
-                << " | "
-                << setw(7) << "minimum"
-                << " | "
-                << setw(7) << "moyenne"
-                << " | "
-                << setw(7) << "mediane"
-                << " | "
-                << setw(7) << "maximum"
-                << " | "
-                << setw(10) << "écart-type"
-                << endl;
-
-            for (auto it = resultat->begin(); it != resultat->end(); it++)
-            {
-                const auto v = it->second;
+                App::banner("Résultats des calculs :");
                 cout
-                    << setw(9) << it->first.getAttributeId() << " | "
-                    << setw(5) << it->first.getUnite() << " | "
-                    << setw(7) << v.min << " | "
-                    << setw(7) << v.moyenne << " | "
-                    << setw(7) << v.mediane << " | "
-                    << setw(7) << v.max << " | "
-                    << setw(10) << v.ecartType
+                    << setw(9) << "attribut"
+                    << " | "
+                    << setw(5) << "unité"
+                    << " | "
+                    << setw(7) << "minimum"
+                    << " | "
+                    << setw(7) << "moyenne"
+                    << " | "
+                    << setw(7) << "mediane"
+                    << " | "
+                    << setw(7) << "maximum"
+                    << " | "
+                    << setw(10) << "écart-type"
                     << endl;
-            }
+
+                for (auto it = resultat->begin(); it != resultat->end(); it++)
+                {
+                    const auto v = it->second;
+                    cout
+                        << setw(9) << it->first.getAttributeId() << " | "
+                        << setw(5) << it->first.getUnite() << " | "
+                        << setw(7) << v.min << " | "
+                        << setw(7) << v.moyenne << " | "
+                        << setw(7) << v.mediane << " | "
+                        << setw(7) << v.max << " | "
+                        << setw(10) << v.ecartType
+                        << endl;
+                }
                 cout << endl;
             }
             else
