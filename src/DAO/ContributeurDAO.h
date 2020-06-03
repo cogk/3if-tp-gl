@@ -15,6 +15,8 @@ public:
 
     Contributeur *getContributeur(const string &id);
 
+    vector<string*>* getUsernames();
+
 private:
     static const string contributeurPath;
     static const string capteurPath;

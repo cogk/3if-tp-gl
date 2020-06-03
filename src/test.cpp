@@ -9,6 +9,7 @@
 #include "DAO/TypeDAO.h"
 #include "DAO/CapteurDAO.h"
 #include "DAO/ContributeurDAO.h"
+#include "Services/ServiceContributeur.h"
 
 int main() {
     TypeDAO typeDao;
@@ -29,5 +30,9 @@ int main() {
     Contributeur *ret = contDao.getContributeur("User0");
     cout << ret->getIdentifiant() << " / " << ret->getCapteurs()[0].getSensorId() << " / " << ret->getCapteurs()[0].getCoordonnees().getLongitude() << endl;
 
+    cout << "test listUsers" << endl;
+    for (auto truc: *ServiceContributeur::listUsers()){
+        cout << (*truc) << endl;
+    }
     return 0;
 }

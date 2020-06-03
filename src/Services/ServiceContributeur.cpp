@@ -4,6 +4,7 @@
 
 #include "ServiceContributeur.h"
 #include "../DAO/MesureDAO.h"
+#include "../DAO/ContributeurDAO.h"
 
 const string cheminMesuresCSV = "./Data/test.csv";
 
@@ -18,4 +19,10 @@ Contributeur* ServiceContributeur::getContributeur(const string &userID) {
     ContributeurDAO contribDao;
     const auto contributeur = contribDao.getContributeur(userID);
     return contributeur;
+}
+
+vector<string*>* ServiceContributeur::listUsers() {
+
+    ContributeurDAO dao;
+    return dao.getUsernames();
 }
