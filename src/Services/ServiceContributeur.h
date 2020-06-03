@@ -7,6 +7,7 @@
 
 #include "../Metier/Mesure.h"
 #include "../Metier/Type.h"
+#include "../DAO/ContributeurDAO.h"
 
 class ServiceContributeur {
 

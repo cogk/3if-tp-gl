@@ -13,6 +13,8 @@ public:
 
     vector<Contributeur*> *list();
 
+    Contributeur *getContributeur(const string &id);
+
 private:
     static const string ContributeurPath;
 };
