@@ -10,6 +10,7 @@
 #include "Metier/Coordonnees.h"
 #include "Metier/Mesure.h"
 #include "Metier/Type.h"
+#include "Services/ServiceAnalyste.h"
 #include "Services/ServiceContributeur.h"
 
 // Définition des menus
@@ -125,7 +126,7 @@ bool App::MenuContributeur()
 
 bool App::MenuAnalyste()
 {
-    const std::vector<std::string> menuAnalyse = {"Filtrage géographique…", "Filtrage temporel…", "Statistiques…"};
+    const std::vector<std::string> menuAnalyse = {"Filtrage géographique…", "Filtrage temporel…", "> Lancer le calcul"};
     // const std::vector<std::string> menuAnalyseStatsCalculsSolo = {"Moyenne", "Médian", "Écart-type"};
 
     bool filtre_geographique = false;
@@ -227,6 +228,7 @@ bool App::MenuAnalyste()
         }
         case 2:
         {
+            /*
             // App::banner("Choisir les séries à analyser :");
             App::banner("Choisir le type de mesure à analyser :");
 
@@ -250,6 +252,15 @@ bool App::MenuAnalyste()
             // poursuivre avec le choix de l'analyse
 
             std::cout << "> Pas implémenté" << std::endl;
+            */
+
+            const auto resultat = ServiceAnalyste::agregerDonnees(filtre_centre, filtre_rayon, filtre_debut, filtre_fin, filtre_geographique, filtre_temporel);
+            for (auto it = resultat->begin(); it != resultat->end(); it++)
+            {
+                std::cout << it->first.getAttributeId() << "(" << it->first.getUnite() << ") : "
+                          << "moyenne = " << it->second << std::endl;
+            }
+
             break;
         }
         case 3:

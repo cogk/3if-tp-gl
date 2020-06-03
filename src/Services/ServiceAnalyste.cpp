@@ -17,7 +17,6 @@ map<Type, double> *ServiceAnalyste::agregerDonnees(const Coordonnees& centre, do
     for(const Mesure* mes : *res){
         // initialisation de la liste ? -> ptet pas (constr par def appelé)
         valeursParType[mes->getType()].push_back(mes->getValeur());
-        std::cerr << "ajout de " << mes->getValeur() << std::endl;
     }
 
     // mettre les moyennes dans une map par type
