@@ -146,15 +146,18 @@ bool App::MenuAnalyste()
         }
         if (filtre_temporel)
         {
-            char *buffer_debut;
-            char *buffer_fin;
+            char *buffer_debut = new char[64];
+            char *buffer_fin = new char[64];
             const char *formatTimestamp("%d/%m/%Y");
-            strftime(buffer_debut, 200, formatTimestamp, localtime(&filtre_debut));
-            strftime(buffer_fin, 200, formatTimestamp, localtime(&filtre_fin));
+            strftime(buffer_debut, 63, formatTimestamp, localtime(&filtre_debut));
+            strftime(buffer_fin, 63, formatTimestamp, localtime(&filtre_fin));
 
             std::cout << ">> Filtre temporel : "
                       << "Période du " << buffer_debut << " au " << buffer_fin
                       << std::endl;
+
+            free(buffer_debut);
+            free(buffer_fin);
         }
 
         const int choice = this->menu("Menu - Sources de données", menuAnalyse);
@@ -205,7 +208,7 @@ bool App::MenuAnalyste()
             const auto debut = App::readDate();
             if (!debut.valid)
             {
-                std::cout << "Valeur invalide." << std::endl;
+                std::cout << "Date invalide." << std::endl;
                 return false;
             }
 
@@ -213,7 +216,7 @@ bool App::MenuAnalyste()
             const auto fin = App::readDate();
             if (!fin.valid)
             {
-                std::cout << "Valeur invalide." << std::endl;
+                std::cout << "Date invalide." << std::endl;
                 return false;
             }
 
@@ -225,20 +228,20 @@ bool App::MenuAnalyste()
         case 2:
         {
             // App::banner("Choisir les séries à analyser :");
-            App::banner("Choisir la série à analyser :");
+            App::banner("Choisir le type de mesure à analyser :");
 
             std::vector<std::string> series = {"Blabla", "Machin", "Truc"};
             const int N = series.size();
             for (int i = 0; i < N; i++)
             {
                 const auto serie = series[i];
-                std::cout << std::setw(4) << i << ". " << serie << std::endl;
+                std::cout << std::setw(4) << (i + 1) << ". " << serie << std::endl;
             }
             std::cout << std::endl;
 
             std::cout << "Série : ";
             const auto res = App::readInteger();
-            const bool valid = (res.valid && res.value >= 0 && res.value < N);
+            const bool valid = (res.valid && res.value > 0 && res.value <= N);
             if (!valid)
             {
                 return false;

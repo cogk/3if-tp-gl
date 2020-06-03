@@ -14,6 +14,7 @@
 const string MesureDAO::mesurePath = "../Data/measurements.csv";
 const string MesureDAO::capteurPath = "../Data/sensors.csv";
 const string MesureDAO::typePath = "../Data/attributes.csv";
+const string MesureDAO::testPath = "../Data/tests.csv";
 
 MesureDAO::MesureDAO() {}
 
@@ -47,7 +48,9 @@ bool MesureDAO::add(const Mesure& mesure) {
     // value
     ligne.push_back(to_string(mesure.getValeur()));
 
-    CSVParser parser (mesurePath);
+    // TODO changer !!!
+//    CSVParser parser (mesurePath);
+    CSVParser parser (testPath);
     return parser.add(ligne);
 
 }
@@ -58,7 +61,7 @@ double distanceGPS(Coordonnees coo1, Coordonnees coo2)
     double lon2 = coo2.getLongitude(), lat2 = coo2.getLattitude();
 
     // https://www.movable-type.co.uk/scripts/latlong.html
-    const double PI = 3.1415;
+    const double PI = 3.14159265359;
 
     // calcul distance entre deux points GPS
     const double R = 6371e3; // rayon de la Terre en mètres
@@ -75,7 +78,8 @@ double distanceGPS(Coordonnees coo1, Coordonnees coo2)
     return d;
 }
 
-vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin) {
+vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin, bool filtrerParDate, bool filtrerParDistance)
+{
     CSVParser parserMesure(mesurePath);
     CSVParser parserCapteur(capteurPath);
     CSVParser parserType(typePath);
@@ -135,7 +139,11 @@ vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut,
         istringstream str_stream(dateStr);
         str_stream >> get_time(&tm, "%Y-%m-%d %T");
         time_t date = mktime(&tm);
-        if (debut < date && date < fin && distanceGPS(centre, capteur.getCoordonnees()) <= rayon) {
+        const bool validDate = filtrerParDate ? (debut < date && date < fin) : true;
+        const bool validDistance = filtrerParDistance ? (distanceGPS(centre, capteur.getCoordonnees()) <= rayon) : true;
+        const bool valid = validDate && validDistance;
+        if (valid)
+        {
             Mesure *mesure = new Mesure(stod(valeur), date, "", capteur, type);
             retour->push_back(mesure);
         }
