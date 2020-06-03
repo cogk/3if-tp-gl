@@ -16,7 +16,7 @@ public:
 
     static bool envoyerDonnees(const Mesure& donnees);
 
-    list<Capteur*>* getCapteurParUser(string& userID);
+    static Contributeur* getContributeur(const string& userID);
 
 };
 

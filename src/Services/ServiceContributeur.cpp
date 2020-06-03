@@ -14,6 +14,8 @@ bool ServiceContributeur::envoyerDonnees(const Mesure& donnees) {
 
 }
 
-list<Capteur *> *ServiceContributeur::getCapteurParUser(string &userID) {
-    return nullptr;
+Contributeur* ServiceContributeur::getContributeur(const string &userID) {
+    ContributeurDAO contribDao;
+    const auto contributeur = contribDao.getContributeur(userID);
+    return contributeur;
 }
