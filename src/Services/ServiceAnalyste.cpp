@@ -4,6 +4,7 @@
 
 #include "ServiceAnalyste.h"
 #include "../DAO/MesureDAO.h"
+#include "../DAO/TypeDAO.h"
 
 #include <algorithm>
 #include <math.h>
@@ -65,4 +66,8 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
     }
 
     return resultats;
+}
+
+vector<Type*> *ServiceAnalyste::listType() {
+    return TypeDAO().list();
 }

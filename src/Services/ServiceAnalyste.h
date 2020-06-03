@@ -8,6 +8,7 @@
 #include "../Metier/Coordonnees.h"
 #include "../Metier/Type.h"
 #include <map>
+#include <vector>
 
 class ServiceAnalyste
 {
@@ -22,6 +23,8 @@ public:
     };
 
     static map<Type, Resultats> *agregerDonnees(const Coordonnees &centre, double rayon, time_t debut, time_t fin, bool = true, bool = true);
+
+    static vector<Type*> *listType();
 };
 
 #endif //INC_3IF_GL_TP_SERVICEANALYSTE_H
