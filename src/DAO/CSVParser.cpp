@@ -32,7 +32,7 @@ void split(string& str, string& delim, vector<string*> &result)
     } while (pos < str.length() && prev < str.length());
 }
 
-map<string, vector<string*>*>* CSVParser::read(map<int, string> params) {
+map<string, vector<string *> *> *CSVParser::read(map<size_t, string> params) {
     ifstream csvFile(csv);
     map<string, vector<string*>*>* result = new map<string, vector<string*>*>;
 
@@ -58,7 +58,7 @@ map<string, vector<string*>*>* CSVParser::read(map<int, string> params) {
             if (ok) {
                 result->insert(pair<string, vector<string*>*>(*splittedLine->at(0), splittedLine));
             } else {
-                for (int i = 0; i < splittedLine->size(); i++) {
+                for (size_t i = 0; i < splittedLine->size(); i++) {
                     delete splittedLine->at(i);
                 }
                 delete splittedLine;
@@ -73,7 +73,7 @@ map<string, vector<string*>*>* CSVParser::read(map<int, string> params) {
     return result;
 }
 
-vector<vector<string*>*>* CSVParser::readVec(map<int, string> params) {
+vector<vector<string*>*>* CSVParser::readVec(map<size_t, string> params) {
     ifstream csvFile(csv);
     vector<vector<string*>*>* result = new vector<vector<string*>*>;
 
@@ -99,7 +99,7 @@ vector<vector<string*>*>* CSVParser::readVec(map<int, string> params) {
             if (ok) {
                 result->push_back(splittedLine);
             } else {
-                for (int i = 0; i < splittedLine->size(); i++) {
+                for (size_t i = 0; i < splittedLine->size(); i++) {
                     delete splittedLine->at(i);
                 }
                 delete splittedLine;
@@ -134,12 +134,12 @@ bool CSVParser::add(vector<string> line) {
     return false;
 }
 
-bool CSVParser::deleteLines(map<int, string> params) {
-    cerr << "deleteLines : fonctionnalité non implémentée" << endl;
-    return false;
-}
+// bool CSVParser::deleteLines(map<size_t, string> params) {
+//     cerr << "deleteLines : fonctionnalité non implémentée" << endl;
+//     return false;
+// }
 
-bool CSVParser::editLines(map<int, string> params, vector<string> newLine) {
-    cerr << "editLines : fonctionnalité non implémentée" << endl;
-    return false;
-}
+// bool CSVParser::editLines(map<size_t, string> params, vector<string> newLine) {
+//     cerr << "editLines : fonctionnalité non implémentée" << endl;
+//     return false;
+// }
