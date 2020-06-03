@@ -5,17 +5,22 @@
 #ifndef INC_3IF_GL_TP_SERVICEANALYSTE_H
 #define INC_3IF_GL_TP_SERVICEANALYSTE_H
 
-#include <map>
-#include <list>
-#include <numeric>
 #include "../Metier/Coordonnees.h"
 #include "../Metier/Type.h"
+#include <map>
 
-class ServiceAnalyste {
-
+class ServiceAnalyste
+{
 public:
-    static map<Type, double> *agregerDonnees(const Coordonnees& centre, double rayon, time_t debut, time_t fin, bool = true, bool = true);
-};
+    struct Resultats
+    {
+        double moyenne;
+        double min;
+        double max;
+        double mediane;
+    };
 
+    static map<Type, Resultats> *agregerDonnees(const Coordonnees &centre, double rayon, time_t debut, time_t fin, bool = true, bool = true);
+};
 
 #endif //INC_3IF_GL_TP_SERVICEANALYSTE_H

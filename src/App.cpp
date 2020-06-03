@@ -126,8 +126,7 @@ bool App::MenuContributeur()
 
 bool App::MenuAnalyste()
 {
-    const std::vector<std::string> menuAnalyse = {"Filtrage géographique…", "Filtrage temporel…", "> Lancer le calcul"};
-    // const std::vector<std::string> menuAnalyseStatsCalculsSolo = {"Moyenne", "Médian", "Écart-type"};
+    const std::vector<std::string> menuAnalyse = {"Filtrage géographique…", "Filtrage temporel…", "Lancer le calcul", "Retour au menu principal"};
 
     bool filtre_geographique = false;
     double filtre_rayon = 0.0;
@@ -229,7 +228,6 @@ bool App::MenuAnalyste()
         case 2:
         {
             /*
-            // App::banner("Choisir les séries à analyser :");
             App::banner("Choisir le type de mesure à analyser :");
 
             std::vector<std::string> series = {"Blabla", "Machin", "Truc"};
@@ -254,16 +252,47 @@ bool App::MenuAnalyste()
             std::cout << "> Pas implémenté" << std::endl;
             */
 
+            std::cout << "Calcul..." << std::flush;
+
             const auto resultat = ServiceAnalyste::agregerDonnees(filtre_centre, filtre_rayon, filtre_debut, filtre_fin, filtre_geographique, filtre_temporel);
+            std::cout << " Terminé." << std::endl
+                      << std::endl;
+            App::banner("Résultats des calculs :");
+            std::cout
+                << std::setw(9) << "attribut"
+                << " | "
+                << std::setw(5) << "unité"
+                << " | "
+                << std::setw(7) << "minimum"
+                << " | "
+                << std::setw(7) << "moyenne"
+                << " | "
+                << std::setw(7) << "mediane"
+                << " | "
+                << std::setw(7) << "maximum"
+                << std::endl;
+
             for (auto it = resultat->begin(); it != resultat->end(); it++)
             {
-                std::cout << it->first.getAttributeId() << "(" << it->first.getUnite() << ") : "
-                          << "moyenne = " << it->second << std::endl;
+                const auto v = it->second;
+                std::cout
+                    << std::setw(9) << it->first.getAttributeId() << " | "
+                    << std::setw(5) << it->first.getUnite() << " | "
+                    << std::setw(7) << v.min << " | "
+                    << std::setw(7) << v.moyenne << " | "
+                    << std::setw(7) << v.mediane << " | "
+                    << std::setw(7) << v.max
+                    << std::endl;
             }
+
+            std::cout << std::endl;
 
             break;
         }
         case 3:
+            return true;
+            break;
+        case 4:
             return true;
             break;
         default:
