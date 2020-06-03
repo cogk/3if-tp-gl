@@ -35,6 +35,26 @@ Contributeur *ContributeurDAO::getContributeur(const string &id) {
         retour->addCapteur(capteur);
     }
 
+    for (auto i = contributeurs->begin(); i != contributeurs->end(); i++)
+    {
+        for (auto j = (*i)->begin(); j != (*i)->end(); j++)
+        {
+            delete *j;
+        }
+        delete *i;
+    }
+    delete contributeurs;
+
+    for (auto i = capteurs->begin(); i != capteurs->end(); i++)
+    {
+        for (auto j = i->second->begin(); j != i->second->end(); j++)
+        {
+            delete *j;
+        }
+        delete i->second;
+    }
+    delete capteurs;
+
     return retour;
 }
 
@@ -48,6 +68,16 @@ vector<string *>* ContributeurDAO::getUsernames() {
     for (vector<string*> *ligne : *contributeurs) {
         retour->push_back((*ligne)[0]);
     }
+
+    for (auto i = contributeurs->begin(); i != contributeurs->end(); i++)
+    {
+        for (auto j = (*i)->begin()+1; j != (*i)->end(); j++)
+        {
+            delete *j;
+        }
+        delete *i;
+    }
+    delete contributeurs;
 
     return retour;
 }
