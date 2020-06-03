@@ -15,13 +15,12 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
     bool filtrerParDate)
 {
 
-    MesureDAO dao;
-    vector<Mesure *> *res = dao.list(centre, rayon, debut, fin, filtrerParDistance, filtrerParDate);
+    MesureDAO mesureDao;
+    vector<Mesure *> *res = mesureDao.list(centre, rayon, debut, fin, filtrerParDistance, filtrerParDate);
 
     // mapper les valeurs par type
     map<Type, vector<double>> valeursParType;
-    for (const Mesure *mes : *res)
-    {
+    for (const Mesure *mes : *res){
         // initialisation de la liste ? -> ptet pas (constr par def appelé)
         valeursParType[mes->getType()].push_back(mes->getValeur());
     }
@@ -29,8 +28,8 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
     // mettre les resultats dans une map par type
     const double infty = std::numeric_limits<double>::infinity();
     auto resultats = new map<Type, ServiceAnalyste::Resultats>();
-    for (const auto pair : valeursParType)
-    {
+    for (const auto pair : valeursParType){
+
         auto v = pair.second;
         size_t count = v.size();
         double sum = 0.0;
