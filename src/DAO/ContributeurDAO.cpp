@@ -37,3 +37,17 @@ Contributeur *ContributeurDAO::getContributeur(const string &id) {
 
     return retour;
 }
+
+vector<string *>* ContributeurDAO::getUsernames() {
+
+    CSVParser parser(contributeurPath);
+
+    vector<vector<string*>*> *contributeurs = parser.readVec();
+    vector<string *>* retour = new vector<string*>();
+
+    for (vector<string*> *ligne : *contributeurs) {
+        retour->push_back((*ligne)[0]);
+    }
+
+    return retour;
+}
