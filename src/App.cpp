@@ -275,10 +275,15 @@ bool App::MenuAnalyste()
         case 2:
         {
             cout << "Calcul..." << flush;
+            auto start = chrono::steady_clock::now();
 
             const auto resultat = ServiceAnalyste::agregerDonnees(filtre_centre, filtre_rayon, filtre_debut, filtre_fin, filtre_geographique, filtre_temporel);
             cout << " Terminé." << endl
                  << endl;
+
+            if (resultat->size() > 0)
+            {
+
             App::banner("Résultats des calculs :");
             cout
                 << setw(9) << "attribut"
@@ -309,8 +314,17 @@ bool App::MenuAnalyste()
                     << setw(10) << v.ecartType
                     << endl;
             }
+                cout << endl;
+            }
+            else
+            {
+                App::banner("Aucun résultat pour les critères spécifiés");
+            }
 
-            cout << endl;
+            auto end = chrono::steady_clock::now();
+            auto diff = end - start;
+
+            cout << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
             break;
         }
