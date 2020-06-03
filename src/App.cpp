@@ -203,7 +203,7 @@ bool App::MenuAnalyste()
             delete[] buffer_fin;
         }
 
-        const int choice = this->menu("Menu - Sources de données", menuAnalyse);
+        const int choice = this->menu("Menu - Analyse", menuAnalyse);
 
         switch (choice)
         {
@@ -384,7 +384,7 @@ bool App::MenuAdmin()
 bool App::MenuSuperAdmin()
 {
     const vector<string> menuSuperAdmin = {"Ajouter un administrateur", "Modifier un administrateur", "Supprimer un administrateur", "Voir les performances du service", "Retour au menu principal"};
-    const int choice = this->menu("Menu - Administration", menuSuperAdmin);
+    const int choice = this->menu("Menu - Super Administration", menuSuperAdmin);
     switch (choice)
     {
     case 0:
