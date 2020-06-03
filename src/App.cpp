@@ -125,7 +125,7 @@ bool App::MenuContributeur()
         cout << endl;
         cout << "Valeur mesurée : ";
         const auto resVal = App::readFractional();
-        if (!resVal.valid)
+        if (!resVal.valid || resVal.value < 0)
         {
             cout << "Valeur invalide." << endl;
             return false;
