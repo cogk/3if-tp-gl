@@ -32,10 +32,11 @@ int main() {
 
     tm tm2{};
     istringstream str_stream2("2019-01-08 12:00:10");
-    str_stream >> get_time(&tm2, "%Y-%m-%d %T");
+    str_stream2 >> get_time(&tm2, "%Y-%m-%d %T");
     time_t fin = mktime(&tm2);
 
-    vector<Mesure*>* res = dao.list(Coordonnees(44.8, 1.1), 1000.0, debut, fin);
+    vector<Mesure*>* res = dao.list(Coordonnees(44.8, 1.1), 50000.0, debut, fin);
+    cout << "Taille de la liste : " << res->size();
     for (Mesure *m : *res) {
         cout << m->getDate() << " / " << m->getCapteur().getSensorId() << " / " << m->getType().getAttributeId() << endl;
         delete m;

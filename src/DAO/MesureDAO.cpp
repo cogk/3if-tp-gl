@@ -106,11 +106,10 @@ vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut
 
     // Récupération des mesures
     vector<vector<string*>*>* mesures = parserMesure.readVec();
-    map<string, vector<string*>*>* capteurs = parserMesure.read();
-    map<string, vector<string*>*>* types = parserMesure.read();
+    map<string, vector<string*>*>* capteurs = parserCapteur.read();
+    map<string, vector<string*>*>* types = parserType.read();
 
     vector<Mesure*>* retour = new vector<Mesure*>();
-    int i = 0;
 
     // Tri des mesures
     for (auto line : *mesures) {
@@ -118,16 +117,13 @@ vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut
         string &nomCapteur = *line->at(1);
         string &nomType = *line->at(2);
         string &valeur = *line->at(3);
-        if (i++ % 100 == 0) {
-            cout << "Ligne " << i << "/" << mesures->size() << endl;
-        }
 
         // Récupération du capteur
-        vector<string*> *capteurCsv = (*capteurs)[nomCapteur];
+        vector<string*> *capteurCsv = capteurs->at(nomCapteur);
         Capteur capteur(*(*capteurCsv)[0], "", Coordonnees(stod(*(*capteurCsv)[1]), stod(*(*capteurCsv)[2])));
 
         // récupération du type
-        vector<string*> *typeCsv = (*types)[nomType];
+        vector<string*> *typeCsv = types->at(nomType);
         Type type(*(*typeCsv)[0], *(*typeCsv)[1], *(*typeCsv)[2]);
 
         // Vérification de la mesure
