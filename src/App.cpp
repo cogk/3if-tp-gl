@@ -142,7 +142,7 @@ bool App::MenuContributeur()
         auto end = chrono::steady_clock::now();
         auto diff = end - start;
 
-        cout << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
+        cerr << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
         for (auto i = types->begin(); i != types->end(); ++i)
             delete *i;
@@ -284,7 +284,7 @@ bool App::MenuAnalyste()
             auto end = chrono::steady_clock::now();
             auto diff = end - start;
 
-            cout << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
+            cerr << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
             if (resultat->size() > 0)
             {
