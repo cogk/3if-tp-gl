@@ -101,8 +101,10 @@ bool App::MenuContributeur()
 
         auto start = chrono::steady_clock::now();
 
+        // instanciation des objets nécessaires
         time_t timestamp = time(nullptr);
         Coordonnees coords(resLat.value, resLon.value);
+        // TODO description à changer
         Capteur capteur(sensorId, "description capteur", coords);
         Type type("machin", "unité", "description unité");
         Mesure mes(resVal.value, timestamp, "mesure test", capteur, type);
