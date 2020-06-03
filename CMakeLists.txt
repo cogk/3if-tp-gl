@@ -3,6 +3,12 @@ project(3if_gl-tp)
 
 set(CMAKE_CXX_STANDARD 11)
 
+# pour le dossier courant
+# si tout est cassé, enlever ça
+#                               |
+#                               v
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+
 # Crée des variables avec les fichiers à compiler
 set(SRCS src/main.cpp src/App.cpp)
 set(Metier src/Metier/Utilisateur.cpp src/Metier/SuperAdministrateur.cpp src/Metier/Administrateur.cpp src/Metier/Analyste.cpp src/Metier/Expert.cpp src/Metier/Contributeur.cpp src/Metier/Capteur.cpp src/Metier/Mesure.cpp src/Metier/Type.cpp src/Metier/Coordonnees.cpp src/Metier/Purificateur.cpp src/Metier/Organisation.cpp src/Metier/Agence.cpp src/Metier/Entreprise.cpp)
