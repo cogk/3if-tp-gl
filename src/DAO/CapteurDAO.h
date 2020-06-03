@@ -20,6 +20,8 @@ public:
 
     vector<Capteur *> *list();
 
+private:
+    static const string capteurPath;
 };
 
 
