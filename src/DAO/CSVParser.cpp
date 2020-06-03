@@ -73,6 +73,47 @@ map<string, vector<string*>*>* CSVParser::read(map<int, string> params) {
     return result;
 }
 
+vector<vector<string*>*>* CSVParser::readVec(map<int, string> params) {
+    ifstream csvFile(csv);
+    vector<vector<string*>*>* result = new vector<vector<string*>*>;
+
+    if (csvFile) {
+        while (!csvFile.eof()) {
+            string *line = new string;
+            getline(csvFile, *line);
+            if (line->empty()) {
+                continue;
+            }
+
+            vector<string*> *splittedLine = new vector<string*>;
+            string delim = ";";
+            split(*line, delim, *splittedLine);
+
+            bool ok = true;
+            for (auto it = params.cbegin(); it != params.cend(); ++it) {
+                if (it->first >= splittedLine->size() || *splittedLine->at(it->first) != it->second) {
+                    ok = false;
+                    break;
+                }
+            }
+            if (ok) {
+                result->push_back(splittedLine);
+            } else {
+                for (int i = 0; i < splittedLine->size(); i++) {
+                    delete splittedLine->at(i);
+                }
+                delete splittedLine;
+            }
+        }
+
+        csvFile.close();
+    } else {
+        cerr << "Oupsi : Erreur d'ouverture du fichier " << csv << " dans la methode CSVParser::read." << endl;
+    }
+
+    return result;
+}
+
 bool CSVParser::add(vector<string> line) {
     ofstream csvFile(csv, ios_base::app);
 

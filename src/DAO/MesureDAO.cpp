@@ -88,6 +88,16 @@ void deleteMap(map<string, vector<string*>*>* &map) {
     delete map;
 }
 
+void deleteVec(vector<vector<string*>*>* &vec) {
+    for (auto inVec : *vec) {
+        for (auto str : *inVec) {
+            delete str;
+        }
+        delete inVec;
+    }
+    delete vec;
+}
+
 vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin, bool filtrerParDistance, bool filtrerParDate)
 {
     CSVParser parserMesure(mesurePath);
@@ -95,7 +105,7 @@ vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut
     CSVParser parserType(typePath);
 
     // Récupération des mesures
-    map<string, vector<string*>*>* mesures = parserMesure.read();
+    vector<vector<string*>*>* mesures = parserMesure.readVec();
     map<string, vector<string*>*>* capteurs = parserMesure.read();
     map<string, vector<string*>*>* types = parserMesure.read();
 
@@ -103,9 +113,7 @@ vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut
     int i = 0;
 
     // Tri des mesures
-    for (auto it = mesures->begin(); it != mesures->end(); ++it) {
-        vector<string*> *line = it->second;
-
+    for (auto line : *mesures) {
         string &dateStr = *line->at(0);
         string &nomCapteur = *line->at(1);
         string &nomType = *line->at(2);
@@ -138,7 +146,7 @@ vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut
     }
 
     // Nettoyage mémoire
-    deleteMap(mesures);
+    deleteVec(mesures);
     deleteMap(capteurs);
     deleteMap(types);
 

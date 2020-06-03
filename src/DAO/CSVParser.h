@@ -18,9 +18,11 @@ public:
 // Méthodes publiques
     // Contrat : le retour devra être delete par l'utilisateur
     map<string, vector<string*>*>* read(map<int, string> params = map<int, string>());
+    vector<vector<string*>*>* readVec(map<int, string> params = map<int, string>());
+
     bool add(vector<string> line);
-    bool deleteLines(map<int, string> params = map<int, string>());
-    bool editLines(map<int, string> params = map<int, string>(), vector<string> newLine);
+    bool deleteLines(map<int, string> params);
+    bool editLines(map<int, string> params, vector<string> newLine);
 
 // Constructeurs / destructeurs
     CSVParser(string csvStr);
