@@ -18,6 +18,12 @@ Entrez ici votre sélection :
    4. Retour au menu principal
 
 Entrez ici votre sélection : 
+* Ajouter une nouvelle entrée 
+Choix de l'utilisateur (débug)
+   1. User0
+   2. User1
+
+Numéro de votre utilisateur : Utilisateur invalide.
 * Menu Principal 
 
    1. Contribution…
@@ -28,23 +34,5 @@ Entrez ici votre sélection :
    6. Quitter AirWatcher
 
 Entrez ici votre sélection : 
-* Menu - Super Administration 
-
-   1. Ajouter un administrateur
-   2. Modifier un administrateur
-   3. Supprimer un administrateur
-   4. Voir les performances du service
-   5. Retour au menu principal
-
-Entrez ici votre sélection : 
-> Pas implémenté
-* Menu Principal 
-
-   1. Contribution…
-   2. Analyse…
-   3. Sources de données…
-   4. Administration…
-   5. Super Admin…
-   6. Quitter AirWatcher
-
-Entrez ici votre sélection : 
+Entrée invalide, veuillez entrer un entier entre 1 et 6.
+Vous n'avez pas choisi de menu.

@@ -10,18 +10,30 @@
    6. Quitter AirWatcher
 
 Entrez ici votre sélection : 
-* Menu - Analyse 
+* Menu - Vos données 
 
-   1. Filtrage géographique…
-   2. Filtrage temporel…
-   3. Lancer le calcul
+   1. Entrer de nouvelles données
+   2. Votre score global
+   3. Liste de vos données
    4. Retour au menu principal
 
 Entrez ici votre sélection : 
-* Définir une région d'analyse 
-Forme de la région d'analyse : CERCLE
-* Rayon du cercle (en mètres) : Valeur invalide.
-* Menu Principal 
+* Ajouter une nouvelle entrée 
+Choix de l'utilisateur (débug)
+   1. User0
+   2. User1
+
+Numéro de votre utilisateur : Choix du capteur
+   1. Sensor70 (46.8, -1) -- 
+
+Numéro du capteur : Choix du type
+   1. O3 (µg/m3) -- concentration d'ozone
+   2. SO2 (µg/m3) -- concentration de dioxyde de soufre
+   3. NO2 (µg/m3) -- concentration de dioxyde d'azote
+   4. PM10 (µg/m3) -- concentration de particules fines
+
+Numéro du type : 
+Valeur mesurée : * Menu Principal 
 
    1. Contribution…
    2. Analyse…
