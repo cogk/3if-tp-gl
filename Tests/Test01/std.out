@@ -1,6 +1,6 @@
-| Bienvenue dans AirWatcher
-* Utilisateur: (anonyme)       
-| Menu Principal 
+* Bienvenue dans AirWatcher 
+| Utilisateur: (anonyme)       
+* Menu Principal 
 
    1. Contribution…
    2. Analyse…
@@ -10,7 +10,7 @@
    6. Quitter AirWatcher
 
 Entrez ici votre sélection : 
-| Menu - Vos données 
+* Menu - Vos données 
 
    1. Entrer de nouvelles données
    2. Votre score global
@@ -18,7 +18,7 @@ Entrez ici votre sélection :
    4. Retour au menu principal
 
 Entrez ici votre sélection : 
-| Menu Principal 
+* Menu Principal 
 
    1. Contribution…
    2. Analyse…
@@ -28,15 +28,17 @@ Entrez ici votre sélection :
    6. Quitter AirWatcher
 
 Entrez ici votre sélection : 
-| Menu - Administration 
+* Menu - Super Administration 
 
-   1. Supprimer un utilisateur
-   2. Modifier un utilisateur
-   3. Réinit. un mot de passe
-   4. Retour au menu principal
+   1. Ajouter un administrateur
+   2. Modifier un administrateur
+   3. Supprimer un administrateur
+   4. Voir les performances du service
+   5. Retour au menu principal
 
 Entrez ici votre sélection : 
-| Menu Principal 
+> Pas implémenté
+* Menu Principal 
 
    1. Contribution…
    2. Analyse…
