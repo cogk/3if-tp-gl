@@ -10,7 +10,8 @@ CapteurDAO::CapteurDAO() {}
 
 CapteurDAO::~CapteurDAO() {}
 
-vector<Capteur *> *CapteurDAO::list() {
+vector<Capteur *> *CapteurDAO::list() const
+{
     CSVParser parser(capteurPath);
 
     vector<vector<string*>*> *types = parser.readVec();
