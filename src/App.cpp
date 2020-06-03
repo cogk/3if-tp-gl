@@ -7,8 +7,6 @@
 #include <vector>
 
 #include "App.h"
-#include "DAO/CapteurDAO.h"
-#include "DAO/TypeDAO.h"
 #include "Metier/Capteur.h"
 #include "Metier/Coordonnees.h"
 #include "Metier/Mesure.h"
@@ -67,28 +65,28 @@ bool App::MenuContributeur()
     {
         App::banner("Ajouter une nouvelle entrée");
 
+        const auto contributeur = ServiceContributeur::getContributeur("User0");
+
         std::cout << "Choix du capteur" << std::endl;
-        CapteurDAO daoCapteurs;
-        const auto capteurs = daoCapteurs.list();
-        for (size_t i = 0; i < capteurs->size(); i++)
+        const auto capteurs = contributeur->getCapteurs();
+        for (size_t i = 0; i < capteurs.size(); i++)
         {
-            const auto capteur = capteurs->at(i);
-            std::cout << std::setw(4) << (i + 1) << ". " << capteur->getSensorId() << " (" << capteur->getCoordonnees().getLattitude() << ", " << capteur->getCoordonnees().getLongitude() << ") -- " << capteur->getDescription() << std::endl;
+            const auto capteur = capteurs.at(i);
+            std::cout << std::setw(4) << (i + 1) << ". " << capteur.getSensorId() << " (" << capteur.getCoordonnees().getLattitude() << ", " << capteur.getCoordonnees().getLongitude() << ") -- " << capteur.getDescription() << std::endl;
         }
         std::cout << std::endl;
         std::cout << "Numéro du capteur : ";
         const auto resCapteur = App::readInteger();
-        const bool validC = (resCapteur.valid && resCapteur.value > 0 && resCapteur.value <= capteurs->size());
+        const bool validC = (resCapteur.valid && resCapteur.value > 0 && resCapteur.value <= capteurs.size());
         if (!validC)
         {
             std::cout << "Capteur invalide." << std::endl;
             return false;
         }
-        const auto capteur = capteurs->at(resCapteur.value - 1);
+        const auto capteur = capteurs.at(resCapteur.value - 1);
 
         std::cout << "Choix du type" << std::endl;
-        TypeDAO daoTypes;
-        const auto types = daoTypes.list();
+        const auto types = ServiceAnalyste::listType();
         for (size_t i = 0; i < types->size(); i++)
         {
             const auto type = types->at(i);
@@ -103,7 +101,7 @@ bool App::MenuContributeur()
             std::cout << "Type invalide." << std::endl;
             return false;
         }
-        const auto type = types->at(resType.value - 1);
+        const auto type = *types->at(resType.value - 1);
 
         std::cout << std::endl;
         std::cout << "Valeur mesurée : ";
@@ -118,7 +116,7 @@ bool App::MenuContributeur()
 
         // instanciation des objets nécessaires
         time_t timestamp = time(nullptr);
-        Mesure mes(resVal.value, timestamp, "ajout manuel", *capteur, *type);
+        Mesure mes(resVal.value, timestamp, "ajout manuel", capteur, type);
 
         ServiceContributeur::envoyerDonnees(mes);
 
@@ -127,6 +125,10 @@ bool App::MenuContributeur()
 
         cout << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
+        for (auto i = types->begin(); i != types->end(); ++i)
+            delete *i;
+        delete types;
+        delete contributeur;
         break;
     }
     case 1:
@@ -177,8 +179,8 @@ bool App::MenuAnalyste()
                       << "Période du " << buffer_debut << " au " << buffer_fin
                       << std::endl;
 
-            delete buffer_debut;
-            delete buffer_fin;
+            delete[] buffer_debut;
+            delete[] buffer_fin;
         }
 
         const int choice = this->menu("Menu - Sources de données", menuAnalyse);
