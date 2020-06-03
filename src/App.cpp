@@ -277,13 +277,16 @@ bool App::MenuAnalyste()
             cout << "Calcul..." << flush;
             auto start = chrono::steady_clock::now();
 
+            auto start = chrono::steady_clock::now();
             const auto resultat = ServiceAnalyste::agregerDonnees(filtre_centre, filtre_rayon, filtre_debut, filtre_fin, filtre_geographique, filtre_temporel);
-            cout << " Terminé." << endl
+            auto end = chrono::steady_clock::now();
+            auto diff = end - start;
+
+            cout << " Terminé (en " << chrono::duration<double, milli>(diff).count() << " ms)"
                  << endl;
 
             if (resultat->size() > 0)
             {
-
                 App::banner("Résultats des calculs :");
                 cout
                     << setw(9) << "attribut"
