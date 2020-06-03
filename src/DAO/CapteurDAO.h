@@ -18,7 +18,7 @@ public:
 
     virtual ~CapteurDAO();
 
-    vector<Capteur *> *list();
+    vector<Capteur *> *list() const;
 
 private:
     static const string capteurPath;

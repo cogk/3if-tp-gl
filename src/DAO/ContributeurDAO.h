@@ -11,7 +11,7 @@ public:
 
     virtual ~ContributeurDAO();
 
-    vector<Contributeur*> *list();
+//    vector<Contributeur*> *list();
 
     Contributeur *getContributeur(const string &id);
 

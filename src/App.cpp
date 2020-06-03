@@ -7,6 +7,8 @@
 #include <vector>
 
 #include "App.h"
+#include "DAO/CapteurDAO.h"
+#include "DAO/TypeDAO.h"
 #include "Metier/Capteur.h"
 #include "Metier/Coordonnees.h"
 #include "Metier/Mesure.h"
@@ -65,35 +67,48 @@ bool App::MenuContributeur()
     {
         App::banner("Ajouter une nouvelle entrée");
 
-        std::string sensorId;
-        std::cout << "* Nom du capteur : ";
-        std::getline(std::cin, sensorId);
-        if (sensorId.size() == 0)
+        std::cout << "Choix du capteur" << std::endl;
+        CapteurDAO daoCapteurs;
+        const auto capteurs = daoCapteurs.list();
+        for (size_t i = 0; i < capteurs->size(); i++)
         {
-            std::cout << "Valeur invalide." << std::endl;
+            const auto capteur = capteurs->at(i);
+            std::cout << std::setw(4) << (i + 1) << ". " << capteur->getSensorId() << " (" << capteur->getCoordonnees().getLattitude() << ", " << capteur->getCoordonnees().getLongitude() << ") -- " << capteur->getDescription() << std::endl;
+        }
+        std::cout << std::endl;
+        std::cout << "Numéro du capteur : ";
+        const auto resCapteur = App::readInteger();
+        const bool validC = (resCapteur.valid && resCapteur.value > 0 && resCapteur.value <= capteurs->size());
+        if (!validC)
+        {
+            std::cout << "Capteur invalide." << std::endl;
             return false;
         }
+        const auto capteur = capteurs->at(resCapteur.value - 1);
 
-        std::cout << "* Coordonnées capteur" << std::endl;
-        std::cout << "   - latitude : ";
-        const auto resLat = App::readFractional();
-        if (!resLat.valid || resLat.value < 0)
+        std::cout << "Choix du type" << std::endl;
+        TypeDAO daoTypes;
+        const auto types = daoTypes.list();
+        for (size_t i = 0; i < types->size(); i++)
         {
-            std::cout << "Valeur invalide." << std::endl;
+            const auto type = types->at(i);
+            std::cout << std::setw(4) << (i + 1) << ". " << type->getAttributeId() << " (" << type->getUnite() << ") -- " << type->getDescription() << std::endl;
+        }
+        std::cout << std::endl;
+        std::cout << "Numéro du type : ";
+        const auto resType = App::readInteger();
+        const bool validT = (resType.valid && resType.value > 0 && resType.value <= types->size());
+        if (!validT)
+        {
+            std::cout << "Type invalide." << std::endl;
             return false;
         }
+        const auto type = types->at(resType.value - 1);
 
-        std::cout << "   - longitude : ";
-        const auto resLon = App::readFractional();
-        if (!resLon.valid || resLon.value < 0)
-        {
-            std::cout << "Valeur invalide." << std::endl;
-            return false;
-        }
-
-        std::cout << "* Valeur mesurée : ";
+        std::cout << std::endl;
+        std::cout << "Valeur mesurée : ";
         const auto resVal = App::readFractional();
-        if (!resVal.valid || resVal.value < 0)
+        if (!resVal.valid)
         {
             std::cout << "Valeur invalide." << std::endl;
             return false;
@@ -101,11 +116,9 @@ bool App::MenuContributeur()
 
         auto start = chrono::steady_clock::now();
 
+        // instanciation des objets nécessaires
         time_t timestamp = time(nullptr);
-        Coordonnees coords(resLat.value, resLon.value);
-        Capteur capteur(sensorId, "description capteur", coords);
-        Type type("machin", "unité", "description unité");
-        Mesure mes(resVal.value, timestamp, "mesure test", capteur, type);
+        Mesure mes(resVal.value, timestamp, "ajout manuel", *capteur, *type);
 
         ServiceContributeur::envoyerDonnees(mes);
 

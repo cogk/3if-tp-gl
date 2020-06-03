@@ -6,7 +6,7 @@ TypeDAO::TypeDAO() {}
 
 TypeDAO::~TypeDAO() {}
 
-vector<Type*> *TypeDAO::list() {
+vector<Type*> *TypeDAO::list() const {
     CSVParser parser(typePath);
 
     vector<vector<string*>*> *types = parser.readVec();

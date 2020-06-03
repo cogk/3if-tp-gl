@@ -13,3 +13,7 @@ bool ServiceContributeur::envoyerDonnees(const Mesure& donnees) {
     return dao.add(donnees);
 
 }
+
+list<Capteur *> *ServiceContributeur::getCapteurParUser(string &userID) {
+    return nullptr;
+}
