@@ -5,7 +5,7 @@
 #include "CapteurDAO.h"
 
 // TODO changer : debug
-const string cheminCapteursCSV = "../../Data/capt.csv";
+const string cheminCapteursCSV = "./Data/sensors.csv";
 
 CapteurDAO::CapteurDAO() {}
 
