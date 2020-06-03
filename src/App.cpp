@@ -14,6 +14,8 @@
 #include "Services/ServiceAnalyste.h"
 #include "Services/ServiceContributeur.h"
 
+using namespace std;
+
 // Définition des menus
 bool App::MenuPrincipal()
 {
@@ -21,7 +23,7 @@ bool App::MenuPrincipal()
     this->userbar("(anonyme)");
 
     // Tous les menus
-    const std::vector<std::string>
+    const vector<string>
         menuPrincipal = {"Contribution…", "Analyse…", "Sources de données…", "Administration…", "Super Admin…", "Quitter AirWatcher"};
 
     while (true)
@@ -48,7 +50,7 @@ bool App::MenuPrincipal()
             return true;
             break;
         default:
-            std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+            cout << "Vous n'avez pas choisi de menu." << endl;
             return false;
         }
     }
@@ -57,7 +59,7 @@ bool App::MenuPrincipal()
 
 bool App::MenuContributeur()
 {
-    const std::vector<std::string> menuVosDonnees = {"Entrer de nouvelles données", "Votre score global", "Liste de vos données", "Retour au menu principal"};
+    const vector<string> menuVosDonnees = {"Entrer de nouvelles données", "Votre score global", "Liste de vos données", "Retour au menu principal"};
     const int choice = this->menu("Menu - Vos données", menuVosDonnees);
     switch (choice)
     {
@@ -65,50 +67,68 @@ bool App::MenuContributeur()
     {
         App::banner("Ajouter une nouvelle entrée");
 
-        const auto contributeur = ServiceContributeur::getContributeur("User0");
+        cout << "Choix de l'utilisateur (débug)" << endl;
+        const vector<string> users = {"User0", "User1"};
+        for (size_t i = 0; i < users.size(); i++)
+        {
+            const auto user = users.at(i);
+            cout << setw(4) << (i + 1) << ". " << user << endl;
+        }
+        cout << endl;
+        cout << "Numéro de votre utilisateur : ";
+        const auto resUser = App::readInteger();
+        const bool validU = (resUser.valid && resUser.value > 0 && (size_t)resUser.value <= users.size());
+        if (!validU)
+        {
+            cout << "Utilisateur invalide." << endl;
+            return false;
+        }
+        const auto username = users.at(resUser.value - 1);
 
-        std::cout << "Choix du capteur" << std::endl;
+        const auto contributeur = ServiceContributeur::getContributeur(username);
+
+        cout << "Choix du capteur" << endl;
         const auto capteurs = contributeur->getCapteurs();
         for (size_t i = 0; i < capteurs.size(); i++)
         {
             const auto capteur = capteurs.at(i);
-            std::cout << std::setw(4) << (i + 1) << ". " << capteur.getSensorId() << " (" << capteur.getCoordonnees().getLattitude() << ", " << capteur.getCoordonnees().getLongitude() << ") -- " << capteur.getDescription() << std::endl;
+            cout << setw(4) << (i + 1) << ". " << capteur.getSensorId() << " (" << capteur.getCoordonnees().getLattitude() << ", " << capteur.getCoordonnees().getLongitude() << ") -- " << capteur.getDescription() << endl;
         }
-        std::cout << std::endl;
-        std::cout << "Numéro du capteur : ";
+        cout << endl;
+        cout << "Numéro du capteur : ";
         const auto resCapteur = App::readInteger();
-        const bool validC = (resCapteur.valid && resCapteur.value > 0 && resCapteur.value <= capteurs.size());
+        const bool validC = (resCapteur.valid && resCapteur.value > 0 && (size_t)resCapteur.value <= capteurs.size());
         if (!validC)
         {
-            std::cout << "Capteur invalide." << std::endl;
+            cout << "Capteur invalide." << endl;
             return false;
         }
         const auto capteur = capteurs.at(resCapteur.value - 1);
 
-        std::cout << "Choix du type" << std::endl;
+        cout << "Choix du type" << endl;
         const auto types = ServiceAnalyste::listType();
         for (size_t i = 0; i < types->size(); i++)
         {
             const auto type = types->at(i);
-            std::cout << std::setw(4) << (i + 1) << ". " << type->getAttributeId() << " (" << type->getUnite() << ") -- " << type->getDescription() << std::endl;
+            cout << setw(4) << (i + 1) << ". " << type->getAttributeId() << " (" << type->getUnite() << ") -- " << type->getDescription() << endl;
         }
-        std::cout << std::endl;
-        std::cout << "Numéro du type : ";
+        cout << endl;
+        cout << "Numéro du type : ";
         const auto resType = App::readInteger();
-        const bool validT = (resType.valid && resType.value > 0 && resType.value <= types->size());
+        const bool validT = (resType.valid && resType.value > 0 && (size_t)resType.value <= types->size());
         if (!validT)
         {
-            std::cout << "Type invalide." << std::endl;
+            cout << "Type invalide." << endl;
             return false;
         }
         const auto type = *types->at(resType.value - 1);
 
-        std::cout << std::endl;
-        std::cout << "Valeur mesurée : ";
+        cout << endl;
+        cout << "Valeur mesurée : ";
         const auto resVal = App::readFractional();
         if (!resVal.valid)
         {
-            std::cout << "Valeur invalide." << std::endl;
+            cout << "Valeur invalide." << endl;
             return false;
         }
 
@@ -132,16 +152,16 @@ bool App::MenuContributeur()
         break;
     }
     case 1:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 2:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 3:
         return true;
         break;
     default:
-        std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+        cout << "Vous n'avez pas choisi de menu." << endl;
         return false;
     }
     return true;
@@ -149,7 +169,7 @@ bool App::MenuContributeur()
 
 bool App::MenuAnalyste()
 {
-    const std::vector<std::string> menuAnalyse = {"Filtrage géographique…", "Filtrage temporel…", "Lancer le calcul", "Retour au menu principal"};
+    const vector<string> menuAnalyse = {"Filtrage géographique…", "Filtrage temporel…", "Lancer le calcul", "Retour au menu principal"};
 
     bool filtre_geographique = false;
     double filtre_rayon = 0.0;
@@ -163,9 +183,9 @@ bool App::MenuAnalyste()
     {
         if (filtre_geographique)
         {
-            std::cout << ">> Filtre géographique : "
-                      << "Cercle de rayon " << filtre_rayon << " et de centre (" << filtre_centre.getLattitude() << ", " << filtre_centre.getLongitude() << ")"
-                      << std::endl;
+            cout << ">> Filtre géographique : "
+                 << "Cercle de rayon " << filtre_rayon << " et de centre (" << filtre_centre.getLattitude() << ", " << filtre_centre.getLongitude() << ")"
+                 << endl;
         }
         if (filtre_temporel)
         {
@@ -175,9 +195,9 @@ bool App::MenuAnalyste()
             strftime(buffer_debut, 63, formatTimestamp, localtime(&filtre_debut));
             strftime(buffer_fin, 63, formatTimestamp, localtime(&filtre_fin));
 
-            std::cout << ">> Filtre temporel : "
-                      << "Période du " << buffer_debut << " au " << buffer_fin
-                      << std::endl;
+            cout << ">> Filtre temporel : "
+                 << "Période du " << buffer_debut << " au " << buffer_fin
+                 << endl;
 
             delete[] buffer_debut;
             delete[] buffer_fin;
@@ -192,34 +212,34 @@ bool App::MenuAnalyste()
             filtre_geographique = false;
 
             App::banner("Définir une région d'analyse");
-            std::cout << "Forme de la région d'analyse : CERCLE" << std::endl;
+            cout << "Forme de la région d'analyse : CERCLE" << endl;
 
-            std::cout << "* Rayon du cercle (en mètres) : ";
+            cout << "* Rayon du cercle (en mètres) : ";
             const auto resR = App::readFractional();
             if (!resR.valid || resR.value < 0)
             {
-                std::cout << "Valeur invalide." << std::endl;
+                cout << "Valeur invalide." << endl;
                 return false;
             }
 
-            std::cout << "* Centre du cercle" << std::endl;
-            std::cout << "   - latitude : ";
+            cout << "* Centre du cercle" << endl;
+            cout << "   - latitude : ";
             const auto resLat = App::readFractional();
             if (!resLat.valid || resLat.value < 0)
             {
-                std::cout << "Valeur invalide." << std::endl;
+                cout << "Valeur invalide." << endl;
                 return false;
             }
 
-            std::cout << "   - longitude : ";
+            cout << "   - longitude : ";
             const auto resLon = App::readFractional();
             if (!resLon.valid || resLon.value < 0)
             {
-                std::cout << "Valeur invalide." << std::endl;
+                cout << "Valeur invalide." << endl;
                 return false;
             }
 
-            std::cout << std::endl;
+            cout << endl;
 
             filtre_geographique = true;
             filtre_rayon = resR.value;
@@ -231,19 +251,19 @@ bool App::MenuAnalyste()
             filtre_temporel = false;
 
             App::banner("Définir une période d'analyse");
-            std::cout << "Date de début (jour/mois/année) : ";
+            cout << "Date de début (jour/mois/année) : ";
             const auto debut = App::readDate();
             if (!debut.valid)
             {
-                std::cout << "Date invalide." << std::endl;
+                cout << "Date invalide." << endl;
                 return false;
             }
 
-            std::cout << "Date de fin   (jour/mois/année) : ";
+            cout << "Date de fin   (jour/mois/année) : ";
             const auto fin = App::readDate();
             if (!fin.valid)
             {
-                std::cout << "Date invalide." << std::endl;
+                cout << "Date invalide." << endl;
                 return false;
             }
 
@@ -254,68 +274,48 @@ bool App::MenuAnalyste()
         }
         case 2:
         {
-            /*
-            App::banner("Choisir le type de mesure à analyser :");
+            cout << "Calcul..." << flush;
 
-            std::vector<std::string> series = {"Blabla", "Machin", "Truc"};
-            const int N = series.size();
-            for (int i = 0; i < N; i++)
-            {
-                const auto serie = series[i];
-                std::cout << std::setw(4) << (i + 1) << ". " << serie << std::endl;
-            }
-            std::cout << std::endl;
-
-            std::cout << "Série : ";
-            const auto res = App::readInteger();
-            const bool valid = (res.valid && res.value > 0 && res.value <= N);
-            if (!valid)
-            {
-                return false;
-            }
-
-            // poursuivre avec le choix de l'analyse
-
-            std::cout << "> Pas implémenté" << std::endl;
-            */
-
-            std::cout << "Calcul..." << std::flush;
-
+            auto start = chrono::steady_clock::now();
             const auto resultat = ServiceAnalyste::agregerDonnees(filtre_centre, filtre_rayon, filtre_debut, filtre_fin, filtre_geographique, filtre_temporel);
-            std::cout << " Terminé." << std::endl
-                      << std::endl;
+            auto end = chrono::steady_clock::now();
+            auto diff = end - start;
+
+            cout << " Terminé (en " << chrono::duration<double, milli>(diff).count() << " ms)"
+                 << endl;
+
             App::banner("Résultats des calculs :");
-            std::cout
-                << std::setw(9) << "attribut"
+            cout
+                << setw(9) << "attribut"
                 << " | "
-                << std::setw(5) << "unité"
+                << setw(5) << "unité"
                 << " | "
-                << std::setw(7) << "minimum"
+                << setw(7) << "minimum"
                 << " | "
-                << std::setw(7) << "moyenne"
+                << setw(7) << "moyenne"
                 << " | "
-                << std::setw(7) << "mediane"
+                << setw(7) << "mediane"
                 << " | "
-                << std::setw(7) << "maximum"
+                << setw(7) << "maximum"
                 << " | "
-                << std::setw(10) << "écart-type"
-                << std::endl;
+                << setw(10) << "écart-type"
+                << endl;
 
             for (auto it = resultat->begin(); it != resultat->end(); it++)
             {
                 const auto v = it->second;
-                std::cout
-                    << std::setw(9) << it->first.getAttributeId() << " | "
-                    << std::setw(5) << it->first.getUnite() << " | "
-                    << std::setw(7) << v.min << " | "
-                    << std::setw(7) << v.moyenne << " | "
-                    << std::setw(7) << v.mediane << " | "
-                    << std::setw(7) << v.max << " | "
-                    << std::setw(10) << v.ecartType
-                    << std::endl;
+                cout
+                    << setw(9) << it->first.getAttributeId() << " | "
+                    << setw(5) << it->first.getUnite() << " | "
+                    << setw(7) << v.min << " | "
+                    << setw(7) << v.moyenne << " | "
+                    << setw(7) << v.mediane << " | "
+                    << setw(7) << v.max << " | "
+                    << setw(10) << v.ecartType
+                    << endl;
             }
 
-            std::cout << std::endl;
+            cout << endl;
 
             break;
         }
@@ -326,7 +326,7 @@ bool App::MenuAnalyste()
             return true;
             break;
         default:
-            std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+            cout << "Vous n'avez pas choisi de menu." << endl;
             return false;
         }
     }
@@ -335,24 +335,24 @@ bool App::MenuAnalyste()
 
 bool App::MenuExpert()
 {
-    const std::vector<std::string> menuSources = {"Liste des sources", "Qualité des données", "Données médiocres", "Retour au menu principal"};
+    const vector<string> menuSources = {"Liste des sources", "Qualité des données", "Données médiocres", "Retour au menu principal"};
     const int choice = this->menu("Menu - Sources de données", menuSources);
     switch (choice)
     {
     case 0:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 1:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 2:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 3:
         return true;
         break;
     default:
-        std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+        cout << "Vous n'avez pas choisi de menu." << endl;
         return false;
     }
     return true;
@@ -360,27 +360,27 @@ bool App::MenuExpert()
 
 bool App::MenuAdmin()
 {
-    const std::vector<std::string> menuAdministration = {"Ajouter un analyste / expert", "Supprimer un analyste / expert", "Modifier un analyste / expert", "Réinit. un mot de passe", "Retour au menu principal"};
+    const vector<string> menuAdministration = {"Ajouter un analyste / expert", "Supprimer un analyste / expert", "Modifier un analyste / expert", "Réinit. un mot de passe", "Retour au menu principal"};
     const int choice = this->menu("Menu - Administration", menuAdministration);
     switch (choice)
     {
     case 0:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 1:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 2:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 3:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 4:
         return true;
         break;
     default:
-        std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+        cout << "Vous n'avez pas choisi de menu." << endl;
         return false;
     }
     return true;
@@ -388,27 +388,27 @@ bool App::MenuAdmin()
 
 bool App::MenuSuperAdmin()
 {
-    const std::vector<std::string> menuSuperAdmin = {"Ajouter un administrateur", "Modifier un administrateur", "Supprimer un administrateur", "Voir les performances du service", "Retour au menu principal"};
+    const vector<string> menuSuperAdmin = {"Ajouter un administrateur", "Modifier un administrateur", "Supprimer un administrateur", "Voir les performances du service", "Retour au menu principal"};
     const int choice = this->menu("Menu - Administration", menuSuperAdmin);
     switch (choice)
     {
     case 0:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 1:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 2:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 3:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     case 4:
-        std::cout << "> Pas implémenté" << std::endl;
+        cout << "> Pas implémenté" << endl;
         break;
     default:
-        std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+        cout << "Vous n'avez pas choisi de menu." << endl;
         return false;
     }
     return true;
@@ -417,20 +417,20 @@ bool App::MenuSuperAdmin()
 // fonctions utilitaires
 // lire un entier
 App::ConsoleReadResult<int>
-App::readInteger(std::istream &in)
+App::readInteger(istream &in)
 {
-    std::string input;
-    std::getline(in, input);
+    string input;
+    getline(in, input);
 
     ConsoleReadResult<int> res;
 
     try
     {
-        const int value = std::stoi(input);
+        const int value = stoi(input);
         res.value = value;
         res.valid = true;
     }
-    catch (std::invalid_argument)
+    catch (invalid_argument)
     {
         res.value = 0;
         res.valid = false;
@@ -440,20 +440,20 @@ App::readInteger(std::istream &in)
 }
 
 App::ConsoleReadResult<double>
-App::readFractional(std::istream &in)
+App::readFractional(istream &in)
 {
-    std::string input;
-    std::getline(in, input);
+    string input;
+    getline(in, input);
 
     ConsoleReadResult<double> res;
 
     try
     {
-        const double value = std::stod(input);
+        const double value = stod(input);
         res.value = value;
         res.valid = true;
     }
-    catch (std::invalid_argument)
+    catch (invalid_argument)
     {
         res.value = 0.0;
         res.valid = false;
@@ -463,17 +463,17 @@ App::readFractional(std::istream &in)
 }
 
 App::ConsoleReadResult<time_t>
-App::readDate(std::istream &in)
+App::readDate(istream &in)
 {
     ConsoleReadResult<time_t> res;
 
     try
     {
-        std::tm tm{};
-        in >> std::get_time(&tm, "%d/%m/%Y");
-        std::cout << std::endl
-                  << tm.tm_year
-                  << std::endl;
+        tm tm{};
+        in >> get_time(&tm, "%d/%m/%Y");
+        cout << endl
+             << tm.tm_year
+             << endl;
 
         if (in.fail())
         {
@@ -489,7 +489,7 @@ App::readDate(std::istream &in)
             res.valid = true;
         }
     }
-    catch (std::invalid_argument)
+    catch (invalid_argument)
     {
         res.value = 0;
         res.valid = false;
@@ -498,16 +498,16 @@ App::readDate(std::istream &in)
     return res;
 }
 
-void App::banner(std::string text, bool thick, std::ostream &out)
+void App::banner(string text, bool thick, ostream &out)
 {
     const int width = maxWidth;
 
     if (thick)
-        out << primaryBg << primaryFg << std::string(width, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
-    out << primaryBg << primaryFg << text << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
+        out << primaryBg << primaryFg << string(width, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << endl;
+    out << primaryBg << primaryFg << text << ANSI_FG_RESET << ANSI_BG_RESET << endl;
 
     if (thick)
-        out << primaryBg << primaryFg << std::string(width, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
+        out << primaryBg << primaryFg << string(width, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << endl;
 }
 
 /**
@@ -515,30 +515,30 @@ void App::banner(std::string text, bool thick, std::ostream &out)
  * - renvoie un entier entre 0 et (N - 1) lorsque le choix est valide
  * - renvoie App::InvalidMenuChoice sinon
  */
-int App::menu(const std::string menuName, const std::vector<std::string> &entries, std::ostream &out)
+int App::menu(const string menuName, const vector<string> &entries, ostream &out)
 {
-    // out << std::endl;
-    // out << std::endl;
+    // out << endl;
+    // out << endl;
     banner(menuName, false, out);
-    out << std::endl;
+    out << endl;
 
     int i = 0;
     for (auto const &entry : entries)
     {
         i += 1;
-        out << std::setw(4) << i << ". " << entry << std::endl;
+        out << setw(4) << i << ". " << entry << endl;
     }
     const int n = i;
 
-    out << std::endl;
+    out << endl;
     out << "Entrez ici votre sélection : ";
 
     auto res = readInteger();
-    out << std::endl;
+    out << endl;
 
     if (!res.valid || res.value < 1 || res.value > n)
     {
-        out << "Entrée invalide, veuillez entrer un entier entre " << 1 << " et " << n << "." << std::endl;
+        out << "Entrée invalide, veuillez entrer un entier entre " << 1 << " et " << n << "." << endl;
         return InvalidMenuChoice;
     }
     else
@@ -547,18 +547,18 @@ int App::menu(const std::string menuName, const std::vector<std::string> &entrie
     }
 }
 
-void App::userbar(std::string username, std::ostream &out)
+void App::userbar(string username, ostream &out)
 {
     const int width = maxWidth;
 
-    const std::string preamble = "Utilisateur: ";
+    const string preamble = "Utilisateur: ";
     int space = width - username.length() - preamble.length();
     if (space < 0)
     {
         space = 0;
     }
 
-    out << secondaryBg << primaryFg << preamble << username << std::string(space, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << std::endl;
+    out << secondaryBg << primaryFg << preamble << username << string(space, ' ') << ANSI_FG_RESET << ANSI_BG_RESET << endl;
 }
 
 App::App()

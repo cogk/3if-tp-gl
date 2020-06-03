@@ -17,14 +17,14 @@ class CSVParser {
 public:
 // Méthodes publiques
     // Contrat : le retour devra être delete par l'utilisateur
-    map<string, vector<string*>*>* read(map<int, string> params = map<int, string>());
-    vector<vector<string*>*>* readVec(map<int, string> params = map<int, string>());
+    map<string, vector<string*>*>* read(map<size_t, string> params = map<size_t, string>());
+    vector<vector<string*>*>* readVec(map<size_t, string> params = map<size_t, string>());
 
     bool add(vector<string> line);
-    bool deleteLines(map<int, string> params);
-    bool editLines(map<int, string> params, vector<string> newLine);
+    bool deleteLines(map<size_t, string> params = map<size_t, string>());
+    bool editLines(map<size_t, string> params = map<size_t, string>(), vector<string> newLine = vector<string>());
 
-// Constructeurs / destructeurs
+    // Constructeurs / destructeurs
     CSVParser(string csvStr);
     virtual ~CSVParser();
 

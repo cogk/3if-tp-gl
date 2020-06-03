@@ -1,6 +1,5 @@
 CC        = g++
 CFLAGS    = -ansi -pedantic -Wall -Wextra -std=c++11
-# ajout du flag -Wextra
 
 EXEC_NAME = airwatcher
 INCLUDES  =
@@ -26,15 +25,15 @@ test: normal
 # On supprime les fichiers temporaires et l'éxécutable
 clean:
 	@rm -f $(EXEC_NAME)
-	@rm -r tmp/
+	@rm -rf tmp/
 
 # Création du répertoire temporaire
 directories:
-	mkdir -p $(dir $(OBJS))
+	@mkdir -p $(dir $(OBJS))
 
 # Règle de compilation
 tmp/%.o: src/%.cpp $(LIBS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $< -lm
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 # Règle d'édition de liens
 $(EXEC_NAME): $(OBJS) $(LIBS)
