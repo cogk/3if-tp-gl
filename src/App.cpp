@@ -251,7 +251,7 @@ bool App::MenuAnalyste()
             filtre_temporel = false;
 
             App::banner("Définir une période d'analyse");
-            cout << "Date de début (jour/mois/année) : ";
+            cout << "Date de début (jj/mm/aaaa) : ";
             const auto debut = App::readDate();
             if (!debut.valid)
             {
@@ -259,7 +259,7 @@ bool App::MenuAnalyste()
                 return false;
             }
 
-            cout << "Date de fin   (jour/mois/année) : ";
+            cout << "Date de fin   (jj/mm/aaaa) : ";
             const auto fin = App::readDate(true); // entrée + 23h59m59s
             if (!fin.valid)
             {
@@ -326,9 +326,6 @@ bool App::MenuAnalyste()
             break;
         }
         case 3:
-            return true;
-            break;
-        case 4:
             return true;
             break;
         default:
