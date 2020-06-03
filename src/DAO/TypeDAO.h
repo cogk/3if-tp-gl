@@ -19,7 +19,7 @@ public:
 
     virtual ~TypeDAO();
 
-    vector<Type *> *list();
+    vector<Type *> *list() const;
 
 private:
     static const string typePath;
