@@ -4,21 +4,28 @@
 
 #include "CapteurDAO.h"
 
-// TODO changer : debug
-const string cheminCapteursCSV = "./Data/sensors.csv";
+const string CapteurDAO::capteurPath = "./Data/sensors.csv";
 
 CapteurDAO::CapteurDAO() {}
 
-CapteurDAO::~CapteurDAO() {
-
-}
+CapteurDAO::~CapteurDAO() {}
 
 vector<Capteur *> *CapteurDAO::list() {
+    CSVParser parser(capteurPath);
 
-    CSVParser parser(cheminCapteursCSV);
-//    parser.read();
+    vector<vector<string*>*> *types = parser.readVec();
+    vector<Capteur*> *retour = new vector<Capteur*>();
 
-    // TODO récupérer le résultat et le parser
-    
-    return nullptr;
+    for (vector<string*> *linePtr : *types) {
+        vector<string*> &line = *linePtr;
+        retour->push_back(new Capteur(*line[0], "", Coordonnees(stod(*line[1]), stod(*line[2]))));
+
+        for (string *str: *linePtr) {
+            delete str;
+        }
+        delete linePtr;
+    }
+    delete types;
+
+    return retour;
 }
