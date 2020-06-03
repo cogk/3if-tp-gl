@@ -6,7 +6,7 @@
 #include "../DAO/MesureDAO.h"
 
 
-const string cheminMesuresCSV = "../../Data/test.csv";
+const string cheminMesuresCSV = "./Data/test.csv";
 
 map<Type, double> *ServiceAnalyste::agregerDonnees(Coordonnees centre, double rayon, time_t debut, time_t fin, bool filtrerParDistance, bool filtrerParDate)
 {

@@ -11,10 +11,10 @@
 #include <iomanip>
 #include <sstream>
 
-const string MesureDAO::mesurePath = "../Data/measurements.csv";
-const string MesureDAO::capteurPath = "../Data/sensors.csv";
-const string MesureDAO::typePath = "../Data/attributes.csv";
-const string MesureDAO::testPath = "../Data/tests.csv";
+const string MesureDAO::mesurePath = "./Data/measurements.csv";
+const string MesureDAO::capteurPath = "./Data/sensors.csv";
+const string MesureDAO::typePath = "./Data/attributes.csv";
+const string MesureDAO::testPath = "./Data/tests.csv";
 
 MesureDAO::MesureDAO() {}
 
