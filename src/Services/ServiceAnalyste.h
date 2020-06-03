@@ -14,7 +14,7 @@
 class ServiceAnalyste {
 
 public:
-    static map<Type, double> *agregerDonnees(Coordonnees centre, double rayon, time_t debut, time_t fin, bool = true, bool = true);
+    static map<Type, double> *agregerDonnees(const Coordonnees& centre, double rayon, time_t debut, time_t fin, bool = true, bool = true);
 };
 
 

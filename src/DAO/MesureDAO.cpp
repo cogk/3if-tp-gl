@@ -78,6 +78,16 @@ double distanceGPS(Coordonnees coo1, Coordonnees coo2)
     return d;
 }
 
+void deleteMap(map<string, vector<string*>*>* &map) {
+    for (auto it = map->begin(); it != map->end(); ++it) {
+        for (string *str : *it->second) {
+            delete str;
+        }
+        delete it->second;
+    }
+    delete map;
+}
+
 vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin, bool filtrerParDistance, bool filtrerParDate)
 {
     CSVParser parserMesure(mesurePath);
@@ -85,13 +95,17 @@ vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut
     CSVParser parserType(typePath);
 
     // Récupération des mesures
-    map<int, string> params;
-    vector<vector<string*>*>* mesures = parserMesure.read(params);
+    map<string, vector<string*>*>* mesures = parserMesure.read();
+    map<string, vector<string*>*>* capteurs = parserMesure.read();
+    map<string, vector<string*>*>* types = parserMesure.read();
 
     vector<Mesure*>* retour = new vector<Mesure*>();
     int i = 0;
+
     // Tri des mesures
-    for (vector<string*>* line : *mesures) {
+    for (auto it = mesures->begin(); it != mesures->end(); ++it) {
+        vector<string*> *line = it->second;
+
         string &dateStr = *line->at(0);
         string &nomCapteur = *line->at(1);
         string &nomType = *line->at(2);
@@ -101,38 +115,12 @@ vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut
         }
 
         // Récupération du capteur
-
-        map<int, string> paramsCapteur;
-        paramsCapteur.insert(pair<int, string>(0, nomCapteur));
-        vector<vector<string *> *> *capteurCsv = parserCapteur.read(paramsCapteur);
-        auto capteurCsvLine = capteurCsv->at(0);
-        Coordonnees coos(stod(*capteurCsvLine->at(1)), stod(*capteurCsvLine->at(2)));
-        Capteur capteur(*capteurCsvLine->at(0), "", coos);
-
-        // Nettoyage mémoire
-        for (vector<string *> *vec : *capteurCsv) {
-            for (string *str : *vec) {
-                delete str;
-            }
-            delete vec;
-        }
-        delete capteurCsv;
+        vector<string*> *capteurCsv = (*capteurs)[nomCapteur];
+        Capteur capteur(*(*capteurCsv)[0], "", Coordonnees(stod(*(*capteurCsv)[1]), stod(*(*capteurCsv)[2])));
 
         // récupération du type
-        map<int, string> paramsType;
-        paramsType.insert(pair<int, string>(0, nomType));
-        vector<vector<string *> *> *typeCsv = parserType.read(paramsType);
-        auto typeCsvLine = typeCsv->at(0);
-        Type type(*typeCsvLine->at(0), *typeCsvLine->at(1), *typeCsvLine->at(2));
-
-        // Nettoyage mémoire
-        for (vector<string *> *vec : *typeCsv) {
-            for (string *str : *vec) {
-                delete str;
-            }
-            delete vec;
-        }
-        delete typeCsv;
+        vector<string*> *typeCsv = (*types)[nomType];
+        Type type(*(*typeCsv)[0], *(*typeCsv)[1], *(*typeCsv)[2]);
 
         // Vérification de la mesure
         tm tm{};
@@ -147,13 +135,12 @@ vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut
             Mesure *mesure = new Mesure(stod(valeur), date, "", capteur, type);
             retour->push_back(mesure);
         }
-
-        // Nettoyage mémoire
-        for (string *str : *line) {
-            delete str;
-        }
-        delete line;
     }
+
+    // Nettoyage mémoire
+    deleteMap(mesures);
+    deleteMap(capteurs);
+    deleteMap(types);
 
     return retour;
 }
