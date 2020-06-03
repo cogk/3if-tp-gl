@@ -467,6 +467,8 @@ App::readDate(std::istream &in)
         }
         else
         {
+            in.ignore(10000, '\n'); // skip new line
+
             time_t time = mktime(&tm);
             res.value = time;
             res.valid = true;
