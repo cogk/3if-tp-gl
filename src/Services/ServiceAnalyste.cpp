@@ -27,14 +27,15 @@ map<Type, ServiceAnalyste::Resultats> *ServiceAnalyste::agregerDonnees(
     }
 
     // mettre les resultats dans une map par type
+    const double infty = std::numeric_limits<double>::infinity();
     auto resultats = new map<Type, ServiceAnalyste::Resultats>();
     for (const auto pair : valeursParType)
     {
         auto v = pair.second;
         size_t count = v.size();
         double sum = 0.0;
-        double max = -INFINITY;
-        double min = +INFINITY;
+        double max = -infty;
+        double min = +infty;
         double mediane = 0;
 
         std::nth_element(v.begin(), v.begin() + v.size() / 2, v.end());
