@@ -65,7 +65,25 @@ bool App::MenuContributeur()
     {
         App::banner("Ajouter une nouvelle entrée");
 
-        const auto contributeur = ServiceContributeur::getContributeur("User0");
+        std::cout << "Choix de l'utilisateur (débug)" << std::endl;
+        const std::vector<std::string> users = {"User0", "User1"};
+        for (size_t i = 0; i < users.size(); i++)
+        {
+            const auto user = users.at(i);
+            std::cout << std::setw(4) << (i + 1) << ". " << user << std::endl;
+        }
+        std::cout << std::endl;
+        std::cout << "Numéro de votre utilisateur : ";
+        const auto resUser = App::readInteger();
+        const bool validU = (resUser.valid && resUser.value > 0 && resUser.value <= users.size());
+        if (!validU)
+        {
+            std::cout << "Utilisateur invalide." << std::endl;
+            return false;
+        }
+        const auto username = users.at(resUser.value - 1);
+
+        const auto contributeur = ServiceContributeur::getContributeur(username);
 
         std::cout << "Choix du capteur" << std::endl;
         const auto capteurs = contributeur->getCapteurs();
