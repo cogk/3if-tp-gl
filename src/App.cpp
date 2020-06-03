@@ -290,7 +290,7 @@ bool App::MenuExpert()
 
 bool App::MenuAdmin()
 {
-    const std::vector<std::string> menuAdministration = {"Supprimer un utilisateur", "Modifier un utilisateur", "Réinit. un mot de passe", "Retour au menu principal"};
+    const std::vector<std::string> menuAdministration = {"Ajouter un analyste / expert", "Supprimer un analyste / expert", "Modifier un analyste / expert", "Réinit. un mot de passe", "Retour au menu principal"};
     const int choice = this->menu("Menu - Administration", menuAdministration);
     switch (choice)
     {
@@ -304,6 +304,9 @@ bool App::MenuAdmin()
         std::cout << "> Pas implémenté" << std::endl;
         break;
     case 3:
+        std::cout << "> Pas implémenté" << std::endl;
+        break;
+    case 4:
         return true;
         break;
     default:
@@ -315,7 +318,30 @@ bool App::MenuAdmin()
 
 bool App::MenuSuperAdmin()
 {
-    return this->MenuAdmin();
+    const std::vector<std::string> menuSuperAdmin = {"Ajouter un administrateur", "Modifier un administrateur", "Supprimer un administrateur", "Voir les performances du service", "Retour au menu principal"};
+    const int choice = this->menu("Menu - Administration", menuSuperAdmin);
+    switch (choice)
+    {
+        case 0:
+            std::cout << "> Pas implémenté" << std::endl;
+            break;
+        case 1:
+            std::cout << "> Pas implémenté" << std::endl;
+            break;
+        case 2:
+            std::cout << "> Pas implémenté" << std::endl;
+            break;
+        case 3:
+            std::cout << "> Pas implémenté" << std::endl;
+            break;
+        case 4:
+            std::cout << "> Pas implémenté" << std::endl;
+            break;
+        default:
+            std::cout << "Vous n'avez pas choisi de menu." << std::endl;
+            return false;
+    }
+    return true;
 }
 
 // fonctions utilitaires
