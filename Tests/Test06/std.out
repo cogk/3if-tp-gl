@@ -10,14 +10,37 @@
    6. Quitter AirWatcher
 
 Entrez ici votre sélection : 
-* Menu - Vos données 
+* Menu - Analyse 
 
-   1. Entrer de nouvelles données
-   2. Votre score global
-   3. Liste de vos données
+   1. Filtrage géographique…
+   2. Filtrage temporel…
+   3. Lancer le calcul
    4. Retour au menu principal
 
 Entrez ici votre sélection : 
+* Définir une période d'analyse 
+Date de début (jj/mm/aaaa) : Date de fin   (jj/mm/aaaa) : >> Filtre temporel : Période du 01/01/2010 au 01/02/2010
+* Menu - Analyse 
+
+   1. Filtrage géographique…
+   2. Filtrage temporel…
+   3. Lancer le calcul
+   4. Retour au menu principal
+
+Entrez ici votre sélection : 
+Calcul...* Aucun résultat pour les critères spécifiés 
+
+>> Filtre temporel : Période du 01/01/2010 au 01/02/2010
+* Menu - Analyse 
+
+   1. Filtrage géographique…
+   2. Filtrage temporel…
+   3. Lancer le calcul
+   4. Retour au menu principal
+
+Entrez ici votre sélection : 
+Entrée invalide, veuillez entrer un entier entre 1 et 4.
+Vous n'avez pas choisi de menu.
 * Menu Principal 
 
    1. Contribution…
@@ -28,23 +51,5 @@ Entrez ici votre sélection :
    6. Quitter AirWatcher
 
 Entrez ici votre sélection : 
-* Menu - Super Administration 
-
-   1. Ajouter un administrateur
-   2. Modifier un administrateur
-   3. Supprimer un administrateur
-   4. Voir les performances du service
-   5. Retour au menu principal
-
-Entrez ici votre sélection : 
-> Pas implémenté
-* Menu Principal 
-
-   1. Contribution…
-   2. Analyse…
-   3. Sources de données…
-   4. Administration…
-   5. Super Admin…
-   6. Quitter AirWatcher
-
-Entrez ici votre sélection : 
+Entrée invalide, veuillez entrer un entier entre 1 et 6.
+Vous n'avez pas choisi de menu.

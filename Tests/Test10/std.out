@@ -10,14 +10,18 @@
    6. Quitter AirWatcher
 
 Entrez ici votre sélection : 
-* Menu - Vos données 
+* Menu - Analyse 
 
-   1. Entrer de nouvelles données
-   2. Votre score global
-   3. Liste de vos données
+   1. Filtrage géographique…
+   2. Filtrage temporel…
+   3. Lancer le calcul
    4. Retour au menu principal
 
 Entrez ici votre sélection : 
+* Définir une région d'analyse 
+Forme de la région d'analyse : CERCLE
+* Rayon du cercle (en mètres) : * Centre du cercle
+   - latitude : Valeur invalide.
 * Menu Principal 
 
    1. Contribution…
@@ -28,23 +32,5 @@ Entrez ici votre sélection :
    6. Quitter AirWatcher
 
 Entrez ici votre sélection : 
-* Menu - Super Administration 
-
-   1. Ajouter un administrateur
-   2. Modifier un administrateur
-   3. Supprimer un administrateur
-   4. Voir les performances du service
-   5. Retour au menu principal
-
-Entrez ici votre sélection : 
-> Pas implémenté
-* Menu Principal 
-
-   1. Contribution…
-   2. Analyse…
-   3. Sources de données…
-   4. Administration…
-   5. Super Admin…
-   6. Quitter AirWatcher
-
-Entrez ici votre sélection : 
+Entrée invalide, veuillez entrer un entier entre 1 et 6.
+Vous n'avez pas choisi de menu.

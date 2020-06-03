@@ -21,7 +21,29 @@ Entrez ici votre sélection :
 * Définir une région d'analyse 
 Forme de la région d'analyse : CERCLE
 * Rayon du cercle (en mètres) : * Centre du cercle
-   - latitude :    - longitude : Valeur invalide.
+   - latitude :    - longitude : 
+>> Filtre géographique : Cercle de rayon 424242 et de centre (60.1235, 50.001)
+* Menu - Analyse 
+
+   1. Filtrage géographique…
+   2. Filtrage temporel…
+   3. Lancer le calcul
+   4. Retour au menu principal
+
+Entrez ici votre sélection : 
+Calcul...* Aucun résultat pour les critères spécifiés 
+
+>> Filtre géographique : Cercle de rayon 424242 et de centre (60.1235, 50.001)
+* Menu - Analyse 
+
+   1. Filtrage géographique…
+   2. Filtrage temporel…
+   3. Lancer le calcul
+   4. Retour au menu principal
+
+Entrez ici votre sélection : 
+Entrée invalide, veuillez entrer un entier entre 1 et 4.
+Vous n'avez pas choisi de menu.
 * Menu Principal 
 
    1. Contribution…

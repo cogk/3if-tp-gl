@@ -1,1 +1,1 @@
-Ce test permet de vérifier l'utilisation incorrecte de la fonctionnalité d'envoi de données (numéro du capteur non numérique).
+Ce test permet de vérifier l'utilisation incorrecte de la fonctionnalité d'envoi de données (numéro du capteur négatif et/ou décimal).
