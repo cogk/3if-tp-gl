@@ -1,10 +1,8 @@
 #include "ContributeurDAO.h"
+#include "CSVParser.h"
 
-#include <utility>
 #include <ctime>
 #include <map>
-#include <math.h>
-#include <iomanip>
 #include <sstream>
 
 const string ContributeurDAO::contributeurPath = "./Data/users.csv";
