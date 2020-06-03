@@ -78,6 +78,7 @@ double distanceGPS(Coordonnees coo1, Coordonnees coo2)
     return d;
 }
 
+<<<<<<< HEAD
 void deleteMap(map<string, vector<string*>*>* &map) {
     for (auto it = map->begin(); it != map->end(); ++it) {
         for (string *str : *it->second) {
@@ -89,6 +90,9 @@ void deleteMap(map<string, vector<string*>*>* &map) {
 }
 
 vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin, bool filtrerParDate, bool filtrerParDistance)
+=======
+vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin, bool filtrerParDistance, bool filtrerParDate)
+>>>>>>> 30a700c052b8dfd41742b1e49b4d22f6941c9e52
 {
     CSVParser parserMesure(mesurePath);
     CSVParser parserCapteur(capteurPath);

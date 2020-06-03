@@ -6,12 +6,11 @@
 #include "../DAO/MesureDAO.h"
 
 
-const string cheminMesuresCSV = "../../Data/test.csv";
-
-map<Type, double>* ServiceAnalyste::agregerDonnees(Coordonnees centre, double rayon, time_t debut, time_t fin){
+map<Type, double> *ServiceAnalyste::agregerDonnees(const Coordonnees& centre, double rayon, time_t debut, time_t fin, bool filtrerParDistance, bool filtrerParDate)
+{
 
     MesureDAO dao;
-    vector<Mesure*>* res = dao.list(centre, rayon, debut, fin);
+    vector<Mesure *> *res = dao.list(centre, rayon, debut, fin, filtrerParDistance, filtrerParDate);
 
     // mapper les valeurs par type
     map<Type, list<double>> valeursParType;
@@ -29,5 +28,4 @@ map<Type, double>* ServiceAnalyste::agregerDonnees(Coordonnees centre, double ra
     }
 
     return moyennes;
-
 }

@@ -20,7 +20,7 @@ normal: directories $(EXEC_NAME)
 all: clean normal
 
 # Cible de test
-test: clean normal
+test: normal
 	cd Tests/ && bash ./mktest.sh
 
 # On supprime les fichiers temporaires et l'éxécutable
