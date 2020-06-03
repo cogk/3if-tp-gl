@@ -118,6 +118,7 @@ vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut
         string &nomType = *line->at(2);
         string &valeur = *line->at(3);
 
+
         try {
             // Récupération du capteur
             vector<string *> *capteurCsv = capteurs->at(nomCapteur);
@@ -126,23 +127,23 @@ vector<Mesure *> *MesureDAO::list(Coordonnees centre, double rayon, time_t debut
             // récupération du type
             vector<string *> *typeCsv = types->at(nomType);
             Type type(*(*typeCsv)[0], *(*typeCsv)[1], *(*typeCsv)[2]);
+
+            // Vérification de la mesure
+            tm tm{};
+            istringstream str_stream(dateStr);
+            str_stream >> get_time(&tm, "%Y-%m-%d %T");
+            time_t date = mktime(&tm);
+            const bool validDate = filtrerParDate ? (debut < date && date < fin) : true;
+            const bool validDistance = filtrerParDistance ? (distanceGPS(centre, capteur.getCoordonnees()) <= rayon) : true;
+            const bool valid = validDate && validDistance;
+            if (valid)
+            {
+                Mesure *mesure = new Mesure(stod(valeur), date, "", capteur, type);
+                retour->push_back(mesure);
+            }
         } catch (int e) {
             cerr << "Ligne intraitable : " << nomCapteur << " ou " << nomType << " introuvable." << endl;
             continue;
-        }
-
-        // Vérification de la mesure
-        tm tm{};
-        istringstream str_stream(dateStr);
-        str_stream >> get_time(&tm, "%Y-%m-%d %T");
-        time_t date = mktime(&tm);
-        const bool validDate = filtrerParDate ? (debut < date && date < fin) : true;
-        const bool validDistance = filtrerParDistance ? (distanceGPS(centre, capteur.getCoordonnees()) <= rayon) : true;
-        const bool valid = validDate && validDistance;
-        if (valid)
-        {
-            Mesure *mesure = new Mesure(stod(valeur), date, "", capteur, type);
-            retour->push_back(mesure);
         }
     }
 
