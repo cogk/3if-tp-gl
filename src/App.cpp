@@ -260,7 +260,7 @@ bool App::MenuAnalyste()
             }
 
             cout << "Date de fin   (jour/mois/année) : ";
-            const auto fin = App::readDate();
+            const auto fin = App::readDate(true); // entrée + 23h59m59s
             if (!fin.valid)
             {
                 cout << "Date invalide." << endl;
@@ -457,8 +457,11 @@ App::readFractional(istream &in)
     return res;
 }
 
+/**
+ * L'option endOfDay permet de décaler de 23h59m59s dans le temps
+ */
 App::ConsoleReadResult<time_t>
-App::readDate(istream &in)
+App::readDate(bool endOfDay, istream &in)
 {
     ConsoleReadResult<time_t> res;
 
@@ -466,9 +469,6 @@ App::readDate(istream &in)
     {
         tm tm{};
         in >> get_time(&tm, "%d/%m/%Y");
-        cout << endl
-             << tm.tm_year
-             << endl;
 
         if (in.fail())
         {
@@ -478,6 +478,13 @@ App::readDate(istream &in)
         else
         {
             in.ignore(10000, '\n'); // skip new line
+
+            if (endOfDay)
+            {
+                tm.tm_hour = 23;
+                tm.tm_min = 59;
+                tm.tm_sec = 59;
+            }
 
             time_t time = mktime(&tm);
             res.value = time;
