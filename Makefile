@@ -5,7 +5,7 @@ CFLAGS    = -ansi -pedantic -Wall -Wextra -std=c++11
 EXEC_NAME = airwatcher
 INCLUDES  =
 LIBS      = $(shell find src -type f -name '*.h')
-SRCS      = $(shell find src -type f -name '*.cpp')
+SRCS      = $(shell find src -type f \( -name '*.cpp' ! -iname "test.cpp" \))
 OBJS      = $(addprefix tmp/,$(SRCS:src/%.cpp=%.o))
 
 ifdef DEBUG
