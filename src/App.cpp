@@ -125,7 +125,7 @@ bool App::MenuContributeur()
         cout << endl;
         cout << "Valeur mesurée : ";
         const auto resVal = App::readFractional();
-        if (!resVal.valid)
+        if (!resVal.valid || resVal.value < 0)
         {
             cout << "Valeur invalide." << endl;
             return false;
@@ -284,7 +284,7 @@ bool App::MenuAnalyste()
             auto end = chrono::steady_clock::now();
             auto diff = end - start;
 
-            cerr << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
+            cerr << " Terminé en " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
             if (resultat->size() > 0)
             {

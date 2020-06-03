@@ -63,6 +63,8 @@ map<string, vector<string *> *> *CSVParser::read(map<size_t, string> params) {
                 }
                 delete splittedLine;
             }
+
+            delete line;
         }
 
         csvFile.close();
@@ -104,6 +106,8 @@ vector<vector<string*>*>* CSVParser::readVec(map<size_t, string> params) {
                 }
                 delete splittedLine;
             }
+
+            delete line;
         }
 
         csvFile.close();
