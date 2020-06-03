@@ -277,13 +277,12 @@ bool App::MenuAnalyste()
             cout << "Calcul..." << flush;
             auto start = chrono::steady_clock::now();
 
-            auto start = chrono::steady_clock::now();
             const auto resultat = ServiceAnalyste::agregerDonnees(filtre_centre, filtre_rayon, filtre_debut, filtre_fin, filtre_geographique, filtre_temporel);
+
             auto end = chrono::steady_clock::now();
             auto diff = end - start;
 
-            cout << " Terminé (en " << chrono::duration<double, milli>(diff).count() << " ms)"
-                 << endl;
+            cout << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
             if (resultat->size() > 0)
             {
@@ -323,11 +322,6 @@ bool App::MenuAnalyste()
             {
                 App::banner("Aucun résultat pour les critères spécifiés");
             }
-
-            auto end = chrono::steady_clock::now();
-            auto diff = end - start;
-
-            cout << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
             break;
         }
