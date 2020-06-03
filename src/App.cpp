@@ -284,7 +284,7 @@ bool App::MenuAnalyste()
             auto end = chrono::steady_clock::now();
             auto diff = end - start;
 
-            cout << "Temps d'execution : " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
+            cerr << " Terminé en " << chrono::duration<double, milli>(diff).count() << " ms" << endl;
 
             if (resultat->size() > 0)
             {
