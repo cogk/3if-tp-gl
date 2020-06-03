@@ -6,8 +6,6 @@
 #include "../DAO/MesureDAO.h"
 #include "../DAO/ContributeurDAO.h"
 
-const string cheminMesuresCSV = "./Data/test.csv";
-
 bool ServiceContributeur::envoyerDonnees(const Mesure& donnees) {
 
     MesureDAO dao;
