@@ -77,7 +77,7 @@ double distanceGPS(Coordonnees coo1, Coordonnees coo2)
 
 vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut, time_t fin) {
     CSVParser parserMesure(mesurePath);
-    CSVParser parserCapteur(mesurePath);
+    CSVParser parserCapteur(capteurPath);
     CSVParser parserType(typePath);
 
     // Récupération des mesures
@@ -85,18 +85,22 @@ vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut,
     vector<vector<string*>*>* mesures = parserMesure.read(params);
 
     vector<Mesure*>* retour = new vector<Mesure*>();
-
+    int i = 0;
     // Tri des mesures
     for (vector<string*>* line : *mesures) {
         string &dateStr = *line->at(0);
         string &nomCapteur = *line->at(1);
         string &nomType = *line->at(2);
         string &valeur = *line->at(3);
+        if (i++ % 100 == 0) {
+            cout << "Ligne " << i << "/" << mesures->size() << endl;
+        }
 
         // Récupération du capteur
+
         map<int, string> paramsCapteur;
         paramsCapteur.insert(pair<int, string>(0, nomCapteur));
-        vector<vector<string *> *> *capteurCsv = parserMesure.read(paramsCapteur);
+        vector<vector<string *> *> *capteurCsv = parserCapteur.read(paramsCapteur);
         auto capteurCsvLine = capteurCsv->at(0);
         Coordonnees coos(stod(*capteurCsvLine->at(1)), stod(*capteurCsvLine->at(2)));
         Capteur capteur(*capteurCsvLine->at(0), "", coos);
@@ -112,8 +116,8 @@ vector<Mesure*>* MesureDAO::list(Coordonnees centre, double rayon, time_t debut,
 
         // récupération du type
         map<int, string> paramsType;
-        paramsCapteur.insert(pair<int, string>(0, nomType));
-        vector<vector<string *> *> *typeCsv = parserMesure.read(paramsCapteur);
+        paramsType.insert(pair<int, string>(0, nomType));
+        vector<vector<string *> *> *typeCsv = parserType.read(paramsType);
         auto typeCsvLine = typeCsv->at(0);
         Type type(*typeCsvLine->at(0), *typeCsvLine->at(1), *typeCsvLine->at(2));
 

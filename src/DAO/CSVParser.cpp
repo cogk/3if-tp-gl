@@ -37,7 +37,6 @@ vector<vector<string*>*>* CSVParser::read(map<int, string> params) {
     vector<vector<string*>*>* result = new vector<vector<string*>*>;
 
     if (csvFile) {
-        cout << "Hello" << endl;
         while (!csvFile.eof()) {
             string *line = new string;
             getline(csvFile, *line);
@@ -68,7 +67,7 @@ vector<vector<string*>*>* CSVParser::read(map<int, string> params) {
 
         csvFile.close();
     } else {
-        cout << "Oupsi !" << endl;
+        cerr << "Oupsi : Erreur d'ouverture du fichier " << csv << " dans la methode CSVParser::read." << endl;
     }
 
     return result;
@@ -78,7 +77,6 @@ bool CSVParser::add(vector<string> line) {
     ofstream csvFile(csv, ios_base::app);
 
     if (csvFile) {
-        cout << "Hello" << endl;
         string unsplittedLine = "";
         for (const string &str : line) {
             unsplittedLine = unsplittedLine + str + ";";
@@ -89,7 +87,7 @@ bool CSVParser::add(vector<string> line) {
         csvFile.close();
         return state;
     }else{
-        cout << "Oupsi" << endl;
+        cerr << "Oupsi : Erreur d'ouverture du fichier " << csv << " dans la methode CSVParser::add." << endl;
     }
 
     return false;
